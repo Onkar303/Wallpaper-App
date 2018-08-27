@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/cardview_default_radius"
         app:cardElevation="@dimen/cardview_default_elevation"
-        app:cardUseCompatPadding="true"
-        >
+        app:cardUseCompatPadding="true">
 
         <ImageView
             android:id="@+id/user_personal_pics"

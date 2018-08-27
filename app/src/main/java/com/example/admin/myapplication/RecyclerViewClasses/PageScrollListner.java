@@ -22,11 +22,12 @@ public abstract class PageScrollListner extends RecyclerView.OnScrollListener {
         if (!isLoading() && !isLastPage()) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0)
             {
-
+                loadMoreItems();
             }
         }
 
-        loadMoreItems();
+
+
 
 
     }

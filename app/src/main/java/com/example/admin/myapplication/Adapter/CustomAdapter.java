@@ -71,49 +71,54 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull final CustomAdapter.MyViewHolder holder,final int position) {
 
-        holder.title.setText(list.get(position).getUser().getFirstName());
-        holder.likes.setText(list.get(position).getUser().getTotalLikes()+" likes");
-        Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000,1000)).into(holder.imageView);
-        Glide.with(context).load(list.get(position).getUser().getProfileImage().getMedium()).apply(new RequestOptions().override(50,50)).into(holder.ProfileImage);
-        //MyAnimationUtils.Animate(holder,true);
+        try{
+            holder.title.setText(list.get(position).getUser().getFirstName());
+            holder.likes.setText(list.get(position).getUser().getTotalLikes()+" likes");
+            Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000,1000)).into(holder.imageView);
+            Glide.with(context).load(list.get(position).getUser().getProfileImage().getMedium()).apply(new RequestOptions().override(50,50)).into(holder.ProfileImage);
+            //MyAnimationUtils.Animate(holder,true);
+            holder.ProfileImage.setBorderColor(Color.parseColor(list.get(position).getColor()));
+            //holder.imageView.setMaxHeight(1000);
+            //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
+            holder.ProfileImage.setOnClickListener(new View.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View view) {
+                    Intent i1=new Intent(context, ProfileActivity.class);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) context, holder.ProfileImage,holder.ProfileImage.getTransitionName());
 
-        //holder.imageView.setMaxHeight(1000);
-        //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
-        holder.ProfileImage.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(View view) {
-                Intent i1=new Intent(context, ProfileActivity.class);
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context, holder.ProfileImage,holder.ProfileImage.getTransitionName());
+                    i1.putExtra("myobject",list.get(position));
+                    context.startActivity(i1,options.toBundle());
+                }
+            });
 
-                i1.putExtra("myobject",list.get(position));
-                context.startActivity(i1,options.toBundle());
-            }
-        });
+            //holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
 
-        //holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
+            //Glide.with(context).load(list.get(position).getUrls().getRegular().toString()).into(holder.imageView);
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    Intent i=new Intent(context, ImageScreen.class);
+                    i.putExtra("url",list.get(position).getUrls().getRegular());
 
-
-
-        //Glide.with(context).load(list.get(position).getUrls().getRegular().toString()).into(holder.imageView);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(context, ImageScreen.class);
-                 i.putExtra("url",list.get(position).getUrls().getRegular());
-
-                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                         makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
-
-
-                context.startActivity(i,options.toBundle());
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
 
 
-            }
-        });
+                    context.startActivity(i,options.toBundle());
+
+
+                }
+            });
+
+        }catch (Exception e)
+        {
+           e.printStackTrace();
+        }
 
 
     }
@@ -141,7 +146,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             likes=(TextView)v.findViewById(R.id.likes);
             title=(TextView)v.findViewById(R.id.title);
             ProfileImage=(CircleImageView) v.findViewById(R.id.user_profile_image);
-            //cardView=(CardView)v.findViewById(R.id.list_cardview);
+            cardView=(CardView)v.findViewById(R.id.recycler_item_card);
             relativeLayout=(RelativeLayout) v.findViewById(R.id.header_recycleritem);
 
         }

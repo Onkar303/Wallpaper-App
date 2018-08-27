@@ -2,6 +2,7 @@ package com.example.admin.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.net.URI;
+
 public class ImageScreen extends AppCompatActivity implements View.OnClickListener {
 
     Intent i;
@@ -23,6 +26,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     private float mScaleFactor = 1;
     Animation openRotation, closeRotation, translateYopen, translateYclose;
     boolean isOpen = false;
+    String ImageUrl = null;
 
     FloatingActionButton mainbutton, sharebutton, downloadbutton;
 
@@ -44,9 +48,15 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         sharebutton = (FloatingActionButton) findViewById(R.id.share_fab_button);
         downloadbutton = (FloatingActionButton) findViewById(R.id.download_fab_button);
         mainbutton.setOnClickListener(this);
+        sharebutton.setOnClickListener(this);
+        downloadbutton.setOnClickListener(this);
 
 
-        String ImageUrl = null;
+        //setting the visibility to invisible
+        sharebutton.setVisibility(View.INVISIBLE);
+        downloadbutton.setVisibility(View.INVISIBLE);
+
+
         imageView = (ImageView) findViewById(R.id.imageViewscreen);
         if (!getIntent().hasExtra("url")) {
             MyAlertDialog("didnotFetch iurl");
@@ -100,7 +110,16 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                     closeRotation.start();
                     isOpen = false;
                 }
+                break;
 
+            case R.id.share_fab_button:
+                Intent i=new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse( ImageUrl));
+                startActivity(i);
+                break;
+
+
+            case R.id.download_fab_button:
                 break;
 
         }

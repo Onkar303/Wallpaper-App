@@ -3,81 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="10dp">
+    android:layout_marginBottom="5dp"
+    >
 
 
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        android:id="@+id/recycler_item_card"
+        app:cardBackgroundColor="#f2f2f2"
+        >
 
-        <LinearLayout
-            android:id="@+id/linearlayout_manager"
+
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:id="@+id/header_recycleritem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="bottom"
-                android:visibility="visible">
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:transitionName="mytransition"
+            android:adjustViewBounds="true"
+            />
+    </android.support.v7.widget.CardView>
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_profile_image"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/roundimage"
-                    android:src="@mipmap/ic_launcher"
-                    android:padding="1dp"
-                    android:transitionName="profile_transition"/>
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="3dp"
-                    android:layout_toRightOf="@+id/user_profile_image"
-                    android:maxWidth="130dp"
-                    android:text="Title"
-                    android:textColor="#000"
-                    android:textSize="15.5sp"
-                    />
+    <LinearLayout
+        android:id="@+id/linearlayout_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:layout_below="@id/recycler_item_card">
+        <RelativeLayout
+            android:id="@+id/header_recycleritem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:visibility="visible"
+            >
 
 
-            </RelativeLayout>
-
-
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:layout_centerInParent="true"
-                android:scaleType="centerCrop"
-                android:transitionName="mytransition"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_profile_image"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/roundimage"
+                android:src="@mipmap/ic_launcher"
+                android:transitionName="profile_transition"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                app:civ_border_width="1dp"
                 />
 
             <TextView
-                android:id="@+id/likes"
-                android:layout_width="wrap_content"
+                android:id="@+id/title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="3dp"
+                android:layout_toRightOf="@+id/user_profile_image"
+                android:maxWidth="130dp"
+                android:text="Title"
                 android:textColor="#000"
-                android:visibility="visible"
-                android:text="likes"
+                android:textStyle="bold"
                 android:textSize="15.5sp"
                 />
+        </RelativeLayout>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6.5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#000"
+            android:visibility="visible"
+            android:text="likes"
+            android:textSize="12.5sp"
+            />
+    </LinearLayout>
+
+
+
 
 
 </RelativeLayout>

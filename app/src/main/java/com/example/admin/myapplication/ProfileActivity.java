@@ -257,7 +257,12 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     public void BottomSheetChangeFunction() {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        } else {
+        }
+        else if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_DRAGGING)
+        {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+        else {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             if (getConnectionStatus()) {
                 nowifi.setVisibility(View.INVISIBLE);
@@ -268,8 +273,6 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
                 nowifi.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
-
-
         }
     }
 }

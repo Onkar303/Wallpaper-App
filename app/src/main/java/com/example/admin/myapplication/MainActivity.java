@@ -2,6 +2,7 @@ package com.example.admin.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,6 +13,7 @@ import android.support.animation.FlingAnimation;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
@@ -23,6 +25,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +34,7 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -56,7 +60,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     RecyclerView recyclerView;
     List<SplashModel> list;
     CustomAdapter adapter;
@@ -70,7 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GridLayoutManager gridLayoutManager;
     PageScrollListner pageScrollListner;
     boolean isLoading;
-    int pagenumber=0;
+    int pagenumber = 0;
+    Toolbar toolbar;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    ImageView no_wifi_1;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -95,21 +102,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void init() {
 
 
-        appBarLayout=(AppBarLayout)findViewById(R.id.appbar_layout);
+        no_wifi_1=(ImageView)findViewById(R.id.no_internert);
 
-        refreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.collapisingtoolbar);
+        collapsingToolbarLayout.setTitle("Photos");
+        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        gridLayoutManager=new GridLayoutManager(this,2);
-        staggeredGridLayoutManager =new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        linearLayoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         list = new ArrayList<>();
-        pageScrollListner=new PageScrollListner(linearLayoutManager) {
+        pageScrollListner = new PageScrollListner(linearLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                isLoading=true;
+                isLoading = true;
                 pagenumber++;
                 new MyAsyncTask(pagenumber).execute();
             }
@@ -135,11 +151,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.setAdapter(adapter);
 
-        if(isConnected())
-        {
+        if (isConnected()) {
+            no_wifi_1.setVisibility(View.GONE);
+
             refreshLayout.setRefreshing(true);
-            pagenumber=0;
+            pagenumber = 0;
             new MyAsyncTask(pagenumber).execute();
+        }
+        else {
+
+            recyclerView.setVisibility(View.GONE);
+            no_wifi_1.setVisibility(View.VISIBLE);
         }
 
     }
@@ -152,10 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRefresh() {
 
-        if(isConnected())
-        {
+        if (isConnected()) {
             refreshLayout.setRefreshing(true);
-            pagenumber=0;
+            pagenumber = 0;
             new MyAsyncTask(pagenumber).execute();
         }
 
@@ -167,9 +188,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Request request;
         int i;
 
-        MyAsyncTask(int i)
-        {
-            this.i=i;
+        MyAsyncTask(int i) {
+            this.i = i;
         }
 
         @Override
@@ -183,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             client = new OkHttpClient();
 
             request = new Request.Builder()
-                    .url(Constants.DEFUALT_URL+"&page="+i)
+                    .url(Constants.DEFUALT_URL + "&page=" + i)
                     .build();
 
             Response response;
@@ -191,12 +211,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             try {
                 response = client.newCall(request).execute();
-                if(response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     s = response.body().string();
-                }
-                else if(!response.isSuccessful())
-                {
+                } else if (!response.isSuccessful()) {
                     MyAlertDialog("Faliure");
                 }
 
@@ -206,10 +223,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Gson gson = new Gson();
             JSONArray array = null;
 
+            if(!list.isEmpty())
+            {
+                list.clear();
+            }
 
             try {
                 array = new JSONArray(s);
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             for (int i = 0; i < array.length(); i++) {
@@ -227,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPostExecute(Void aVoid) {
             refreshLayout.setRefreshing(false);
             adapter.notifyDataSetChanged();
-            //recyclerView.setLayoutAnimation(animationController);
+            recyclerView.setLayoutAnimation(animationController);
         }
     }
 
@@ -241,24 +262,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dialog.dismiss();
             }
         });
-
         AlertDialog dialog = builder.create();
         dialog.show();
 
     }
 
-    public boolean isConnected()
-    {
-        ConnectivityManager connectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
-        if(networkInfo.isAvailable() && networkInfo.isConnected())
+    public boolean isConnected() {
+        try
         {
-            return true;
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if (networkInfo.isAvailable() && networkInfo.isConnected()) {
+                return true;
+            }
+        }catch (NullPointerException exception)
+        {
+            exception.printStackTrace();
         }
         return false;
     }
-
-
 
 
 }
