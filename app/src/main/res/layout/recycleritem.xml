@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp">
+
+
+
+
+        <LinearLayout
+            android:id="@+id/linearlayout_manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/header_recycleritem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:visibility="visible">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_profile_image"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/roundimage"
+                    android:src="@mipmap/ic_launcher"
+                    android:padding="1dp"
+                    android:transitionName="profile_transition"/>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="3dp"
+                    android:layout_toRightOf="@+id/user_profile_image"
+                    android:maxWidth="130dp"
+                    android:text="Title"
+                    android:textColor="#000"
+                    android:textSize="15.5sp"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:transitionName="mytransition"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                />
+
+            <TextView
+                android:id="@+id/likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#000"
+                android:visibility="visible"
+                android:text="likes"
+                android:textSize="15.5sp"
+                />
+
+        </LinearLayout>
+
+
+</RelativeLayout>
