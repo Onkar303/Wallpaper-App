@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isLoading;
     int pagenumber = 0;
     Toolbar toolbar;
-    CollapsingToolbarLayout collapsingToolbarLayout;
+
     ImageView no_wifi_1;
 
 
@@ -104,15 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         no_wifi_1=(ImageView)findViewById(R.id.no_internert);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.collapisingtoolbar);
-        collapsingToolbarLayout.setTitle("Photos");
-        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
@@ -120,9 +113,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gridLayoutManager = new GridLayoutManager(this, 2);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         linearLayoutManager = new LinearLayoutManager(this);
+        staggeredGridLayoutManager.setGapStrategy( StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         list = new ArrayList<>();
-        pageScrollListner = new PageScrollListner(linearLayoutManager) {
+        pageScrollListner = new PageScrollListner(staggeredGridLayoutManager) {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
@@ -142,11 +136,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean isLoading() {
-                return true;
+                return isLoading;
             }
         };
 
         recyclerView.addOnScrollListener(pageScrollListner);
+
         adapter = new CustomAdapter(list, MainActivity.this);
 
         recyclerView.setAdapter(adapter);
@@ -175,8 +170,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRefresh() {
 
         if (isConnected()) {
+
             refreshLayout.setRefreshing(true);
             pagenumber = 0;
+            list.clear();
             new MyAsyncTask(pagenumber).execute();
         }
 
@@ -223,10 +220,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Gson gson = new Gson();
             JSONArray array = null;
 
-            if(!list.isEmpty())
-            {
-                list.clear();
-            }
+//            if(!list.isEmpty())
+//            {
+//                list.clear();
+//            }
 
             try {
                 array = new JSONArray(s);
@@ -241,6 +238,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
             }
+            array=null;
+            s=null;
             return null;
         }
 
@@ -248,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPostExecute(Void aVoid) {
             refreshLayout.setRefreshing(false);
             adapter.notifyDataSetChanged();
-            recyclerView.setLayoutAnimation(animationController);
+            //recyclerView.setLayoutAnimation(animationController);
+            isLoading=false;
         }
     }
 

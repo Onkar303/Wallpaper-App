@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.ProfileCustomAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
+import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -60,7 +61,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     ImageView nowifi;
     Button showAllPhotos;
     GridLayoutManager gridLayoutManager;
-
+    PageScrollListner listner;
+    boolean isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +109,12 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_profile);
         gridLayoutManager = new GridLayoutManager(this, 2);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
+
+        staggeredGridLayoutManager.setGapStrategy( StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter = new ProfileCustomAdapter(list, this);
         controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutAnimation(controller);
 
 
     }
@@ -216,6 +219,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
                 }
             }
 
+            s = null;
+            array = null;
             return null;
         }
 
@@ -226,6 +231,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
             adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
+            recyclerView.setLayoutAnimation(controller);
         }
     }
 
@@ -257,12 +263,9 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     public void BottomSheetChangeFunction() {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
-        else if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_DRAGGING)
-        {
+        } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_DRAGGING) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-        else {
+        } else {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             if (getConnectionStatus()) {
                 nowifi.setVisibility(View.INVISIBLE);

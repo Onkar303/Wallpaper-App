@@ -19,6 +19,7 @@ public class MyAnimationUtils {
         translateX.setDuration(1000);
 
 
+
         //ObjectAnimator rotateX=ObjectAnimator.ofFloat(holder.itemView,"rot")
 
         animatorSet.playTogether(translateY);

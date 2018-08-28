@@ -52,6 +52,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     Context context;
     Bitmap bitmap;
 
+
     public CustomAdapter(List<SplashModel> list, Context context)
     {
         this.context=context;
@@ -72,10 +73,30 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(@NonNull final CustomAdapter.MyViewHolder holder,final int position) {
 
         try{
+
+
+            //MyAnimationUtils.Animate(holder,true);
             holder.title.setText(list.get(position).getUser().getFirstName());
             holder.likes.setText(list.get(position).getUser().getTotalLikes()+" likes");
-            Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000,1000)).into(holder.imageView);
-            Glide.with(context).load(list.get(position).getUser().getProfileImage().getMedium()).apply(new RequestOptions().override(50,50)).into(holder.ProfileImage);
+            RequestOptions requestOptions=new RequestOptions();
+
+
+
+
+
+            Glide.with(context)
+                    .load(list.get(position).getUrls().getSmall())
+                    .apply(requestOptions.override(1000,1000))
+                    .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(holder.imageView);
+
+            Glide.with(context)
+                    .load(list.get(position).getUser().getProfileImage().getMedium())
+                    .apply(requestOptions.override(50,50))
+                    .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(holder.ProfileImage);
+
+
             //MyAnimationUtils.Animate(holder,true);
             holder.ProfileImage.setBorderColor(Color.parseColor(list.get(position).getColor()));
             //holder.imageView.setMaxHeight(1000);
@@ -94,6 +115,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 }
             });
 
+
+            holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ALertDialog(list.get(position).getUrls().getRegular());
+                    return true;
+                }
+            });
+
+           // holder.recycleritemrelativelayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
             //holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
 
             //Glide.with(context).load(list.get(position).getUrls().getRegular().toString()).into(holder.imageView);
@@ -103,7 +134,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent(context, ImageScreen.class);
-                    i.putExtra("url",list.get(position).getUrls().getRegular());
+                    i.putExtra("url",list.get(position).getUrls().getFull());
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
@@ -137,7 +168,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         View v;
         CardView cardView;
         LinearLayout linearLayout;
-        RelativeLayout relativeLayout;
+        RelativeLayout relativeLayout,recycleritemrelativelayout;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -148,9 +180,32 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             ProfileImage=(CircleImageView) v.findViewById(R.id.user_profile_image);
             cardView=(CardView)v.findViewById(R.id.recycler_item_card);
             relativeLayout=(RelativeLayout) v.findViewById(R.id.header_recycleritem);
-
         }
+
+
+
+
+
     }
+
+    public void ALertDialog(String url) {
+        try {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = inflater.inflate(R.layout.longpress_image, null);
+            ImageView imageView = (ImageView) v.findViewById(R.id.prodifile_image_longPress);
+            Glide.with(context).load(url).into(imageView);
+            android.support.v7.app.AlertDialog dialog = builder.create();
+            dialog.setView(v);
+            dialog.show();
+            dialog.getWindow().getAttributes().windowAnimations = R.style.AppTheme;
+        } catch (NullPointerException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
+
 
 
 

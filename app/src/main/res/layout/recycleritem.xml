@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
+    android:id="@+id/recycler_item_relatrive_layout"
     >
 
 
@@ -24,9 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:transitionName="mytransition"
             android:adjustViewBounds="true"
+            android:background="@drawable/background"
             />
     </android.support.v7.widget.CardView>
 
@@ -50,8 +52,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_profile_image"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="@drawable/roundimage"
                 android:src="@mipmap/ic_launcher"
                 android:transitionName="profile_transition"
@@ -90,9 +92,5 @@
             android:textSize="12.5sp"
             />
     </LinearLayout>
-
-
-
-
 
 </RelativeLayout>
