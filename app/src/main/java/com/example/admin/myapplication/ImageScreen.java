@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -15,8 +16,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.admin.myapplication.Adapter.MyImageViewPagerAdapter;
+import com.example.admin.myapplication.Model.SplashModel;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +32,11 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     Animation openRotation, closeRotation, translateYopen, translateYclose;
     boolean isOpen = false;
     String ImageUrl = null;
+    ViewPager imageViewPager;
+    MyImageViewPagerAdapter adapter;
+    List<SplashModel> list;
+    int image_position;
+
 
     FloatingActionButton mainbutton, sharebutton, downloadbutton;
 
@@ -40,6 +50,9 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     public void init() {
+        imageViewPager=(ViewPager)findViewById(R.id.image_view_pager);
+        list=new ArrayList<>();
+
         openRotation = AnimationUtils.loadAnimation(this, R.anim.rotateopen);
         closeRotation = AnimationUtils.loadAnimation(this, R.anim.rotateclose);
         translateYopen = AnimationUtils.loadAnimation(this, R.anim.translateyopen);
@@ -58,14 +71,23 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
 
         imageView = (ImageView) findViewById(R.id.imageViewscreen);
-        if (!getIntent().hasExtra("url")) {
+        if (!getIntent().hasExtra("list")) {
             MyAlertDialog("didnotFetch iurl");
         } else {
-            ImageUrl = getIntent().getStringExtra("url");
+            list=(List<SplashModel>) getIntent().getSerializableExtra("list");
         }
+
+        if(getIntent().hasExtra("position"))
+        {
+            image_position=getIntent().getIntExtra("position",0);
+        }
+
+        adapter=new MyImageViewPagerAdapter(this,list);
+        imageViewPager.setAdapter(adapter);
+        imageViewPager.setCurrentItem(image_position);
         mscaleDetector = new ScaleGestureDetector(this, new MyScaleListner());
 
-        Glide.with(this).load(ImageUrl).into(imageView);
+        //Glide.with(this).load(lis).into(imageView);
     }
 
     public void MyAlertDialog(String name) {
@@ -95,7 +117,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                     sharebutton.setAnimation(translateYopen);
                     downloadbutton.setAnimation(translateYopen);
                     sharebutton.setVisibility(View.GONE);
-                    downloadbutton.setVisibility(View.GONE);
+                    downloadbutton.setVisibility(View.GONE);;
                     mainbutton.setAnimation(openRotation);
                     translateYopen.start();
                     openRotation.start();
@@ -105,6 +127,8 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                     downloadbutton.setAnimation(translateYclose);
                     sharebutton.setVisibility(View.VISIBLE);
                     downloadbutton.setVisibility(View.VISIBLE);
+                    sharebutton.setClickable(false);
+                    downloadbutton.setClickable(false);
                     mainbutton.setAnimation(closeRotation);
                     translateYclose.start();
                     closeRotation.start();

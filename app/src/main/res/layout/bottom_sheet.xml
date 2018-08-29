@@ -17,12 +17,32 @@
         android:src="@drawable/no_wifi"
         android:id="@+id/bottom_sheet_nowifi"/>
 
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/bottom_sheet_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        >
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_gravity="top"
-        android:background="@drawable/background_bottom_sheet"
-        android:id="@+id/bottom_sheet_dragger">
+        android:background="#cecfce"
+        android:id="@+id/bottom_sheet_dragger"
+        android:elevation="2dp"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,29 +52,7 @@
             />
 
     </RelativeLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/bottom_sheet_swipe_refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            >
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-    </android.support.v4.widget.NestedScrollView>
 
 
 

@@ -63,6 +63,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     GridLayoutManager gridLayoutManager;
     PageScrollListner listner;
     boolean isLoading;
+    int pagenumber=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,32 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         gridLayoutManager = new GridLayoutManager(this, 2);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
+        listner=new PageScrollListner(staggeredGridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading=true;
+                new MyAsyncTask(pagenumber).execute();
+                swipeRefreshLayout.setRefreshing(true);
+                pagenumber++;
+
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return caculateTotalpages(splashModel.getUser().getTotalPhotos());
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return false;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        };
+
         staggeredGridLayoutManager.setGapStrategy( StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter = new ProfileCustomAdapter(list, this);
@@ -138,7 +166,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         if (getConnectionStatus()) {
             nowifi.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
-            new MyAsyncTask().execute();
+            pagenumber=0;
+            new MyAsyncTask(pagenumber).execute();
             swipeRefreshLayout.setRefreshing(true);
 
         } else {
@@ -168,6 +197,12 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         Request request;
         Response response;
         OkHttpClient client;
+        int i;
+
+        MyAsyncTask(int i)
+        {
+            this.i=i;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -179,7 +214,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
             client = new OkHttpClient();
             request = new Request.Builder()
-                    .url("https://api.unsplash.com/users/" + splashModel.getUser().getUsername() + "/photos?client_id=197cb5c51cab8fdca1fe72c8898f9ca97325bb961fa0d59b2dae0e2a92d0f7ca")
+                    .url("https://api.unsplash.com/users/" + splashModel.getUser().getUsername() + "/photos?client_id=197cb5c51cab8fdca1fe72c8898f9ca97325bb961fa0d59b2dae0e2a92d0f7ca&pages="+i)
                     .build();
 
             String s = null;
@@ -206,9 +241,9 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
                 e.printStackTrace();
             }
 
-            if (!list.isEmpty()) {
-                list.clear();
-            }
+//            if (!list.isEmpty()) {
+//                list.clear();
+//            }
 
             for (int i = 0; i < array.length(); i++) {
                 try {
@@ -231,7 +266,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
             adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
-            recyclerView.setLayoutAnimation(controller);
+            //recyclerView.setLayoutAnimation(controller);
+            isLoading=false;
         }
     }
 
@@ -269,7 +305,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             if (getConnectionStatus()) {
                 nowifi.setVisibility(View.INVISIBLE);
-                new MyAsyncTask().execute();
+                pagenumber=0;
+                new MyAsyncTask(pagenumber).execute();
                 swipeRefreshLayout.setRefreshing(true);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
@@ -277,5 +314,11 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
                 recyclerView.setVisibility(View.GONE);
             }
         }
+    }
+
+
+    public int caculateTotalpages(int number_photos)
+    {
+        return ((number_photos/9)+1);
     }
 }

@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isLoading;
     int pagenumber = 0;
     Toolbar toolbar;
-
     ImageView no_wifi_1;
 
 
@@ -103,9 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         no_wifi_1=(ImageView)findViewById(R.id.no_internert);
-
-
-
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
@@ -122,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 isLoading = true;
                 pagenumber++;
                 new MyAsyncTask(pagenumber).execute();
+                refreshLayout.setRefreshing(true);
+
             }
 
             @Override
@@ -148,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (isConnected()) {
             no_wifi_1.setVisibility(View.GONE);
-
             refreshLayout.setRefreshing(true);
             pagenumber = 0;
             new MyAsyncTask(pagenumber).execute();
@@ -170,11 +167,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRefresh() {
 
         if (isConnected()) {
-
-            refreshLayout.setRefreshing(true);
             pagenumber = 0;
             list.clear();
             new MyAsyncTask(pagenumber).execute();
+            refreshLayout.setRefreshing(true);
         }
 
     }

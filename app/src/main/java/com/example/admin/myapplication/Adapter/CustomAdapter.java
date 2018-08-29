@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Build;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -30,8 +33,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.example.admin.myapplication.Animations.MyAnimationUtils;
 import com.example.admin.myapplication.ImageScreen;
@@ -86,7 +93,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
             Glide.with(context)
                     .load(list.get(position).getUrls().getSmall())
-                    .apply(requestOptions.override(1000,1000))
+                    .apply(requestOptions.override(500,500))
                     .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(holder.imageView);
 
@@ -134,13 +141,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent(context, ImageScreen.class);
-                    i.putExtra("url",list.get(position).getUrls().getFull());
+                    i.putExtra("list", (Serializable)list);
+                    i.putExtra("position",position);
 
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
+//                    context.startActivity(i,options.toBundle());
 
-
-                    context.startActivity(i,options.toBundle());
+                    context.startActivity(i);
 
 
                 }
@@ -173,17 +181,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            v=itemView;
-            imageView=(ImageView)v.findViewById(R.id.imageView);
-            likes=(TextView)v.findViewById(R.id.likes);
-            title=(TextView)v.findViewById(R.id.title);
-            ProfileImage=(CircleImageView) v.findViewById(R.id.user_profile_image);
-            cardView=(CardView)v.findViewById(R.id.recycler_item_card);
-            relativeLayout=(RelativeLayout) v.findViewById(R.id.header_recycleritem);
+            v = itemView;
+            imageView = (ImageView) v.findViewById(R.id.imageView);
+            likes = (TextView) v.findViewById(R.id.likes);
+            title = (TextView) v.findViewById(R.id.title);
+            ProfileImage = (CircleImageView) v.findViewById(R.id.user_profile_image);
+            cardView = (CardView) v.findViewById(R.id.recycler_item_card);
+            relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
+
+
+
         }
-
-
-
 
 
     }
