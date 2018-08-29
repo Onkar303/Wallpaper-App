@@ -21,6 +21,7 @@ import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdapter.MyViewHolder> {
@@ -53,11 +54,13 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ImageScreen.class);
-                i.putExtra("url", list.get(position).getUrls().getFull());
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context, holder.imageView, holder.imageView.getTransitionName());
-
-                context.startActivity(i, options.toBundle());
+                i.putExtra("list",(Serializable) list);
+                i.putExtra("position",position);
+//                ActivityOptionsCompat options = ActivityOptionsCompat.
+//                        makeSceneTransitionAnimation((Activity) context, holder.imageView, holder.imageView.getTransitionName());
+//
+//                context.startActivity(i, options.toBundle());
+                context.startActivity(i);
             }
         });
 
