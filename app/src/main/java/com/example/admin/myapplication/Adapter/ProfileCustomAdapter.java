@@ -69,6 +69,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             public boolean onLongClick(View view) {
                 ALertDialog(list.get(position).getUrls().getRegular());
                 return true;
+
             }
         });
 
