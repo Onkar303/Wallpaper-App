@@ -149,6 +149,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                     downloadtext.setVisibility(View.VISIBLE);
                     setbackgroundtext.setVisibility(View.VISIBLE);
 
+
                     sharebutton.setVisibility(View.VISIBLE);
                     downloadbutton.setVisibility(View.VISIBLE);
                     setbackgroundImage.setVisibility(View.VISIBLE);
