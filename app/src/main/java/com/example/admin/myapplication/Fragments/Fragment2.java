@@ -34,6 +34,7 @@ public class Fragment2 extends Fragment {
         View v=inflater.inflate(R.layout.fragment2,container,false);
         imageView=(ImageView)v.findViewById(R.id.image32);
         //
+
         try{
             //Glide.with(context).load(context.getResources().getDrawable(R.drawable.paper2)).into(imageView);
             imageView.setImageResource(R.drawable.paper2);
