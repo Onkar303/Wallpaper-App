@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
         no_wifi_1=(ImageView)findViewById(R.id.no_internert);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
