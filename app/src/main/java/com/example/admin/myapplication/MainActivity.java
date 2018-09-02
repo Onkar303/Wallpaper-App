@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.FlingAnimation;
 import android.support.annotation.NonNull;
@@ -15,8 +16,11 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +32,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -77,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int pagenumber = 0;
     Toolbar toolbar;
     ImageView no_wifi_1;
+    ImageView toggle_drawer;
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -99,6 +107,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void init() {
+
+        toolbar=(Toolbar)findViewById(R.id.mainactivity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        navigationView=(NavigationView)findViewById(R.id.navigation_view_mainactivity);
+
+
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawerlayout);
+
+
+        toggle_drawer=(ImageView)findViewById(R.id.toggle_drawer);
+        toggle_drawer.setOnClickListener(this);
+
+
 
 
         no_wifi_1=(ImageView)findViewById(R.id.no_internert);
@@ -160,6 +184,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.toggle_drawer:
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                }
+                else {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                }
+                break;
+        }
 
     }
 
@@ -260,7 +296,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     public boolean isConnected() {
