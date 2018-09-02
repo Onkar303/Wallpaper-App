@@ -1,5 +1,6 @@
 package com.example.admin.myapplication.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +21,14 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
 
     Button button;
 
+    Context context;
     ImageView imageView;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context=context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +42,15 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
         View v=inflater.inflate(R.layout.fragment1,container,false);
         imageView=(ImageView)v.findViewById(R.id.image32);
 
-        Glide.with(getContext()).load(getResources().getDrawable(R.drawable.paper1)).into(imageView);
+        //
+        try{
+           // Glide.with(context).load(context.getResources().getDrawable(R.drawable.paper1)).into(imageView);
+            imageView.setImageResource(R.drawable.paper1);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 
         //button=(Button)v.findViewById(R.id.button);
         //button.setOnClickListener(this);
