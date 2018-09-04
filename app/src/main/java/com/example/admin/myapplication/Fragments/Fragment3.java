@@ -36,7 +36,7 @@ public class Fragment3 extends Fragment {
         //
         try{
            // Glide.with(context).load(context.getResources().getDrawable(R.drawable.paper3)).into(imageView);
-            imageView.setImageResource(R.drawable.paper3);
+            imageView.setImageResource(R.drawable.paper1);
         }catch (Exception e){
 
         }
