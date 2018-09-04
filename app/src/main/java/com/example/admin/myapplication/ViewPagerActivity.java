@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.admin.myapplication.Adapter.MyViewPagerAdapter;
 import com.example.admin.myapplication.Fragments.Fragment1;
@@ -26,6 +28,8 @@ import com.example.admin.myapplication.Fragments.Fragment3;
 import java.util.ArrayList;
 import java.util.List;
 
+import github.chenupt.springindicator.SpringIndicator;
+
 public class ViewPagerActivity extends AppCompatActivity implements ViewPager.PageTransformer {
 
     ViewPager viewPager;
@@ -33,6 +37,7 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
     List<Fragment> list;
     Toolbar toolbar;
     Button button;
+    TabLayout tablayout;
 
 
     @Override
@@ -44,6 +49,7 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
     }
 
     public void init() {
+        tablayout=(TabLayout)findViewById(R.id.tablayout);
         viewPager = (ViewPager) findViewById(R.id.ViewPager1);
         list = new ArrayList<>();
         list.add(new Fragment1());
@@ -61,6 +67,7 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
             }
         });
         viewPager.setPageTransformer(false, this);
+        tablayout.setupWithViewPager(viewPager);
 
 
         //
@@ -72,6 +79,7 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
 
 
         ImageView imageView = (ImageView) page.findViewById(R.id.image32);
+        TextView textView=(TextView)page.findViewById(R.id.fragment_text);
         int pageWidth = page.getWidth();
 
 
@@ -82,6 +90,7 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
         } else if (position <= 1) { // [-1,1]
 
             imageView.setTranslationX(-position * (pageWidth / 2)); //Half the normal speed
+
 
         } else { // (1,+Infinity]
             // This page is way off-screen to the right.

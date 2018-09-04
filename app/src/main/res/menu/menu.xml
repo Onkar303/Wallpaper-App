@@ -4,8 +4,13 @@
 
 
 
-    <item android:title="Option 1"
+    <item android:title="My Photos"
+        android:icon="@drawable/photocameraicon"
         />
-    <item android:title="Option 2"/>
+    <item android:title="My Profile"
+        android:icon="@drawable/user"/>
+
+    <item android:title="Logout"
+        android:icon="@drawable/drawer_toggle_icon"/>
 
 </menu>

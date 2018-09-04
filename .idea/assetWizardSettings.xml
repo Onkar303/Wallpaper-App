@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/mnt/1C32398632396644/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_menu_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_perm_identity_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,8 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="drawer_toggle_icon" />
-                                      <entry key="theme" value="HOLO_DARK" />
+                                      <entry key="outputName" value="user" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="373c47" />
                                     </map>
                                   </option>
                                 </PersistentState>

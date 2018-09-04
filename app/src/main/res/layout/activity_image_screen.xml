@@ -55,10 +55,10 @@
             android:text="Share"
             android:elevation="4dp"
             android:id="@+id/share_text"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
-            android:background="@android:color/white"
+            android:background="@color/colorPrimary"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
@@ -98,10 +98,10 @@
             android:layout_toLeftOf="@+id/share_fab_button"
             android:text="set as background"
             android:elevation="4dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
-            android:background="@android:color/white"
+            android:background="@color/colorPrimary"
             android:id="@+id/set_background_text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -140,10 +140,10 @@
             android:layout_toLeftOf="@+id/share_fab_button"
             android:text="Download"
             android:elevation="4dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
-            android:background="@android:color/white"
+            android:background="@color/colorPrimary"
             android:id="@+id/download_text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 

@@ -20,6 +20,7 @@
         android:textSize="80sp"
         android:textColor="#fff"
         android:text="Beautiful"
+        android:id="@+id/fragment_text"
         />
 
 
