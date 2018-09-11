@@ -64,7 +64,7 @@
                 app:civ_border_width="1dp"
                 />
 
-            <TextView
+            <com.example.admin.myapplication.Utils.RecyclerTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                 />
         </RelativeLayout>
 
-        <TextView
+        <com.example.admin.myapplication.Utils.RecyclerTextView
             android:id="@+id/likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
