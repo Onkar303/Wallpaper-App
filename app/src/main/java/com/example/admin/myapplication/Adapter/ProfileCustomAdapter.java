@@ -30,19 +30,23 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     Context context;
     Bitmap bitmap;
 
+
     public ProfileCustomAdapter(List<SplashModel> list, Context context) {
         this.context = context;
         this.list = list;
     }
 
 
+
     @NonNull
     @Override
     public ProfileCustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.profile_recycler_layout, parent, false);
-        ProfileCustomAdapter.MyViewHolder holder = new ProfileCustomAdapter.MyViewHolder(v);
-        return holder;
+
+            View v = inflater.inflate(R.layout.profile_recycler_layout, parent, false);
+            ProfileCustomAdapter.MyViewHolder holder = new ProfileCustomAdapter.MyViewHolder(v);
+            return holder;
+
     }
 
     @Override

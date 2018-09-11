@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -54,109 +55,133 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
-    List<SplashModel> list;
+public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    List<Object> list;
     Context context;
     Bitmap bitmap;
+    final int SPLASHMODEL_TYPE = 0;
+    final int PROGRESSMODEL_TYPE = 1;
 
 
-    public CustomAdapter(List<SplashModel> list, Context context)
-    {
-        this.context=context;
-        this.list=list;
+    public CustomAdapter(List<Object> list, Context context) {
+        this.context = context;
+        this.list = list;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (list.get(position) instanceof SplashModel) {
+            return SPLASHMODEL_TYPE;
+        } else {
+            return PROGRESSMODEL_TYPE;
+        }
     }
 
 
     @NonNull
     @Override
-    public CustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v=inflater.inflate(R.layout.recycleritem,parent,false);
-        MyViewHolder holder=new MyViewHolder(v);
-        return holder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v;
+        if (viewType == SPLASHMODEL_TYPE) {
+            v = LayoutInflater.from(context).inflate(R.layout.recycleritem, parent, false);
+            MyRecyclerItemViewHolder holder = new MyRecyclerItemViewHolder(v);
+            return holder;
+        } else {
+            v = LayoutInflater.from(context).inflate(R.layout.recycler_view_progress_bar, parent, false);
+            MyRecyclerProgresViewHolder holder = new MyRecyclerProgresViewHolder(v);
+            return holder;
+        }
+
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CustomAdapter.MyViewHolder holder,final int position) {
-
-        try{
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
 
-            //MyAnimationUtils.Animate(holder,true);
-            holder.title.setText(list.get(position).getUser().getFirstName());
-            holder.likes.setText(list.get(position).getUser().getTotalLikes()+" likes");
-            RequestOptions requestOptions=new RequestOptions();
+        try {
 
 
+            if (holder instanceof MyRecyclerItemViewHolder) {
+                //MyAnimationUtils.Animate(holder,true);
+                final MyRecyclerItemViewHolder myholder = (MyRecyclerItemViewHolder) holder;
+                final SplashModel model = (SplashModel) list.get(position);
+                myholder.title.setText(model.getUser().getFirstName());
+                myholder.likes.setText(model.getUser().getTotalLikes() + " likes");
+                RequestOptions requestOptions = new RequestOptions();
 
 
+                Glide.with(context)
+                        .load(model.getUrls().getSmall())
+                        .apply(requestOptions.override(500, 500))
+                        .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(myholder.imageView);
 
-            Glide.with(context)
-                    .load(list.get(position).getUrls().getSmall())
-                    .apply(requestOptions.override(500,500))
-                    .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(holder.imageView);
-
-            Glide.with(context)
-                    .load(list.get(position).getUser().getProfileImage().getMedium())
-                    .apply(requestOptions.override(50,50))
-                    .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(holder.ProfileImage);
-
-
-            //MyAnimationUtils.Animate(holder,true);
-            holder.ProfileImage.setBorderColor(Color.parseColor(list.get(position).getColor()));
-            //holder.imageView.setMaxHeight(1000);
-            //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
-            holder.ProfileImage.setOnClickListener(new View.OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                @Override
-                public void onClick(View view) {
-                    Intent i1=new Intent(context, ProfileActivity.class);
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((Activity) context, holder.ProfileImage,holder.ProfileImage.getTransitionName());
-
-                    i1.putExtra("myobject",list.get(position));
-                    context.startActivity(i1,options.toBundle());
-                }
-            });
+                Glide.with(context)
+                        .load(model.getUser().getProfileImage().getSmall())
+                        .apply(requestOptions.override(50, 50))
+                        .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(myholder.ProfileImage);
 
 
-            holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    ALertDialog(list.get(position).getUrls().getRegular());
-                    return true;
-                }
-            });
+                //MyAnimationUtils.Animate(myholder, true);
+                myholder.ProfileImage.setBorderColor(Color.parseColor(model.getColor()));
+                //holder.imageView.setMaxHeight(1000);
+                //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
+                myholder.ProfileImage.setOnClickListener(new View.OnClickListener() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onClick(View view) {
+                        Intent i1 = new Intent(context, ProfileActivity.class);
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation((Activity) context, myholder.ProfileImage, myholder.ProfileImage.getTransitionName());
 
-           // holder.recycleritemrelativelayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
-            //holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
+                        i1.putExtra("myobject", model);
+                        context.startActivity(i1, options.toBundle());
+                    }
+                });
 
-            //Glide.with(context).load(list.get(position).getUrls().getRegular().toString()).into(holder.imageView);
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                @Override
-                public void onClick(View v) {
-                    Intent i=new Intent(context, ImageScreen.class);
-                    i.putExtra("list", (Serializable)list);
-                    i.putExtra("position",position);
+
+                myholder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        ALertDialog(model.getUrls().getRegular());
+                        return true;
+                    }
+                });
+
+                // holder.recycleritemrelativelayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
+                //holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
+
+                //Glide.with(context).load(list.get(position).getUrls().getRegular().toString()).into(holder.imageView);
+                myholder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, ImageScreen.class);
+                        i.putExtra("list", (Serializable) list);
+                        i.putExtra("position", position);
 
 //                    ActivityOptionsCompat options = ActivityOptionsCompat.
 //                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
 //                    context.startActivity(i,options.toBundle());
 
-                    context.startActivity(i);
+                        context.startActivity(i);
 
 
-                }
-            });
+                    }
+                });
 
-        }catch (Exception e)
-        {
-           e.printStackTrace();
+            } else {
+
+                MyRecyclerProgresViewHolder myholder = (MyRecyclerProgresViewHolder) holder;
+                myholder.progressBar.setIndeterminate(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -167,19 +192,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return list.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyRecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView ProfileImage;
         TextView title;
-        TextView likes,id;
+        TextView likes, id;
         ImageView imageView;
         View v;
         CardView cardView;
         LinearLayout linearLayout;
-        RelativeLayout relativeLayout,recycleritemrelativelayout;
+        RelativeLayout relativeLayout, recycleritemrelativelayout;
 
 
-        public MyViewHolder(View itemView) {
+        public MyRecyclerItemViewHolder(View itemView) {
             super(itemView);
             v = itemView;
             imageView = (ImageView) v.findViewById(R.id.imageView);
@@ -188,13 +213,22 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             ProfileImage = (CircleImageView) v.findViewById(R.id.user_profile_image);
             cardView = (CardView) v.findViewById(R.id.recycler_item_card);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
-
-
-
         }
 
-
     }
+
+
+    public class MyRecyclerProgresViewHolder extends RecyclerView.ViewHolder {
+
+        ProgressBar progressBar;
+
+        public MyRecyclerProgresViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.recycler_item_progress_bar);
+
+        }
+    }
+
 
     public void ALertDialog(String url) {
         try {
@@ -212,11 +246,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         }
 
     }
-
-
-
-
-
 
 
 }

@@ -67,7 +67,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     RecyclerView recyclerView;
-    List<SplashModel> list;
+    List<Object> list;
     CustomAdapter adapter;
     LayoutAnimationController animationController;
     Button button;
@@ -108,25 +108,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init() {
 
-        toolbar=(Toolbar)findViewById(R.id.mainactivity_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.mainactivity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-        navigationView=(NavigationView)findViewById(R.id.navigation_view_mainactivity);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view_mainactivity);
 
 
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawerlayout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
 
 
-        toggle_drawer=(ImageView)findViewById(R.id.toggle_drawer);
+        toggle_drawer = (ImageView) findViewById(R.id.toggle_drawer);
         toggle_drawer.setOnClickListener(this);
 
 
-
-
-
-        no_wifi_1=(ImageView)findViewById(R.id.no_internert);
+        no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
@@ -134,12 +131,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gridLayoutManager = new GridLayoutManager(this, 2);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         linearLayoutManager = new LinearLayoutManager(this);
-        staggeredGridLayoutManager.setGapStrategy( StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         list = new ArrayList<>();
         pageScrollListner = new PageScrollListner(staggeredGridLayoutManager) {
             @Override
             protected void loadMoreItems() {
+
                 isLoading = true;
                 pagenumber++;
                 new MyAsyncTask(pagenumber).execute();
@@ -174,8 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             refreshLayout.setRefreshing(true);
             pagenumber = 0;
             new MyAsyncTask(pagenumber).execute();
-        }
-        else {
+        } else {
 
             recyclerView.setVisibility(View.GONE);
             no_wifi_1.setVisibility(View.VISIBLE);
@@ -185,14 +182,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.toggle_drawer:
-                if(drawerLayout.isDrawerOpen(GravityCompat.START))
-                {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(Gravity.LEFT);
-                }
-                else {
+                } else {
                     drawerLayout.closeDrawer(Gravity.LEFT);
                 }
                 break;
@@ -271,8 +265,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
             }
-            array=null;
-            s=null;
+            array = null;
+            s = null;
             return null;
         }
 
@@ -281,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             refreshLayout.setRefreshing(false);
             adapter.notifyDataSetChanged();
             //recyclerView.setLayoutAnimation(animationController);
-            isLoading=false;
+            isLoading = false;
         }
     }
 
@@ -300,15 +294,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean isConnected() {
-        try
-        {
+        try {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo.isAvailable() && networkInfo.isConnected()) {
                 return true;
             }
-        }catch (NullPointerException exception)
-        {
+        } catch (NullPointerException exception) {
             exception.printStackTrace();
         }
         return false;

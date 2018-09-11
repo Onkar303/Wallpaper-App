@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardElevation="10dp"
     >
-        <com.jsibbold.zoomage.ZoomageView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/prodifile_image_longPress"/>
