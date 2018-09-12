@@ -11,25 +11,16 @@ public abstract class PageScrollListner extends RecyclerView.OnScrollListener {
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     GridLayoutManager gridLayoutManager;
     int pastVisibleItems;
-
-    public PageScrollListner(LinearLayoutManager linearLayoutManager)
-    {
-        this.linearLayoutManager=linearLayoutManager;
-    }
-
-    public PageScrollListner(GridLayoutManager gridLayoutManager)
-    {
-        this.gridLayoutManager=gridLayoutManager;
-    }
-
     public PageScrollListner(StaggeredGridLayoutManager staggeredGridLayoutManager)
     {
         this.staggeredGridLayoutManager=staggeredGridLayoutManager;
     }
 
+
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        
         int visibleItemCount = staggeredGridLayoutManager.getChildCount();
         int totalItemCount = staggeredGridLayoutManager.getItemCount();
         int[] firstVisibleItems = null;
@@ -47,6 +38,8 @@ public abstract class PageScrollListner extends RecyclerView.OnScrollListener {
         }
 
     }
+
+
 
     protected abstract void loadMoreItems();
 

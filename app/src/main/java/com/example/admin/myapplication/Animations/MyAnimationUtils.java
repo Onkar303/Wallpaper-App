@@ -8,17 +8,21 @@ public class MyAnimationUtils {
 
     public static void Animate(RecyclerView.ViewHolder holder,boolean goesDown)
     {
-        AnimatorSet  animatorSet=new AnimatorSet();
+        if(goesDown)
+        {
+            AnimatorSet  animatorSet=new AnimatorSet();
 
 
-        ObjectAnimator translateY=ObjectAnimator.ofFloat(holder.itemView,"translationY",200,0);
-        translateY.setDuration(1000);
+            ObjectAnimator translateY=ObjectAnimator.ofFloat(holder.itemView,"translationY",200,0);
+            translateY.setDuration(1000);
 
 
-        //ObjectAnimator rotateX=ObjectAnimator.ofFloat(holder.itemView,"rot")
+            //ObjectAnimator rotateX=ObjectAnimator.ofFloat(holder.itemView,"rot")
 
-        animatorSet.playTogether(translateY);
-        animatorSet.start();
+            animatorSet.playTogether(translateY);
+            animatorSet.start();
+        }
+
     }
 
 

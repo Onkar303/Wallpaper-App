@@ -15,6 +15,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
@@ -24,6 +25,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,6 +35,7 @@ import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -55,12 +59,13 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     List<Object> list;
     Context context;
     Bitmap bitmap;
     final int SPLASHMODEL_TYPE = 0;
     final int PROGRESSMODEL_TYPE = 1;
+    int previous_position=0;
 
 
     public CustomAdapter(List<Object> list, Context context) {
@@ -118,13 +123,27 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .into(myholder.imageView);
 
                 Glide.with(context)
-                        .load(model.getUser().getProfileImage().getSmall())
+                        .load(model.getUser().getProfileImage().getMedium())
                         .apply(requestOptions.override(50, 50))
                         .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(myholder.ProfileImage);
 
 
-                //MyAnimationUtils.Animate(myholder, true);
+                myholder.popupmenu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPopUp(model);
+                    }
+                });
+//                if(position>previous_position)
+//                {
+//                    MyAnimationUtils.Animate(myholder, true);
+//                }
+//                else
+//                {
+//                    MyAnimationUtils.Animate(holder,false);
+//                }
+                previous_position=position;
                 myholder.ProfileImage.setBorderColor(Color.parseColor(model.getColor()));
                 //holder.imageView.setMaxHeight(1000);
                 //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
@@ -192,6 +211,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return list.size();
     }
 
+
+
     public class MyRecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView ProfileImage;
@@ -202,6 +223,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         CardView cardView;
         LinearLayout linearLayout;
         RelativeLayout relativeLayout, recycleritemrelativelayout;
+        ImageView popupmenu;
 
 
         public MyRecyclerItemViewHolder(View itemView) {
@@ -213,6 +235,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ProfileImage = (CircleImageView) v.findViewById(R.id.user_profile_image);
             cardView = (CardView) v.findViewById(R.id.recycler_item_card);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
+            popupmenu=(ImageView)v.findViewById(R.id.recycler_item_menu);
+
         }
 
     }
@@ -246,6 +270,51 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
     }
+
+    public void showPopUp(final SplashModel splashModel)
+    {
+        LinearLayout download,showProfile;
+        ImageView close;
+        final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(context);
+        View view=LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog,null,false);
+        showProfile=(LinearLayout)view.findViewById(R.id.showprofile_linear_layout);
+        close=(ImageView)view.findViewById(R.id.bottom_dialog_close);
+        download=(LinearLayout)view.findViewById(R.id.bottom_dialog_download);
+        showProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(context,ProfileActivity.class);
+                i.putExtra("myobject", splashModel);
+                context.startActivity(i);
+                bottomSheetDialog.cancel();
+
+            }
+        });
+
+
+
+
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.cancel();
+            }
+        });
+
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Under Development", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+    }
+
+
 
 
 }

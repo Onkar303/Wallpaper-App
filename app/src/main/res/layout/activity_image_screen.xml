@@ -15,10 +15,21 @@
     </android.support.v4.view.ViewPager>
 
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileactivity_toolbar">
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
 
     
-  
+
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,9 +79,10 @@
             android:layout_gravity="bottom|end"
             app:backgroundTint="@color/colorPrimary"
             android:src="@drawable/share"
+            app:fabSize="mini"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            app:fabSize="normal"
+            android:layout_marginRight="10dp"
             android:id="@+id/share_fab_button"
             />
 
@@ -114,7 +126,8 @@
             android:src="@drawable/download"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            app:fabSize="normal"
+            android:layout_marginRight="10dp"
+            app:fabSize="mini"
             android:id="@+id/set_background_image"/>
 
     </LinearLayout>
@@ -153,12 +166,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-
+            app:fabSize="mini"
             app:backgroundTint="@color/colorPrimary"
             android:src="@drawable/download"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            app:fabSize="normal"
+            android:layout_marginRight="10dp"
             android:id="@+id/download_fab_button"
             />
 

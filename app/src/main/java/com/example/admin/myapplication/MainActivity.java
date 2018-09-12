@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GridLayoutManager gridLayoutManager;
     PageScrollListner pageScrollListner;
     boolean isLoading;
-    int pagenumber = 0;
+    int pagenumber = 1;
     Toolbar toolbar;
     ImageView no_wifi_1;
     ImageView toggle_drawer;
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isConnected()) {
             no_wifi_1.setVisibility(View.GONE);
             refreshLayout.setRefreshing(true);
-            pagenumber = 0;
+            pagenumber = 1;
             new MyAsyncTask(pagenumber).execute();
         } else {
 
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRefresh() {
 
         if (isConnected()) {
-            pagenumber = 0;
+            pagenumber = 1;
             list.clear();
             new MyAsyncTask(pagenumber).execute();
             refreshLayout.setRefreshing(true);
