@@ -45,7 +45,8 @@
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
                     android:scrollbarStyle="outsideInset"
-                    android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                    android:scrollbars="vertical"
+                    android:background="#212121"></android.support.v7.widget.RecyclerView>
             </android.support.v4.widget.SwipeRefreshLayout>
         </android.support.v4.widget.NestedScrollView>
 
@@ -54,6 +55,7 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             >
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"

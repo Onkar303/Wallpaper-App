@@ -17,7 +17,7 @@
             android:src="@drawable/close_primarycolor"
             android:layout_margin="10dp"
             android:id="@+id/bottom_dialog_close"
-            android:background="?attr/selectableItemBackground"/>
+          />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +41,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="?attr/selectableItemBackground"
         android:id="@+id/bottom_dialog_download">
 
 
@@ -65,12 +64,11 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:id="@+id/showprofile_linear_layout"
-        android:background="?attr/selectableItemBackground">
+        >
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/user"
             android:layout_margin="16dp"/>
 
 

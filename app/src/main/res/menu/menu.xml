@@ -8,7 +8,6 @@
         android:icon="@drawable/photocameraicon"
         />
     <item android:title="My Profile"
-        android:icon="@drawable/user"
         />
 
 
