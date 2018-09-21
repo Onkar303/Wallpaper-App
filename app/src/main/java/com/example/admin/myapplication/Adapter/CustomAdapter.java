@@ -118,12 +118,14 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 Glide.with(context)
                         .load(model.getUrls().getSmall())
+                        .thumbnail(0.2f)
                         .apply(requestOptions.override(500, 500))
                         .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(myholder.imageView);
 
                 Glide.with(context)
                         .load(model.getUser().getProfileImage().getMedium())
+                        .thumbnail(0.2f)
                         .apply(requestOptions.override(50, 50))
                         .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(myholder.ProfileImage);
@@ -143,6 +145,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                {
 //                    MyAnimationUtils.Animate(holder,false);
 //                }
+               // MyAnimationUtils.Animate(holder,true);
                 previous_position=position;
                 myholder.ProfileImage.setBorderColor(Color.parseColor(model.getColor()));
                 //holder.imageView.setMaxHeight(1000);
