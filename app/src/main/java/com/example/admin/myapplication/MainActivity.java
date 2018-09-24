@@ -2,6 +2,7 @@ package com.example.admin.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -42,12 +43,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Model.Employee;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.example.admin.myapplication.Utils.Constants;
+import com.example.admin.myapplication.Utils.InternetBroadCastReceiver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -65,7 +68,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,InternetBroadCastReceiver.ConnectivityReceiverListener {
     RecyclerView recyclerView;
     List<Object> list;
     CustomAdapter adapter;
@@ -93,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
@@ -138,10 +141,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             protected void loadMoreItems() {
 
-                isLoading = true;
-                pagenumber++;
-                new MyAsyncTask(pagenumber).execute();
-                refreshLayout.setRefreshing(true);
+                if(isConnected())
+                {
+                    isLoading = true;
+                    pagenumber++;
+                    new MyAsyncTask(pagenumber).execute();
+                    refreshLayout.setRefreshing(true);
+
+                }
+                else
+                {
+
+                }
 
             }
 
@@ -167,16 +178,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.setAdapter(adapter);
 
+
         if (isConnected()) {
             no_wifi_1.setVisibility(View.GONE);
             refreshLayout.setRefreshing(true);
             pagenumber = 1;
             new MyAsyncTask(pagenumber).execute();
         } else {
-
             recyclerView.setVisibility(View.GONE);
             no_wifi_1.setVisibility(View.VISIBLE);
         }
+
+
 
     }
 
@@ -203,6 +216,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             new MyAsyncTask(pagenumber).execute();
             refreshLayout.setRefreshing(true);
         }
+        else
+        {
+            recyclerView.setVisibility(View.GONE);
+            no_wifi_1.setVisibility(View.VISIBLE);
+
+        }
+
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+
+        Toast.makeText(this, "is connected", Toast.LENGTH_SHORT).show();
 
     }
 
