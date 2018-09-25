@@ -77,8 +77,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     }
 
     public void init() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.bottom_sheet_swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
+//        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.bottom_sheet_swipe_refresh_layout);
+//        swipeRefreshLayout.setOnRefreshListener(this);
         // nestedScrollView=(NestedScrollView)findViewById(R.id.nestedscrollview_bottomsheet);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         bottomSheetBehavior = BottomSheetBehavior.from(coordinatorLayout);
@@ -96,11 +96,11 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         totla_photos = (TextView) findViewById(R.id.total_photos);
         total_likes = (TextView) findViewById(R.id.total_likes_text);
 
-        bottom_sheet_dragger = (RelativeLayout) findViewById(R.id.bottom_sheet_dragger);
-        bottom_sheet_dragger.setOnClickListener(this);
+//        bottom_sheet_dragger = (RelativeLayout) findViewById(R.id.bottom_sheet_dragger);
+//        bottom_sheet_dragger.setOnClickListener(this);
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_refreshbutton);
-        floatingActionButton.setOnClickListener(this);
+//        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_refreshbutton);
+//        floatingActionButton.setOnClickListener(this);
 
         //floatingActionButton.setBackgroundColor(Color.parseColor(splashModel.getColor()));
 
@@ -117,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
             protected void loadMoreItems() {
                 isLoading=true;
                 new MyAsyncTask(pagenumber).execute();
-                swipeRefreshLayout.setRefreshing(true);
+               // swipeRefreshLayout.setRefreshing(true);
                 pagenumber++;
 
             }
@@ -152,7 +152,16 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
             splashModel = (SplashModel) getIntent().getSerializableExtra("myobject");
         }
         name.setText(splashModel.getUser().getName());
-        bio.setText(String.valueOf(splashModel.getUser().getBio()));
+        if(String.valueOf(splashModel.getUser().getBio()).equals("null"))
+        {
+            bio.setText("No Bio");
+        }
+        else
+        {
+            bio.setText(String.valueOf(splashModel.getUser().getBio()));
+        }
+
+
         totla_photos.setText(String.valueOf(splashModel.getUser().getTotalPhotos()));
         total_likes.setText(String.valueOf(splashModel.getUser().getTotalLikes()));
         Glide.with(this).load(splashModel.getUser().getProfileImage().getLarge()).thumbnail(0.1f).into(profileImage);
@@ -168,7 +177,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
             recyclerView.setVisibility(View.VISIBLE);
             pagenumber=0;
             new MyAsyncTask(pagenumber).execute();
-            swipeRefreshLayout.setRefreshing(true);
+           // swipeRefreshLayout.setRefreshing(true);
 
         } else {
             nowifi.setVisibility(View.VISIBLE);
@@ -265,7 +274,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
 
             adapter.notifyDataSetChanged();
-            swipeRefreshLayout.setRefreshing(false);
+           // swipeRefreshLayout.setRefreshing(false);
             //recyclerView.setLayoutAnimation(controller);
             isLoading=false;
         }
@@ -307,7 +316,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
                 nowifi.setVisibility(View.INVISIBLE);
                 pagenumber=0;
                 new MyAsyncTask(pagenumber).execute();
-                swipeRefreshLayout.setRefreshing(true);
+                //swipeRefreshLayout.setRefreshing(true);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
                 nowifi.setVisibility(View.VISIBLE);

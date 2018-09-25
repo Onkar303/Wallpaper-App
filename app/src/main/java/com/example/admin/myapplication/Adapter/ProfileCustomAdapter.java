@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.R;
+import com.example.admin.myapplication.Utils.RecyclerTextView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -52,8 +53,9 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     @Override
     public void onBindViewHolder(@NonNull final ProfileCustomAdapter.MyViewHolder holder, final int position) {
 
+        holder.likes_profile.setText(String.valueOf(list.get(position).getLikes())+" likes");
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.imageView_profile.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
@@ -68,7 +70,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             }
         });
 
-        holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.imageView_profile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 ALertDialog(list.get(position).getUrls().getRegular());
@@ -77,7 +79,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             }
         });
 
-        Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000, 1000)).into(holder.imageView);
+        Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000, 1000)).into(holder.imageView_profile);
 
 
     }
@@ -107,15 +109,16 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        ImageView imageView;
+        ImageView imageView_profile;
         View v;
+        RecyclerTextView likes_profile;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             v = itemView;
-            imageView = (ImageView) v.findViewById(R.id.user_personal_pics);
-
+            imageView_profile = (ImageView) v.findViewById(R.id.user_personal_pics);
+            likes_profile=(RecyclerTextView)v.findViewById(R.id.likes_profile);
         }
     }
 
