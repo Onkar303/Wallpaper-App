@@ -35,6 +35,20 @@
             android:padding="-1dp"
             android:background="?android:attr/selectableItemBackground"
             />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/main_card_loading_indicator"/>
+
+        <com.example.admin.myapplication.Utils.RecyclerTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Unable to Load Image"
+            android:visibility="gone"
+            android:id="@+id/loading_error_main_list"/>
     </android.support.v7.widget.CardView>
 
 

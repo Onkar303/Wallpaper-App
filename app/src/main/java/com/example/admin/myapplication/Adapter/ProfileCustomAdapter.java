@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
+import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Utils.RecyclerTextView;
 
@@ -79,6 +82,13 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             }
         });
 
+        holder.menu_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000, 1000)).into(holder.imageView_profile);
 
 
@@ -109,7 +119,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        ImageView imageView_profile;
+        ImageView imageView_profile,menu_profile;
         View v;
         RecyclerTextView likes_profile;
 
@@ -119,7 +129,9 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             v = itemView;
             imageView_profile = (ImageView) v.findViewById(R.id.user_personal_pics);
             likes_profile=(RecyclerTextView)v.findViewById(R.id.likes_profile);
+            menu_profile=(ImageView)v.findViewById(R.id.recycler_item_menu_profile);
         }
     }
+
 
 }

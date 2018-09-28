@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +54,7 @@ import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Utils.CustomTextView;
+import com.example.admin.myapplication.Utils.RecyclerTextView;
 import com.example.admin.myapplication.ViewPagerActivity;
 
 import java.io.Serializable;
@@ -121,6 +124,23 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .thumbnail(0.2f)
                         .apply(requestOptions.override(500, 500))
                         .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                // log exception
+                              myholder.errorText.setVisibility(View.VISIBLE);
+                              myholder.progressBar.setVisibility(View.GONE);
+                              return false;
+
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                myholder.errorText.setVisibility(View.GONE);
+                                myholder.progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
                         .into(myholder.imageView);
 
                 Glide.with(context)
@@ -227,6 +247,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         LinearLayout linearLayout;
         RelativeLayout relativeLayout, recycleritemrelativelayout;
         ImageView popupmenu;
+        ProgressBar progressBar;
+        RecyclerTextView errorText;
 
 
         public MyRecyclerItemViewHolder(View itemView) {
@@ -239,6 +261,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardView = (CardView) v.findViewById(R.id.recycler_item_card);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
             popupmenu=(ImageView)v.findViewById(R.id.recycler_item_menu);
+            progressBar=(ProgressBar)v.findViewById(R.id.main_card_loading_indicator);
+            errorText=(RecyclerTextView)v.findViewById(R.id.loading_error_main_list);
 
         }
 

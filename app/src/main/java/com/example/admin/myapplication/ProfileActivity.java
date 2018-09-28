@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.ProfileCustomAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
+import com.example.admin.myapplication.Utils.ProfileBottomSheetCallBack;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -44,6 +46,7 @@ import okhttp3.Response;
 public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
 
+    ProfileBottomSheetCallBack callback;
     SplashModel splashModel;
     TextView name, bio, totla_photos, total_likes;
     CircleImageView profileImage;
@@ -84,6 +87,8 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         bottomSheetBehavior = BottomSheetBehavior.from(coordinatorLayout);
         bottomSheetBehavior.setPeekHeight(0);
         //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.profile_coordinator);
 
@@ -143,6 +148,12 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         adapter = new ProfileCustomAdapter(list, this);
         controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView.setAdapter(adapter);
+
+
+
+        //setting bottom sheet callback
+        callback=new ProfileBottomSheetCallBack(list,this,adapter);
+        bottomSheetBehavior.setBottomSheetCallback(callback);
 
 
     }

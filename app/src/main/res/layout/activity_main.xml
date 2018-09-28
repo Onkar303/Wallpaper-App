@@ -24,7 +24,8 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/no_wifi"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:tint="@android:color/white"/>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
