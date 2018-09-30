@@ -23,7 +23,9 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/borderlines"
             android:orientation="vertical"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:id="@+id/profile_container"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -186,6 +188,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
+
+
+
         </LinearLayout>
 
 
@@ -203,14 +208,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="normal"
-            android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
-            android:backgroundTint="#f2f2f2"/>
-
-
-
-
-
+            android:layout_gravity="bottom|end"
+            android:id="@+id/refresh_list_profile"
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 

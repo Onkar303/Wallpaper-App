@@ -1,6 +1,7 @@
 package com.example.admin.myapplication;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -16,11 +17,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,7 +46,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     ProfileBottomSheetCallBack callback;
@@ -65,8 +68,9 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     Button showAllPhotos;
     GridLayoutManager gridLayoutManager;
     PageScrollListner listner;
+    LinearLayout linearLayout;
     boolean isLoading;
-    int pagenumber=0;
+    int pagenumber=1;
 
 
     @Override
@@ -80,13 +84,14 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
     }
 
     public void init() {
-//        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.bottom_sheet_swipe_refresh_layout);
-//        swipeRefreshLayout.setOnRefreshListener(this);
+        //swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.profile_swiperefreshlayout);
         // nestedScrollView=(NestedScrollView)findViewById(R.id.nestedscrollview_bottomsheet);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         bottomSheetBehavior = BottomSheetBehavior.from(coordinatorLayout);
         bottomSheetBehavior.setPeekHeight(0);
         //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        linearLayout=(LinearLayout)findViewById(R.id.profile_container);
 
 
 
@@ -115,26 +120,45 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         profileImage = (CircleImageView) findViewById(R.id.user_image);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_profile);
         gridLayoutManager = new GridLayoutManager(this, 2);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        if(isTablet(this))
+        {
+
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            //linearLayout.setLayoutParams(new CoordinatorLayout.LayoutParams(300,CoordinatorLayout.LayoutParams.WRAP_CONTENT));
+        }
+        else
+        {
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        }
+
 
         listner=new PageScrollListner(staggeredGridLayoutManager) {
             @Override
             protected void loadMoreItems() {
                 isLoading=true;
                 new MyAsyncTask(pagenumber).execute();
-               // swipeRefreshLayout.setRefreshing(true);
                 pagenumber++;
+               // swipeRefreshLayout.setRefreshing(true);
+
 
             }
 
             @Override
             public int getTotalPageCount() {
-                return caculateTotalpages(splashModel.getUser().getTotalPhotos());
+                return (caculateTotalpages(splashModel.getUser().getTotalPhotos()));
             }
 
             @Override
             public boolean isLastPage() {
-                return false;
+                if(pagenumber==getTotalPageCount())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
 
             @Override
@@ -148,6 +172,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
         adapter = new ProfileCustomAdapter(list, this);
         controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(listner);
 
 
 
@@ -181,21 +206,6 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
     }
 
-    @Override
-    public void onRefresh() {
-        if (getConnectionStatus()) {
-            nowifi.setVisibility(View.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-            pagenumber=0;
-            new MyAsyncTask(pagenumber).execute();
-           // swipeRefreshLayout.setRefreshing(true);
-
-        } else {
-            nowifi.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }
-
-    }
 
     @Override
     public void onClick(View view) {
@@ -234,7 +244,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
             client = new OkHttpClient();
             request = new Request.Builder()
-                    .url("https://api.unsplash.com/users/" + splashModel.getUser().getUsername() + "/photos?client_id=197cb5c51cab8fdca1fe72c8898f9ca97325bb961fa0d59b2dae0e2a92d0f7ca&pages="+i)
+                    .url("https://api.unsplash.com/users/" + splashModel.getUser().getUsername() + "/photos?client_id=197cb5c51cab8fdca1fe72c8898f9ca97325bb961fa0d59b2dae0e2a92d0f7ca&page="+i)
                     .build();
 
             String s = null;
@@ -325,7 +335,7 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             if (getConnectionStatus()) {
                 nowifi.setVisibility(View.INVISIBLE);
-                pagenumber=0;
+                pagenumber=1;
                 new MyAsyncTask(pagenumber).execute();
                 //swipeRefreshLayout.setRefreshing(true);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -339,6 +349,10 @@ public class ProfileActivity extends AppCompatActivity implements SwipeRefreshLa
 
     public int caculateTotalpages(int number_photos)
     {
-        return ((number_photos/9)+1);
+        return ((number_photos/10)+1);
+    }
+
+    public static boolean isTablet(Context ctx){
+        return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }

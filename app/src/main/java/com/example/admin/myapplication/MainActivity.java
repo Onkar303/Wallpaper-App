@@ -2,73 +2,55 @@ package com.example.admin.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.provider.ContactsContract;
-import android.support.animation.DynamicAnimation;
+import android.os.Bundle;
 import android.support.animation.FlingAnimation;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.transition.Transition;
-import android.support.transition.TransitionManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
-import com.example.admin.myapplication.Model.Employee;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.InternetBroadCastReceiver;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,InternetBroadCastReceiver.ConnectivityReceiverListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, InternetBroadCastReceiver.ConnectivityReceiverListener {
     RecyclerView recyclerView;
     List<Object> list;
     CustomAdapter adapter;
@@ -129,10 +111,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorSchemeColors(Color.WHITE);
+        refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorPrimaryDark));
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(this, 2);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        if(isTablet(this))
+        {
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        }
+        else
+        {
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        }
+
         linearLayoutManager = new LinearLayoutManager(this);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -141,16 +133,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             protected void loadMoreItems() {
 
-                if(isConnected())
-                {
+                if (isConnected()) {
                     isLoading = true;
                     pagenumber++;
                     new MyAsyncTask(pagenumber).execute();
                     refreshLayout.setRefreshing(true);
 
-                }
-                else
-                {
+                } else {
 
                 }
 
@@ -190,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-
     }
 
     @Override
@@ -215,9 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             list.clear();
             new MyAsyncTask(pagenumber).execute();
             refreshLayout.setRefreshing(true);
-        }
-        else
-        {
+        } else {
             recyclerView.setVisibility(View.GONE);
             no_wifi_1.setVisibility(View.VISIBLE);
 
@@ -330,6 +316,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             exception.printStackTrace();
         }
         return false;
+    }
+
+
+    public static boolean isTablet(Context ctx){
+        return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
 

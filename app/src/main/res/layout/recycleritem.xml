@@ -19,7 +19,6 @@
         android:background="?attr/selectableItemBackground"
         android:translationZ="5dp"
         android:layout_margin="12dp"
-        android:minHeight="80dp"
         android:padding="-1dp"
         >
 
