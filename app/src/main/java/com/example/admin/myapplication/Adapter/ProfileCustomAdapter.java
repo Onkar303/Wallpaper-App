@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
@@ -89,7 +90,11 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             }
         });
 
-        Glide.with(context).load(list.get(position).getUrls().getRegular()).apply(new RequestOptions().override(1000, 1000)).into(holder.imageView_profile);
+        Glide.with(context)
+                .load(list.get(position).getUrls().getRegular())
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .apply(new RequestOptions().override(1000, 1000))
+                .into(holder.imageView_profile);
 
 
     }
