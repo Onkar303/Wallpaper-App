@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,7 +16,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -70,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     PageScrollListner listner;
     LinearLayout linearLayout;
     boolean isLoading;
-    int pagenumber=1;
+    int pagenumber = 1;
 
 
     @Override
@@ -91,8 +89,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         bottomSheetBehavior.setPeekHeight(0);
         //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-        linearLayout=(LinearLayout)findViewById(R.id.profile_container);
-
+        linearLayout = (LinearLayout) findViewById(R.id.profile_container);
 
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.profile_coordinator);
@@ -120,25 +117,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         profileImage = (CircleImageView) findViewById(R.id.user_image);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_profile);
         gridLayoutManager = new GridLayoutManager(this, 2);
-        if(isTablet(this))
-        {
+        if (isTablet(this)) {
 
             staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             //linearLayout.setLayoutParams(new CoordinatorLayout.LayoutParams(300,CoordinatorLayout.LayoutParams.WRAP_CONTENT));
-        }
-        else
-        {
+        } else {
             staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         }
 
 
-        listner=new PageScrollListner(staggeredGridLayoutManager) {
+        listner = new PageScrollListner(staggeredGridLayoutManager) {
             @Override
             protected void loadMoreItems() {
-                isLoading=true;
-                new MyAsyncTask(pagenumber).execute();
+                isLoading = true;
                 pagenumber++;
-               // swipeRefreshLayout.setRefreshing(true);
+                new MyAsyncTask(pagenumber).execute();
+                // swipeRefreshLayout.setRefreshing(true);
 
 
             }
@@ -150,12 +144,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public boolean isLastPage() {
-                if(pagenumber==getTotalPageCount())
-                {
+                if (pagenumber == getTotalPageCount()) {
                     return true;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
 
@@ -167,7 +158,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         };
 
-        staggeredGridLayoutManager.setGapStrategy( StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter = new ProfileCustomAdapter(list, this);
         controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
@@ -175,9 +166,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         recyclerView.addOnScrollListener(listner);
 
 
-
         //setting bottom sheet callback
-        callback=new ProfileBottomSheetCallBack(list,this,adapter);
+        callback = new ProfileBottomSheetCallBack(list, this, adapter);
         bottomSheetBehavior.setBottomSheetCallback(callback);
 
 
@@ -188,12 +178,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             splashModel = (SplashModel) getIntent().getSerializableExtra("myobject");
         }
         name.setText(splashModel.getUser().getName());
-        if(String.valueOf(splashModel.getUser().getBio()).equals("null"))
-        {
+        if (String.valueOf(splashModel.getUser().getBio()).equals("null")) {
             bio.setText("No Bio");
-        }
-        else
-        {
+        } else {
             bio.setText(String.valueOf(splashModel.getUser().getBio()));
         }
 
@@ -229,9 +216,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         OkHttpClient client;
         int i;
 
-        MyAsyncTask(int i)
-        {
-            this.i=i;
+        MyAsyncTask(int i) {
+            this.i = i;
         }
 
         @Override
@@ -244,7 +230,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             client = new OkHttpClient();
             request = new Request.Builder()
-                    .url("https://api.unsplash.com/users/" + splashModel.getUser().getUsername() + "/photos?client_id=197cb5c51cab8fdca1fe72c8898f9ca97325bb961fa0d59b2dae0e2a92d0f7ca&page="+i)
+                    .url("https://api.unsplash.com/users/" + splashModel.getUser().getUsername() + "/photos?client_id=197cb5c51cab8fdca1fe72c8898f9ca97325bb961fa0d59b2dae0e2a92d0f7ca&page=" + i)
                     .build();
 
             String s = null;
@@ -289,15 +275,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             return null;
         }
 
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
 
             adapter.notifyDataSetChanged();
-           // swipeRefreshLayout.setRefreshing(false);
+            // swipeRefreshLayout.setRefreshing(false);
             //recyclerView.setLayoutAnimation(controller);
-            isLoading=false;
+            isLoading = false;
+
         }
     }
 
@@ -335,7 +323,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             if (getConnectionStatus()) {
                 nowifi.setVisibility(View.INVISIBLE);
-                pagenumber=1;
+                pagenumber = 1;
                 new MyAsyncTask(pagenumber).execute();
                 //swipeRefreshLayout.setRefreshing(true);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -347,12 +335,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public int caculateTotalpages(int number_photos)
-    {
-        return ((number_photos/10)+1);
+    public int caculateTotalpages(int number_photos) {
+        return ((number_photos / 10) + 1);
     }
 
-    public static boolean isTablet(Context ctx){
+    public static boolean isTablet(Context ctx) {
         return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }
