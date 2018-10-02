@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Build;
@@ -16,6 +17,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -69,11 +72,13 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     final int SPLASHMODEL_TYPE = 0;
     final int PROGRESSMODEL_TYPE = 1;
     int previous_position=0;
+    ConstraintSet constraintSet;
 
 
     public CustomAdapter(List<Object> list, Context context) {
         this.context = context;
         this.list = list;
+        constraintSet=new ConstraintSet();
     }
 
     @Override
@@ -117,12 +122,15 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.title.setText(model.getUser().getFirstName());
                 myholder.likes.setText(model.getUser().getTotalLikes() + " likes");
                 RequestOptions requestOptions = new RequestOptions();
+                constraintSet.clone(myholder.constraintLayout);
+                constraintSet.setDimensionRatio(myholder.imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
+                constraintSet.applyTo(myholder.constraintLayout);
 
 
                 Glide.with(context)
-                        .load(model.getUrls().getSmall())
-                        .thumbnail(0.2f)
-                        .apply(requestOptions.override(500, 500))
+                        .setDefaultRequestOptions(requestOptions)
+                        .load(model.getUrls().getRegular())
+                        .apply(requestOptions.override(1000, 1000))
                         .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
                         .listener(new RequestListener<Drawable>() {
                             @Override
@@ -188,7 +196,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        ALertDialog(model.getUrls().getRegular());
+                        ALertDialog(model);
                         return true;
                     }
                 });
@@ -249,6 +257,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ImageView popupmenu;
         ProgressBar progressBar;
         RecyclerTextView errorText;
+        ConstraintLayout constraintLayout;
 
 
         public MyRecyclerItemViewHolder(View itemView) {
@@ -263,6 +272,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             popupmenu=(ImageView)v.findViewById(R.id.recycler_item_menu);
             progressBar=(ProgressBar)v.findViewById(R.id.main_card_loading_indicator);
             errorText=(RecyclerTextView)v.findViewById(R.id.loading_error_main_list);
+            constraintLayout=(ConstraintLayout)v.findViewById(R.id.recycler_item_contraintlayout);
 
         }
 
@@ -281,17 +291,22 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public void ALertDialog(String url) {
+    public void ALertDialog(SplashModel model) {
         try {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.longpress_image, null);
+            ConstraintLayout constraintLayout=(ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
+            constraintSet.clone(constraintLayout);
             ImageView imageView = (ImageView) v.findViewById(R.id.prodifile_image_longPress);
-            Glide.with(context).load(url).into(imageView);
+            constraintSet.setDimensionRatio(imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
+            constraintSet.applyTo(constraintLayout);
+            Glide.with(context).load(model.getUrls().getRegular()).into(imageView);
             android.support.v7.app.AlertDialog dialog = builder.create();
             dialog.setView(v);
             dialog.show();
             dialog.getWindow().getAttributes().windowAnimations = R.style.AppTheme;
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (NullPointerException exception) {
             exception.printStackTrace();
         }

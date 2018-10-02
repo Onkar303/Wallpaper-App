@@ -19,27 +19,39 @@
         android:background="?attr/selectableItemBackground"
         android:translationZ="5dp"
         android:layout_margin="12dp"
-        android:padding="-1dp"
         >
 
 
-        <ImageView
-            android:id="@+id/imageView"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:scaleType="fitCenter"
-            android:transitionName="mytransition"
-            android:adjustViewBounds="true"
-            android:padding="-1dp"
-            android:background="?android:attr/selectableItemBackground"
-            />
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_item_contraintlayout">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:transitionName="mytransition"
+                android:adjustViewBounds="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+
+
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/main_card_loading_indicator"/>
+            android:id="@+id/main_card_loading_indicator"
+            android:visibility="gone"/>
 
         <com.example.admin.myapplication.Utils.RecyclerTextView
             android:layout_width="wrap_content"
