@@ -187,7 +187,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         totla_photos.setText(String.valueOf(splashModel.getUser().getTotalPhotos()));
         total_likes.setText(String.valueOf(splashModel.getUser().getTotalLikes()));
-        Glide.with(this).load(splashModel.getUser().getProfileImage().getLarge()).thumbnail(0.1f).into(profileImage);
+        Glide.with(this).load(splashModel.getUser().getProfileImage().getLarge()).thumbnail(0.2f).into(profileImage);
 
         //coordinatorLayout.setBackgroundColor(Color.parseColor(splashModel.getColor()));
 

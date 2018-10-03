@@ -14,14 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="7dp"
-        app:cardElevation="4dp"
-        android:translationZ="5dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="3dp"
         app:cardPreventCornerOverlap="true"
-        android:padding="-2dp"
+        android:id="@+id/profile_card_view"
         >
 
         <android.support.constraint.ConstraintLayout

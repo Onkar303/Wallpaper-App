@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
@@ -125,6 +126,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 constraintSet.clone(myholder.constraintLayout);
                 constraintSet.setDimensionRatio(myholder.imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
                 constraintSet.applyTo(myholder.constraintLayout);
+                myholder.cardView.setCardBackgroundColor(Color.parseColor(model.getColor()));
 
 
                 Glide.with(context)

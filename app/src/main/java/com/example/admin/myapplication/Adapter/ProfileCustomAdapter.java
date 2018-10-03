@@ -14,6 +14,7 @@ import android.support.constraint.ConstraintSet;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,8 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         constraintSet.setDimensionRatio(holder.imageView_profile.getId(),String.valueOf(list.get(position).getWidth())+":"+String.valueOf(list.get(position).getHeight()));
         constraintSet.applyTo(holder.constraintLayout);
 
+        holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
+
         holder.imageView_profile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -143,6 +146,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         View v;
         RecyclerTextView likes_profile;
         ConstraintLayout constraintLayout;
+        CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -151,6 +155,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             likes_profile=(RecyclerTextView)v.findViewById(R.id.likes_profile);
             menu_profile=(ImageView)v.findViewById(R.id.recycler_item_menu_profile);
             constraintLayout=(ConstraintLayout)v.findViewById(R.id.profilelist_constraintlayout);
+            cardView=(CardView)v.findViewById(R.id.profile_card_view);
         }
     }
 
