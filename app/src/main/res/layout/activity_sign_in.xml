@@ -29,6 +29,7 @@
                     android:layout_gravity="left"
                     android:src="@drawable/arrow_back"
                     android:id="@+id/arrow_back"
+                    android:tint="@android:color/black"
                     />
             </android.support.v7.widget.Toolbar>
 
@@ -51,7 +52,7 @@
                 android:layout_margin="3dp"
                 android:paddingLeft="30dp"
                 android:text="Sign In"
-                android:textColor="#f2f2f2"
+                android:textColor="@android:color/black"
                 android:textSize="50sp"
                 android:textStyle="bold" />
 
@@ -79,13 +80,13 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.8"
                 android:background="@drawable/round_edit_text"
-                android:backgroundTint="#fff"
+
                 android:cursorVisible="false"
                 android:hint="Username"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
                 android:textSize="15sp" />
 
 
@@ -96,7 +97,6 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.8"
                 android:background="@drawable/round_edit_text"
-                android:backgroundTint="#fff"
                 android:cursorVisible="false"
                 android:hint="Email "
                 android:inputType="textEmailAddress"
@@ -104,8 +104,8 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
                 android:textSize="15sp" />
 
             <EditText
@@ -115,14 +115,13 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.8"
                 android:background="@drawable/round_edit_text"
-                android:backgroundTint="#fff"
                 android:cursorVisible="false"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
                 android:textSize="15sp" />
 
 
@@ -133,16 +132,16 @@
                 android:layout_marginTop="10dp"
                 android:alpha="0.8"
                 android:background="@drawable/round_edit_text"
-                android:backgroundTint="#fff"
+
                 android:cursorVisible="false"
-                android:hint="ReEnter Password"
+                android:hint="Enter Password Again"
                 android:inputType="textPassword"
                 android:paddingBottom="3dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
                 android:textSize="15sp" />
 
 

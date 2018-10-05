@@ -31,7 +31,7 @@
                 android:id="@+id/user_personal_pics"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:adjustViewBounds="true"
                 android:transitionName="mytransition"
                 android:padding="-1dp"
@@ -59,10 +59,10 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_centerVertical="true"
-            android:textColor="#fff"
+            android:textColor="@android:color/black"
             android:visibility="visible"
             android:text="likes"
-            android:textSize="12.5sp"
+            android:textSize="13sp"
             />
 
         <ImageView
@@ -73,7 +73,7 @@
             android:layout_marginRight="12dp"
             android:background="?attr/selectableItemBackground"
             android:src="@drawable/dotindicator"
-            android:tint="@android:color/white" />
+            android:tint="@android:color/black" />
 
     </RelativeLayout>
 

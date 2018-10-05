@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <com.example.admin.myapplication.Utils.RecyclerTextView
                     android:id="@+id/profilename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                     android:layout_marginRight="20dp"
                     android:text="Name"
                     android:textAlignment="center"
-                    android:textColor="#f2f2f2"
+                    android:textColor="@android:color/black"
                     android:textSize="40sp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -55,10 +55,11 @@
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/ic_launcher_background"
                     android:transitionName="profile_transition"
-                    app:civ_border_color="#fff"
-                    app:civ_border_width="1.5dp" />
+                    app:civ_border_color="@android:color/black"
+                    app:civ_border_width="1.5dp"
+                    />
 
-                <TextView
+                <com.example.admin.myapplication.Utils.RecyclerTextView
                     android:id="@+id/bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,7 +70,7 @@
                     android:layout_marginTop="20dp"
                     android:padding="5dp"
                     android:textAlignment="center"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
 
@@ -91,10 +92,11 @@
                         android:id="@+id/profile_pic"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
+                        android:tint="@android:color/black"
                         android:layout_centerInParent="true"
                         android:src="@drawable/photocameraicon" />
 
-                    <TextView
+                    <com.example.admin.myapplication.Utils.RecyclerTextView
                         android:id="@+id/total_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -102,7 +104,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="5dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/black" />
 
 
                 </LinearLayout>
@@ -119,9 +121,10 @@
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/like" />
+                        android:src="@drawable/like"
+                        android:tint="@android:color/black"/>
 
-                    <TextView
+                    <com.example.admin.myapplication.Utils.RecyclerTextView
                         android:id="@+id/total_likes_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +132,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="5dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
@@ -154,7 +157,7 @@
                     android:background="@drawable/borderline_button"
                     android:padding="3dp"
                     android:text="All Photos"
-                    android:textColor="#fff" />
+                    android:textColor="@android:color/black" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
@@ -182,9 +185,9 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/handle"
-                android:tint="#f2f2f2"
-                android:background="@color/colorPrimaryDark"
-                android:elevation="4dp"/>
+                android:tint="@android:color/black"
+                android:background="#f2f2f2"
+                />
 
 
                 <android.support.v7.widget.RecyclerView

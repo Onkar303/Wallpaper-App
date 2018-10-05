@@ -37,7 +37,7 @@
                 android:textStyle="bold"
                 android:textSize="50sp"
                 android:paddingLeft="30dp"
-                android:textColor="#f2f2f2"
+                android:textColor="@android:color/black"
                 android:layout_margin="3dp"/>
 
 
@@ -61,12 +61,12 @@
                         android:layout_height="37dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="30dp"
-                        android:backgroundTint="#fff"
+                        android:backgroundTint="@android:color/black"
                         android:hint="Username"
                         android:singleLine="true"
                         android:textSize="15sp"
-                        android:textColor="#fff"
-                        android:textColorHint="#fff"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/black"
                         android:paddingLeft="10dp"
                         android:background="@drawable/round_edit_text"
                         android:alpha="0.8"
@@ -85,8 +85,8 @@
                         android:singleLine="true"
                         android:textSize="15sp"
                         android:textColor="#fff"
-                        android:textColorHint="#fff"
-                        android:backgroundTint="#fff"
+                        android:textColorHint="@android:color/black"
+                        android:backgroundTint="@android:color/black"
                         android:alpha="0.8"
                         android:background="@drawable/round_edit_text"
                         android:paddingLeft="10dp"
@@ -117,7 +117,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="15dp"
                         android:text="Forgot Your Password?"
-                        android:textColor="#fff"
+                        android:textColor="@android:color/black"
                         android:textSize="12sp"/>
 
 
@@ -145,7 +145,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="Dont have an Account?"
-                android:textColor="#fff"
+                android:textColor="@android:color/black"
                 android:textSize="12sp"/>
 
 

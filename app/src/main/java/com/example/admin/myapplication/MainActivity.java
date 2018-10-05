@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setColorSchemeColors(Color.WHITE);
-        refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorPrimaryDark));
+        refreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK);
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(this, 2);

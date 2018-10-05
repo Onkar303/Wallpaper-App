@@ -47,7 +47,8 @@
                     android:paddingRight="3dp"
                     android:scrollbarStyle="outsideInset"
                     android:scrollbars="vertical"
-                    android:background="@drawable/background"></android.support.v7.widget.RecyclerView>
+                    android:background="@drawable/background"
+                    />
             </android.support.v4.widget.SwipeRefreshLayout>
         </android.support.v4.widget.NestedScrollView>
 

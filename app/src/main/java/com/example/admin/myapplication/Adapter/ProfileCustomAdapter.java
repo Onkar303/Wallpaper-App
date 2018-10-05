@@ -132,7 +132,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             dialog.setView(v);
             dialog.show();
             dialog.getWindow().getAttributes().windowAnimations = R.style.AppTheme;
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         } catch (NullPointerException exception) {
             exception.printStackTrace();
         }

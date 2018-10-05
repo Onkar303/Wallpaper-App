@@ -236,6 +236,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             String s = null;
 
             try {
+
                 response = client.newCall(request).execute();
 
                 if (response.isSuccessful()) {
@@ -253,7 +254,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             try {
                 array = new JSONArray(s);
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
