@@ -36,5 +36,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.jsibbold:zoomage:1.1.0'
     implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
+    implementation 'com.facebook.shimmer:shimmer:0.3.0'
 
 }

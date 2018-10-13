@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,8 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
 
     FloatingActionButton mainbutton, sharebutton, downloadbutton,setbackgroundImage;
+
+    LinearLayout set_as_background_linearlayout,download_linearlayout,share_linearlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,12 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         sharebutton.setOnClickListener(this);
         downloadbutton.setOnClickListener(this);
         setbackgroundImage.setOnClickListener(this);
+
+
+        //linearlayout
+        set_as_background_linearlayout=(LinearLayout)findViewById(R.id.set_as_background_linearlayout);
+        download_linearlayout=(LinearLayout)findViewById(R.id.download_linearlayout);
+        share_linearlayout=(LinearLayout)findViewById(R.id.share_linear_layout);
 
 
         //setting the visibility to invisible
@@ -133,27 +142,33 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.main_fab_button:
                 if (isOpen == false) {
-                    setbackgroundImage.setAnimation(translateYopen);
-                    sharebutton.setAnimation(translateYopen);
-                    downloadbutton.setAnimation(translateYopen);
+                    //setbackgroundImage.setAnimation(translateYopen);
+                    //sharebutton.setAnimation(translateYopen);
+                    //downloadbutton.setAnimation(translateYopen);
+
+                    share_linearlayout.setAnimation(translateYopen);
+                    set_as_background_linearlayout.setAnimation(translateYopen);
+                    download_linearlayout.setAnimation(translateYopen);
 
                     sharetext.setAnimation(fadein);
                     downloadtext.setAnimation(fadein);
                     setbackgroundtext.setAnimation(fadein);
 
+
                     sharebutton.setClickable(true);
                     downloadbutton.setClickable(true);
                     setbackgroundImage.setClickable(true);
+
 
                     sharetext.setVisibility(View.VISIBLE);
                     downloadtext.setVisibility(View.VISIBLE);
                     setbackgroundtext.setVisibility(View.VISIBLE);
 
 
-
                     sharebutton.setVisibility(View.VISIBLE);
                     downloadbutton.setVisibility(View.VISIBLE);
                     setbackgroundImage.setVisibility(View.VISIBLE);
+
 
                     mainbutton.setAnimation(openRotation);
                     translateYopen.start();
@@ -161,9 +176,13 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                     fadein.start();
                     isOpen = true;
                 } else {
-                    sharebutton.setAnimation(translateYclose);
-                    downloadbutton.setAnimation(translateYclose);
-                    setbackgroundImage.setAnimation(translateYclose);
+                    //sharebutton.setAnimation(translateYclose);
+                    //downloadbutton.setAnimation(translateYclose);
+                    //setbackgroundImage.setAnimation(translateYclose);
+
+                    share_linearlayout.setAnimation(translateYclose);
+                    set_as_background_linearlayout.setAnimation(translateYclose);
+                    download_linearlayout.setAnimation(translateYclose);
 
                     sharetext.setAnimation(fadeout);
                     downloadtext.setAnimation(fadeout);

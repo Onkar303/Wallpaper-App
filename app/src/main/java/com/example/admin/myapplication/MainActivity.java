@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
-        refreshLayout.setColorSchemeColors(Color.WHITE);
-        refreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK);
+        refreshLayout.setColorSchemeResources(R.color.materialGrey);
+        refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.materialBlack));
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(this, 2);

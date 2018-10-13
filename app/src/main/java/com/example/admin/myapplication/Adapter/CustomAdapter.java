@@ -61,6 +61,7 @@ import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Utils.CustomTextView;
 import com.example.admin.myapplication.Utils.RecyclerTextView;
 import com.example.admin.myapplication.ViewPagerActivity;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.Serializable;
 import java.util.List;
@@ -126,6 +127,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 RequestOptions requestOptions = new RequestOptions();
                 constraintSet.clone(myholder.constraintLayout);
                 constraintSet.setDimensionRatio(myholder.imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
+                constraintSet.setDimensionRatio(myholder.shimmerlayout.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
                 constraintSet.applyTo(myholder.constraintLayout);
                 myholder.cardView.setCardBackgroundColor(Color.parseColor(model.getColor()));
 
@@ -139,16 +141,18 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 // log exception
-                              myholder.errorText.setVisibility(View.VISIBLE);
-                              myholder.progressBar.setVisibility(View.GONE);
-                              return false;
+
+                                myholder.shimmerlayout.stopShimmer();
+                                myholder.errorText.setVisibility(View.VISIBLE);
+
+                                return false;
 
                             }
 
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                 myholder.errorText.setVisibility(View.GONE);
-                                myholder.progressBar.setVisibility(View.GONE);
+                                myholder.shimmerlayout.stopShimmer();
                                 return false;
                             }
                         })
@@ -261,6 +265,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ProgressBar progressBar;
         RecyclerTextView errorText;
         ConstraintLayout constraintLayout;
+        ShimmerFrameLayout shimmerlayout;
 
 
         public MyRecyclerItemViewHolder(View itemView) {
@@ -273,9 +278,9 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardView = (CardView) v.findViewById(R.id.recycler_item_card);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
             popupmenu=(ImageView)v.findViewById(R.id.recycler_item_menu);
-            progressBar=(ProgressBar)v.findViewById(R.id.main_card_loading_indicator);
             errorText=(RecyclerTextView)v.findViewById(R.id.loading_error_main_list);
             constraintLayout=(ConstraintLayout)v.findViewById(R.id.recycler_item_contraintlayout);
+            shimmerlayout=(ShimmerFrameLayout)v.findViewById(R.id.shimmer_layout);
 
         }
 
@@ -335,10 +340,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         });
 
-
-
-
-
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,6 +355,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         });
 
+        //bottomSheetDialog.getWindow().setBackgroundDrawableResource(R.drawable.background_bottom_sheet);
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();
     }

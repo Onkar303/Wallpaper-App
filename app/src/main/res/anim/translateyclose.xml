@@ -4,7 +4,7 @@
     android:fillAfter="true">
     <translate
         android:fromYDelta="0"
-        android:toYDelta="100"
+        android:toYDelta="200"
         android:interpolator="@android:anim/linear_interpolator"/>
 
     <alpha android:fromAlpha="1"

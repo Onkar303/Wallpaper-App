@@ -8,6 +8,12 @@
         <item name="colorAccent">#000</item>
         <item name="android:windowEnterAnimation">@anim/fadein</item>
         <item name="android:windowExitAnimation">@anim/fadeout</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 
