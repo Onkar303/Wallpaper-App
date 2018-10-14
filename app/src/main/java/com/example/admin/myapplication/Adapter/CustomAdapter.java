@@ -2,95 +2,76 @@ package com.example.admin.myapplication.Adapter;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Parcelable;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.util.ExceptionCatchingInputStream;
-import com.example.admin.myapplication.Animations.MyAnimationUtils;
 import com.example.admin.myapplication.ImageScreen;
-import com.example.admin.myapplication.Model.Employee;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
-import com.example.admin.myapplication.Utils.CustomTextView;
 import com.example.admin.myapplication.Utils.RecyclerTextView;
-import com.example.admin.myapplication.ViewPagerActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+import static android.support.constraint.Constraints.TAG;
+
+public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Object> list;
     Context context;
     Bitmap bitmap;
     final int SPLASHMODEL_TYPE = 0;
     final int PROGRESSMODEL_TYPE = 1;
-    int previous_position=0;
+    int previous_position = 0;
     ConstraintSet constraintSet;
 
 
     public CustomAdapter(List<Object> list, Context context) {
         this.context = context;
         this.list = list;
-        constraintSet=new ConstraintSet();
+        constraintSet = new ConstraintSet();
     }
 
     @Override
@@ -135,8 +116,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.likes.setText(model.getUser().getTotalLikes() + " likes");
                 RequestOptions requestOptions = new RequestOptions();
                 constraintSet.clone(myholder.constraintLayout);
-                constraintSet.setDimensionRatio(myholder.imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
-                constraintSet.setDimensionRatio(myholder.shimmerlayout.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
+                constraintSet.setDimensionRatio(myholder.imageView.getId(), String.valueOf(model.getWidth()) + ":" + String.valueOf(model.getHeight()));
+                constraintSet.setDimensionRatio(myholder.shimmerlayout.getId(), String.valueOf(model.getWidth()) + ":" + String.valueOf(model.getHeight()));
                 constraintSet.applyTo(myholder.constraintLayout);
                 myholder.cardView.setCardBackgroundColor(Color.parseColor(model.getColor()));
 
@@ -189,8 +170,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                {
 //                    MyAnimationUtils.Animate(holder,false);
 //                }
-               // MyAnimationUtils.Animate(holder,true);
-                previous_position=position;
+                // MyAnimationUtils.Animate(holder,true);
+                previous_position = position;
                 myholder.ProfileImage.setBorderColor(Color.parseColor(model.getColor()));
                 //holder.imageView.setMaxHeight(1000);
                 //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
@@ -259,7 +240,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-
     public class MyRecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView ProfileImage;
@@ -286,10 +266,10 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ProfileImage = (CircleImageView) v.findViewById(R.id.user_profile_image);
             cardView = (CardView) v.findViewById(R.id.recycler_item_card);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
-            popupmenu=(ImageView)v.findViewById(R.id.recycler_item_menu);
-            errorText=(RecyclerTextView)v.findViewById(R.id.loading_error_main_list);
-            constraintLayout=(ConstraintLayout)v.findViewById(R.id.recycler_item_contraintlayout);
-            shimmerlayout=(ShimmerFrameLayout)v.findViewById(R.id.shimmer_layout);
+            popupmenu = (ImageView) v.findViewById(R.id.recycler_item_menu);
+            errorText = (RecyclerTextView) v.findViewById(R.id.loading_error_main_list);
+            constraintLayout = (ConstraintLayout) v.findViewById(R.id.recycler_item_contraintlayout);
+            shimmerlayout = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_layout);
 
         }
 
@@ -313,10 +293,10 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.longpress_image, null);
-            ConstraintLayout constraintLayout=(ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
+            ConstraintLayout constraintLayout = (ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
             constraintSet.clone(constraintLayout);
             ImageView imageView = (ImageView) v.findViewById(R.id.prodifile_image_longPress);
-            constraintSet.setDimensionRatio(imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
+            constraintSet.setDimensionRatio(imageView.getId(), String.valueOf(model.getWidth()) + ":" + String.valueOf(model.getHeight()));
             constraintSet.applyTo(constraintLayout);
             Glide.with(context).load(model.getUrls().getRegular()).into(imageView);
             android.support.v7.app.AlertDialog dialog = builder.create();
@@ -329,20 +309,19 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
-    public void showPopUp(final SplashModel splashModel)
-    {
-        LinearLayout download,showProfile,setasbackground;
+    public void showPopUp(final SplashModel splashModel) {
+        LinearLayout download, showProfile, setasbackground;
         ImageView close;
-        final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(context);
-        View view=LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog,null,false);
-        showProfile=(LinearLayout)view.findViewById(R.id.showprofile_linear_layout);
-        close=(ImageView)view.findViewById(R.id.bottom_dialog_close);
-        download=(LinearLayout)view.findViewById(R.id.bottom_dialog_download);
-        setasbackground=(LinearLayout)view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog, null, false);
+        showProfile = (LinearLayout) view.findViewById(R.id.showprofile_linear_layout);
+        close = (ImageView) view.findViewById(R.id.bottom_dialog_close);
+        download = (LinearLayout) view.findViewById(R.id.bottom_dialog_download);
+        setasbackground = (LinearLayout) view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
         showProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(context,ProfileActivity.class);
+                Intent i = new Intent(context, ProfileActivity.class);
                 i.putExtra("myobject", splashModel);
                 context.startActivity(i);
                 bottomSheetDialog.cancel();
@@ -361,15 +340,15 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Under Development", Toast.LENGTH_LONG).show();
+                new DownloadAsyncTask(splashModel).execute();
             }
         });
 
         setasbackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               new DownloadAsyncTask(splashModel).execute();
-               bottomSheetDialog.dismiss();
+                new setAsBackgroundAsyncTask(splashModel).execute();
+                bottomSheetDialog.dismiss();
 
             }
         });
@@ -380,22 +359,22 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public class DownloadAsyncTask extends AsyncTask<String,Void,Bitmap>{
+    public class setAsBackgroundAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
         ProgressDialog progressDialog;
         SplashModel splashModel;
         Bitmap bitmap;
 
-         DownloadAsyncTask(SplashModel splashModel){
-         this.splashModel=splashModel;
+        setAsBackgroundAsyncTask(SplashModel splashModel) {
+            this.splashModel = splashModel;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog=new ProgressDialog(context);
+            progressDialog = new ProgressDialog(context);
             progressDialog.setTitle("Downloading");
-            progressDialog.setMessage("Loading in progress.....");
+            progressDialog.setMessage("In progress.....");
             progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
@@ -420,18 +399,95 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            WallpaperManager manager=WallpaperManager.getInstance(context);
+            WallpaperManager manager = WallpaperManager.getInstance(context);
             try {
-                manager.setBitmap(bitmap);
+                if (bitmap == null) {
+                    Toast.makeText(context, "Error :(", Toast.LENGTH_SHORT).show();
+                } else {
+                    manager.setBitmap(bitmap);
+                    Toast.makeText(context, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
+
+
             }
             progressDialog.dismiss();
-            Toast.makeText(context, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
         }
     }
 
+    public class DownloadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
+        SplashModel splashModel;
+        ProgressDialog progressDialog;
 
+        DownloadAsyncTask(SplashModel splashModel) {
+            this.splashModel = splashModel;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setTitle("Downloading");
+            progressDialog.setMessage("In Progress...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.show();
+
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+
+            String imageURL = splashModel.getUrls().getRegular();
+
+            Bitmap bitmap = null;
+            try {
+                // Download Image from URL
+                InputStream input = new java.net.URL(imageURL).openStream();
+                // Decode Bitmap
+                bitmap = BitmapFactory.decodeStream(input);
+
+                FileOutputStream outStream = null;
+                File sdCard = Environment.getExternalStorageDirectory();
+                File dir = new File(sdCard.getAbsolutePath() + "/camtest");
+                if (!dir.exists() && !dir.isDirectory()) {
+                    dir.mkdirs();
+                }
+                String fileName = String.format("%d.jpg", System.currentTimeMillis());
+                File outFile = new File(dir, fileName);
+
+                outStream = new FileOutputStream(outFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+                outStream.flush();
+                outStream.close();
+                //Toast.makeText(context, "Wallpaper Downloaded", Toast.LENGTH_SHORT).show();
+
+                Log.d(TAG, "onPictureTaken - wrote to " + outFile.getAbsolutePath());
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                //Toast.makeText(context, "Error Downloading wallpaper", Toast.LENGTH_SHORT).show();
+
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap == null) {
+                Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(context, "Wallpaper Downloaded :)", Toast.LENGTH_SHORT).show();
+            }
+
+            progressDialog.dismiss();
+        }
+    }
 
 
 }
