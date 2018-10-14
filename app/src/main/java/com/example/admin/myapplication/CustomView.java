@@ -4,10 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 
 public class CustomView extends View {
@@ -19,10 +16,11 @@ public class CustomView extends View {
     final RectF rect;
 
     private float angle;
+
     public CustomView(Context context) {
         super(context);
 
-         final int strokeWidth = 40;
+        final int strokeWidth = 40;
 
         paint = new Paint();
         paint.setAntiAlias(true);

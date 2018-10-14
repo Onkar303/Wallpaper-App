@@ -3,16 +3,20 @@ package com.example.admin.myapplication.Adapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -45,6 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -62,9 +67,13 @@ import com.example.admin.myapplication.Utils.CustomTextView;
 import com.example.admin.myapplication.Utils.RecyclerTextView;
 import com.example.admin.myapplication.ViewPagerActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -322,13 +331,14 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void showPopUp(final SplashModel splashModel)
     {
-        LinearLayout download,showProfile;
+        LinearLayout download,showProfile,setasbackground;
         ImageView close;
         final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(context);
         View view=LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog,null,false);
         showProfile=(LinearLayout)view.findViewById(R.id.showprofile_linear_layout);
         close=(ImageView)view.findViewById(R.id.bottom_dialog_close);
         download=(LinearLayout)view.findViewById(R.id.bottom_dialog_download);
+        setasbackground=(LinearLayout)view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
         showProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -355,9 +365,70 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         });
 
+        setasbackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               new DownloadAsyncTask(splashModel).execute();
+               bottomSheetDialog.dismiss();
+
+            }
+        });
+
         //bottomSheetDialog.getWindow().setBackgroundDrawableResource(R.drawable.background_bottom_sheet);
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();
+    }
+
+
+    public class DownloadAsyncTask extends AsyncTask<String,Void,Bitmap>{
+
+        ProgressDialog progressDialog;
+        SplashModel splashModel;
+        Bitmap bitmap;
+
+         DownloadAsyncTask(SplashModel splashModel){
+         this.splashModel=splashModel;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog=new ProgressDialog(context);
+            progressDialog.setTitle("Downloading");
+            progressDialog.setMessage("Loading in progress.....");
+            progressDialog.setIndeterminate(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+
+            String imageURL = splashModel.getUrls().getRegular();
+
+            Bitmap bitmap = null;
+            try {
+                // Download Image from URL
+                InputStream input = new java.net.URL(imageURL).openStream();
+                // Decode Bitmap
+                bitmap = BitmapFactory.decodeStream(input);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            WallpaperManager manager=WallpaperManager.getInstance(context);
+            try {
+                manager.setBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            progressDialog.dismiss();
+            Toast.makeText(context, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

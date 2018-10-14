@@ -14,21 +14,27 @@
 
         <ImageView
             android:id="@+id/bottom_dialog_close"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_margin="10dp"
             android:src="@drawable/close_primarycolor"
-            android:tint="@color/materialGrey" />
+            android:tint="@color/materialGrey"
+            android:background="@drawable/custom_ripple"/>
 
         <com.example.admin.myapplication.Utils.RecyclerTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Options"
             android:textColor="#f2f2f2"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="normal" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/materialGrey"/>
 
 
     <LinearLayout
@@ -36,7 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/custom_ripple">
 
 
         <ImageView
@@ -51,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="Download"
             android:textColor="@color/materialGrey"
-            android:textSize="15sp"
+            android:textSize="18sp"
 
 
             />
@@ -63,7 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/custom_ripple">
 
         <ImageView
             android:layout_width="20dp"
@@ -77,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="Show Profile"
             android:textColor="@color/materialGrey"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -88,7 +96,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/custom_ripple"
+        >
 
         <ImageView
             android:layout_width="20dp"
@@ -102,7 +112,7 @@
             android:layout_height="wrap_content"
             android:text="Set As Background"
             android:textColor="@color/materialGrey"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

@@ -3,7 +3,6 @@ package com.example.admin.myapplication;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -116,12 +115,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(this, 2);
-        if(isTablet(this))
-        {
+        if (isTablet(this)) {
             staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        }
-        else
-        {
+        } else {
             staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         }
 
@@ -319,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public static boolean isTablet(Context ctx){
+    public static boolean isTablet(Context ctx) {
         return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 

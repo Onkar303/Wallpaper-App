@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -18,11 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.MyImageViewPagerAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,19 +29,19 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     ImageView imageView;
     ScaleGestureDetector mscaleDetector;
     private float mScaleFactor = 1;
-    Animation openRotation, closeRotation, translateYopen, translateYclose,fadein,fadeout;
+    Animation openRotation, closeRotation, translateYopen, translateYclose, fadein, fadeout;
     boolean isOpen = false;
     String ImageUrl = null;
     ViewPager imageViewPager;
     MyImageViewPagerAdapter adapter;
     List<SplashModel> list;
     int image_position;
-    TextView sharetext,setbackgroundtext,downloadtext;
+    TextView sharetext, setbackgroundtext, downloadtext;
 
 
-    FloatingActionButton mainbutton, sharebutton, downloadbutton,setbackgroundImage;
+    FloatingActionButton mainbutton, sharebutton, downloadbutton, setbackgroundImage;
 
-    LinearLayout set_as_background_linearlayout,download_linearlayout,share_linearlayout;
+    LinearLayout set_as_background_linearlayout, download_linearlayout, share_linearlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +53,25 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     public void init() {
-        imageViewPager=(ViewPager)findViewById(R.id.image_view_pager);
-        list=new ArrayList<>();
+        imageViewPager = (ViewPager) findViewById(R.id.image_view_pager);
+        list = new ArrayList<>();
 
 
-        sharetext=(TextView)findViewById(R.id.share_text);
-        setbackgroundtext=(TextView)findViewById(R.id.set_background_text);
-        downloadtext=(TextView)findViewById(R.id.download_text);
+        sharetext = (TextView) findViewById(R.id.share_text);
+        setbackgroundtext = (TextView) findViewById(R.id.set_background_text);
+        downloadtext = (TextView) findViewById(R.id.download_text);
 
         openRotation = AnimationUtils.loadAnimation(this, R.anim.rotateopen);
         closeRotation = AnimationUtils.loadAnimation(this, R.anim.rotateclose);
         translateYopen = AnimationUtils.loadAnimation(this, R.anim.translateyopen);
 
-        fadein=AnimationUtils.loadAnimation(this,R.anim.fadein);
-        fadeout=AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        fadein = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
 
         translateYclose = AnimationUtils.loadAnimation(this, R.anim.translateyclose);
         mainbutton = (FloatingActionButton) findViewById(R.id.main_fab_button);
         sharebutton = (FloatingActionButton) findViewById(R.id.share_fab_button);
-        setbackgroundImage=(FloatingActionButton)findViewById(R.id.set_background_image);
+        setbackgroundImage = (FloatingActionButton) findViewById(R.id.set_background_image);
         downloadbutton = (FloatingActionButton) findViewById(R.id.download_fab_button);
         mainbutton.setOnClickListener(this);
         sharebutton.setOnClickListener(this);
@@ -83,9 +80,9 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
 
         //linearlayout
-        set_as_background_linearlayout=(LinearLayout)findViewById(R.id.set_as_background_linearlayout);
-        download_linearlayout=(LinearLayout)findViewById(R.id.download_linearlayout);
-        share_linearlayout=(LinearLayout)findViewById(R.id.share_linear_layout);
+        set_as_background_linearlayout = (LinearLayout) findViewById(R.id.set_as_background_linearlayout);
+        download_linearlayout = (LinearLayout) findViewById(R.id.download_linearlayout);
+        share_linearlayout = (LinearLayout) findViewById(R.id.share_linear_layout);
 
 
         //setting the visibility to invisible
@@ -102,18 +99,17 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         if (!getIntent().hasExtra("list")) {
             MyAlertDialog("didnotFetch iurl");
         } else {
-            list=(List<SplashModel>) getIntent().getSerializableExtra("list");
+            list = (List<SplashModel>) getIntent().getSerializableExtra("list");
         }
 
-        if(getIntent().hasExtra("position"))
-        {
-            image_position=getIntent().getIntExtra("position",0);
+        if (getIntent().hasExtra("position")) {
+            image_position = getIntent().getIntExtra("position", 0);
         }
 
-        adapter=new MyImageViewPagerAdapter(this,list);
+        adapter = new MyImageViewPagerAdapter(this, list);
         imageViewPager.setAdapter(adapter);
         imageViewPager.setCurrentItem(image_position);
-        mscaleDetector = new ScaleGestureDetector(this, new MyScaleListner());
+
 
         //Glide.with(this).load(lis).into(imageView);
     }
@@ -132,10 +128,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         dialog.show();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return mscaleDetector.onTouchEvent(event);
-    }
+
 
     @Override
     public void onClick(View view) {
@@ -209,8 +202,8 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.share_fab_button:
-                Intent i=new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse( ImageUrl));
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://images.unsplash.com/photo-1534290018498-d7f6511591b8?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjMzMDM1fQ&s=771b94a0d2282429c4e9bb79724238d6"));
                 startActivity(i);
                 break;
 
@@ -220,18 +213,5 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
         }
     }
-
-
-    private class MyScaleListner extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            mScaleFactor *= detector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
-            imageView.setScaleX(mScaleFactor);
-            imageView.setScaleY(mScaleFactor);
-            return true;
-        }
-    }
-
 
 }

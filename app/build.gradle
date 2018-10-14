@@ -37,5 +37,7 @@ dependencies {
     implementation 'com.jsibbold:zoomage:1.1.0'
     implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }

@@ -107,7 +107,8 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/wallpaper"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            />
 
     </LinearLayout>
 

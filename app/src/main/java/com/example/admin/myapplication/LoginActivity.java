@@ -1,21 +1,16 @@
 package com.example.admin.myapplication;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     RelativeLayout relativeLayout;
@@ -27,17 +22,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getWindow().setBackgroundDrawableResource(R.drawable.background);
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
     }
 
-    public void init()
-    {
-      login_button=(Button)findViewById(R.id.login_button);
-      login_button.setOnClickListener(this);
-
-      donthaveAccount=(TextView)findViewById(R.id.dont_have_account);
-      donthaveAccount.setOnClickListener(this);
+    public void init() {
+        login_button = (Button) findViewById(R.id.login_button);
+        login_button.setOnClickListener(this);
+        donthaveAccount = (TextView) findViewById(R.id.dont_have_account);
+        donthaveAccount.setOnClickListener(this);
 
     }
 
@@ -51,10 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         Intent i;
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.login_button:
-                i=new Intent(this,MainActivity.class);
+                i = new Intent(this, MainActivity.class);
                 startActivity(i);
 
                 //MyAlertDialog("Test");
@@ -62,16 +54,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
             case R.id.dont_have_account:
-                i=new Intent(this,SignIn.class);
+                i = new Intent(this, SignIn.class);
                 startActivity(i);
                 break;
         }
     }
 
 
-    public void MyAlertDialog(String name)
-    {
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+    public void MyAlertDialog(String name) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(name);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -87,12 +78,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-       AlertDialog dialog=builder.create();
-       dialog.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
 
     }
-
 
 
 }
