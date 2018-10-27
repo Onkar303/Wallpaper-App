@@ -65,7 +65,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:id="@+id/fab_refreshbutton"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/materialBlack"
         android:visibility="gone"/>
 
 

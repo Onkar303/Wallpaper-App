@@ -35,7 +35,7 @@ import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.example.admin.myapplication.Utils.Constants;
-import com.example.admin.myapplication.Utils.InternetBroadCastReceiver;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -49,7 +49,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, InternetBroadCastReceiver.ConnectivityReceiverListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
     RecyclerView recyclerView;
     List<Object> list;
     CustomAdapter adapter;
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.addOnScrollListener(pageScrollListner);
 
-        adapter = new CustomAdapter(list, MainActivity.this);
+        adapter = new CustomAdapter(list, MainActivity.this,drawerLayout);
 
         recyclerView.setAdapter(adapter);
 
@@ -207,12 +207,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
-
-        Toast.makeText(this, "is connected", Toast.LENGTH_SHORT).show();
-
-    }
 
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {

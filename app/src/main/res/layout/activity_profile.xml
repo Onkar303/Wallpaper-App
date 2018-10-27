@@ -184,8 +184,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/handle"
-                android:tint="@android:color/black"
+                android:src="@drawable/minus"
+                android:tint="@color/materialBlack"
                 android:background="#f2f2f2"
                 />
 
@@ -218,6 +218,9 @@
             android:layout_margin="@dimen/fab_margin"
             android:layout_gravity="bottom|end"
             android:id="@+id/refresh_list_profile"
+            android:tint="#fff"
+            android:background="#414141"
+            android:src="@drawable/reload"
             />
 
     </android.support.design.widget.CoordinatorLayout>

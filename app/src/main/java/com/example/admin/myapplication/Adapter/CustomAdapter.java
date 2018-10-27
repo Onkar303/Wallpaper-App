@@ -1,14 +1,18 @@
 package com.example.admin.myapplication.Adapter;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -18,8 +22,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,6 +46,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.example.admin.myapplication.Animations.AlertDialogAnimation;
 import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
@@ -58,7 +65,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ActivityCompat.OnRequestPermissionsResultCallback {
     List<Object> list;
     Context context;
     Bitmap bitmap;
@@ -66,12 +73,15 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     final int PROGRESSMODEL_TYPE = 1;
     int previous_position = 0;
     ConstraintSet constraintSet;
+    DrawerLayout drawerLayout;
 
 
-    public CustomAdapter(List<Object> list, Context context) {
+    public CustomAdapter(List<Object> list, Context context, DrawerLayout drawerLayout) {
         this.context = context;
         this.list = list;
+        this.drawerLayout = drawerLayout;
         constraintSet = new ConstraintSet();
+
     }
 
     @Override
@@ -125,6 +135,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Glide.with(context)
                         .setDefaultRequestOptions(requestOptions)
                         .load(model.getUrls().getRegular())
+                        .thumbnail(0.2f)
                         .apply(requestOptions.override(1000, 1000))
                         .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL))
                         .listener(new RequestListener<Drawable>() {
@@ -295,6 +306,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View v = inflater.inflate(R.layout.longpress_image, null);
             ConstraintLayout constraintLayout = (ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
             constraintSet.clone(constraintLayout);
+            constraintLayout.setBackgroundColor(Color.parseColor(model.getColor()));
             ImageView imageView = (ImageView) v.findViewById(R.id.prodifile_image_longPress);
             constraintSet.setDimensionRatio(imageView.getId(), String.valueOf(model.getWidth()) + ":" + String.valueOf(model.getHeight()));
             constraintSet.applyTo(constraintLayout);
@@ -302,7 +314,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             android.support.v7.app.AlertDialog dialog = builder.create();
             dialog.setView(v);
             dialog.show();
-            dialog.getWindow().getAttributes().windowAnimations = R.style.AppTheme;
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         } catch (NullPointerException exception) {
             exception.printStackTrace();
         }
@@ -312,19 +325,24 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void showPopUp(final SplashModel splashModel) {
         LinearLayout download, showProfile, setasbackground;
         ImageView close;
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog, null, false);
+        final AlertDialog.Builder bottomSheetDialog = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.alert_dialog_view, null, false);
         showProfile = (LinearLayout) view.findViewById(R.id.showprofile_linear_layout);
         close = (ImageView) view.findViewById(R.id.bottom_dialog_close);
         download = (LinearLayout) view.findViewById(R.id.bottom_dialog_download);
         setasbackground = (LinearLayout) view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
+        bottomSheetDialog.setView(view);
+        final AlertDialog dialog = bottomSheetDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         showProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ProfileActivity.class);
                 i.putExtra("myobject", splashModel);
                 context.startActivity(i);
-                bottomSheetDialog.cancel();
+                dialog.dismiss();
+
 
             }
         });
@@ -332,7 +350,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bottomSheetDialog.cancel();
+                dialog.dismiss();
             }
         });
 
@@ -340,7 +358,22 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DownloadAsyncTask(splashModel).execute();
+                boolean checkpermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+
+                if (!checkpermission) {
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
+                    }, 1);
+                }
+
+                if (checkpermission) {
+                    new DownloadAsyncTask(splashModel).execute();
+
+                } else {
+                    Toast.makeText(context, "No permission granted by you :'(", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+
             }
         });
 
@@ -348,14 +381,14 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             @Override
             public void onClick(View view) {
                 new setAsBackgroundAsyncTask(splashModel).execute();
-                bottomSheetDialog.dismiss();
+                dialog.dismiss();
 
             }
         });
 
         //bottomSheetDialog.getWindow().setBackgroundDrawableResource(R.drawable.background_bottom_sheet);
-        bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show();
+
+
     }
 
 
@@ -400,11 +433,13 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             WallpaperManager manager = WallpaperManager.getInstance(context);
+
             try {
                 if (bitmap == null) {
                     Toast.makeText(context, "Error :(", Toast.LENGTH_SHORT).show();
                 } else {
                     manager.setBitmap(bitmap);
+                    //manager.setBitmap(bitmap,null,false,WallpaperManager.FLAG_LOCK);
                     Toast.makeText(context, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
                 }
 
@@ -420,6 +455,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public class DownloadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
         SplashModel splashModel;
         ProgressDialog progressDialog;
+
 
         DownloadAsyncTask(SplashModel splashModel) {
             this.splashModel = splashModel;
@@ -482,10 +518,31 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(context, "Wallpaper Downloaded :)", Toast.LENGTH_SHORT).show();
+                Snackbar.make(drawerLayout, "Download Successfull :)", Snackbar.LENGTH_SHORT)
+                        .setAction("Open", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(context, "dfsf", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
             }
 
             progressDialog.dismiss();
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 

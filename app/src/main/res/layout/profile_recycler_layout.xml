@@ -68,12 +68,13 @@
         <ImageView
             android:id="@+id/recycler_item_menu_profile"
             android:layout_width="18dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:background="?attr/selectableItemBackground"
             android:src="@drawable/dotindicator"
-            android:tint="@android:color/black" />
+            android:tint="@color/materialBlack"
+            />
 
     </RelativeLayout>
 

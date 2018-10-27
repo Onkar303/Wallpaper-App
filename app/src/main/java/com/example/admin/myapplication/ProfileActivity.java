@@ -2,6 +2,7 @@ package com.example.admin.myapplication;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -188,6 +189,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         totla_photos.setText(String.valueOf(splashModel.getUser().getTotalPhotos()));
         total_likes.setText(String.valueOf(splashModel.getUser().getTotalLikes()));
         Glide.with(this).load(splashModel.getUser().getProfileImage().getLarge()).thumbnail(0.2f).into(profileImage);
+        profileImage.setBorderColor(Color.parseColor(splashModel.getColor()));
 
         //coordinatorLayout.setBackgroundColor(Color.parseColor(splashModel.getColor()));
 
