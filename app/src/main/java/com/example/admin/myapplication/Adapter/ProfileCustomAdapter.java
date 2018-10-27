@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
@@ -19,6 +20,7 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -57,11 +59,13 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     Context context;
     Bitmap bitmap;
     ConstraintSet constraintSet;
+    CoordinatorLayout coordinatorLayout;
 
 
-    public ProfileCustomAdapter(List<SplashModel> list, Context context) {
+    public ProfileCustomAdapter(List<SplashModel> list, Context context,CoordinatorLayout coordinatorLayout) {
         this.context = context;
         this.list = list;
+        this.coordinatorLayout=coordinatorLayout;
         constraintSet=new ConstraintSet();
     }
 
@@ -381,7 +385,19 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
                 Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(context, "Downloading complete :)", Toast.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, "Download Successfull :)", Snackbar.LENGTH_LONG)
+                        .setAction("Open", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i=new Intent(Intent.ACTION_GET_CONTENT);
+                                Uri uri=Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/camtest/");
+
+                                i.setDataAndType(uri,"image/*");
+                                context.startActivity(Intent.createChooser(i,"Open folder"));
+                            }
+                        })
+                        .setActionTextColor(context.getResources().getColor(R.color.materialGrey))
+                        .show();
 
             }
 

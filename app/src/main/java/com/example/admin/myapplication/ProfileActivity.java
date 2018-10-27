@@ -161,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        adapter = new ProfileCustomAdapter(list, this);
+        adapter = new ProfileCustomAdapter(list, this,coordinatorLayout);
         controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(listner);

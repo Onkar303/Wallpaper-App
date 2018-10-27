@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
@@ -515,16 +516,22 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             if (bitmap == null) {
-                Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_LONG).show();
 
             } else {
-                Snackbar.make(drawerLayout, "Download Successfull :)", Snackbar.LENGTH_SHORT)
+                Snackbar.make(drawerLayout, "Download Successfull :)", Snackbar.LENGTH_LONG)
                         .setAction("Open", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(context, "dfsf", Toast.LENGTH_SHORT).show();
+                                Intent i=new Intent(Intent.ACTION_GET_CONTENT);
+                                Uri uri=Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/camtest/");
+
+                                i.setDataAndType(uri,"resource/folder");
+                                context.startActivity(i);
                             }
-                        }).show();
+                        })
+                        .setActionTextColor(context.getResources().getColor(R.color.materialGrey))
+                        .show();
             }
 
             progressDialog.dismiss();
