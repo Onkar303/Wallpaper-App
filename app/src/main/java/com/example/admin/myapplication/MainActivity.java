@@ -3,6 +3,7 @@ package com.example.admin.myapplication;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -23,12 +24,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
@@ -69,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView toggle_drawer;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    ArrayList<View> mMenuItems = new ArrayList<>(3);
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -98,6 +104,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view_mainactivity);
+        Menu menu=navigationView.getMenu();
+
+        for(int i=0;i<menu.size();i++)
+        {
+            String id = "menuItem" + (i + 1);
+            MenuItem item=menu.findItem(getResources().getIdentifier(id, "id", getPackageName()));
+            navigationView.findViewsWithText(mMenuItems,item.getTitle(),View.FIND_VIEWS_WITH_TEXT);
+        }
+
+        Typeface typeface=Typeface.createFromAsset(getResources().getAssets(),"lgc.ttf");
+        for(int i=0;i<mMenuItems.size();i++)
+        {
+
+            ((TextView) mMenuItems.get(i)).setTypeface(typeface, Typeface.BOLD);
+        }
+
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);

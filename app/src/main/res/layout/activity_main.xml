@@ -75,41 +75,73 @@
 
 
     <android.support.design.widget.NavigationView
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
         app:elevation="16dp"
-        app:headerLayout="@layout/header_layout"
-        app:menu="@menu/menu"
+        android:background="@drawable/background_bottom_sheet"
+        app:itemTextColor="@android:color/white"
         android:id="@+id/navigation_view_mainactivity">
 
-
-
         <LinearLayout
-            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom|center">
+            android:background="@drawable/background_bottom_sheet"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/drawer_toggle_icon"
-                android:layout_margin="@dimen/fab_margin"/>
+            <View
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:background="@drawable/circular_image"
+                android:id="@+id/circular_image"
+               />
+
+
+
 
             <com.example.admin.myapplication.Utils.RecyclerTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Logout"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/fab_margin"
-                android:textStyle="bold"
+                android:text="Name"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:layout_below="@+id/circular_image"
+                android:layout_gravity="center_horizontal"
                 />
+
+            <com.example.admin.myapplication.Utils.RecyclerTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="30dp"/>
+
+            <com.example.admin.myapplication.Utils.RecyclerTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="30dp"/>
+
+
+            <com.example.admin.myapplication.Utils.RecyclerTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="30dp"/>
+
         </LinearLayout>
+
+
+
     </android.support.design.widget.NavigationView>
-
-
-
 
 </android.support.v4.widget.DrawerLayout>
 

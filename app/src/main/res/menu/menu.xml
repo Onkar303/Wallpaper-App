@@ -4,11 +4,14 @@
 
 
 
-    <item android:title="My Photos"
-        android:icon="@drawable/photocameraicon"
+    <item android:title="donate"
+        android:id="@+id/menuItem1"
         />
-    <item android:title="My Profile"
+    <item android:title="About"
+        android:id="@+id/menuItem2"
         />
+    <item android:title="Share"
+        android:id="@+id/menuItem3"/>
 
 
 
