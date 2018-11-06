@@ -19,11 +19,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +40,7 @@ import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
-import com.example.admin.myapplication.Utils.RecyclerTextView;
+import com.example.admin.myapplication.Utils.CustomTextViewMain;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -145,7 +143,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
 
         ImageView imageView_profile,menu_profile;
         View v;
-        RecyclerTextView likes_profile;
+        CustomTextViewMain likes_profile;
         ConstraintLayout constraintLayout;
         CardView cardView;
 
@@ -153,7 +151,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             super(itemView);
             v = itemView;
             imageView_profile = (ImageView) v.findViewById(R.id.user_personal_pics);
-            likes_profile=(RecyclerTextView)v.findViewById(R.id.likes_profile);
+            likes_profile=(CustomTextViewMain) v.findViewById(R.id.likes_profile);
             menu_profile=(ImageView)v.findViewById(R.id.recycler_item_menu_profile);
             constraintLayout=(ConstraintLayout)v.findViewById(R.id.profilelist_constraintlayout);
             cardView=(CardView)v.findViewById(R.id.profile_card_view);

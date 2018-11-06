@@ -22,7 +22,7 @@
             android:tint="@color/materialGrey"
             android:background="@drawable/custom_ripple"/>
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Options"
@@ -49,7 +49,7 @@
             android:src="@drawable/download_primarycolor"
             android:tint="@color/materialGrey" />
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Download"
@@ -76,7 +76,7 @@
             android:src="@drawable/user_icon" />
 
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Show Profile"
@@ -103,7 +103,7 @@
             android:src="@drawable/wallpaper" />
 
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Set As Background"

@@ -5,4 +5,5 @@
     <color name="colorAccent">#64b5f6</color>
     <color name="materialGrey">#f2f2f2</color>
     <color name="materialBlack">#414141</color>
+    <color name="handlecolor">#c7c7c7</color>
 </resources>

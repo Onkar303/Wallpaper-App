@@ -57,7 +57,7 @@
 
 
 
-            <com.example.admin.myapplication.Utils.RecyclerTextView
+            <com.example.admin.myapplication.Utils.CustomTextViewMain
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,7 +108,7 @@
 
                 />
 
-            <com.example.admin.myapplication.Utils.RecyclerTextView
+            <com.example.admin.myapplication.Utils.CustomTextViewMain
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:layout_toRightOf="@+id/user_profile_image"
                 android:maxWidth="130dp"
                 android:text="Title"
-                android:textColor="@android:color/black"
+                android:textColor="@color/materialBlack"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_toLeftOf="@+id/recycler_item_menu"
@@ -132,20 +132,20 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:id="@+id/recycler_item_menu"
-                android:tint="@android:color/black"
-                android:background="?attr/selectableItemBackground"/>
+                android:tint="@color/materialBlack"
+                android:background="?android:attr/selectableItemBackground"/>
 
 
         </RelativeLayout>
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6.5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/materialBlack"
             android:visibility="visible"
             android:text="likes"
             android:textSize="13sp"

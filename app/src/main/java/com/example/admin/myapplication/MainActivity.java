@@ -2,8 +2,8 @@ package com.example.admin.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -13,7 +13,6 @@ import android.support.animation.FlingAnimation;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -23,18 +22,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isLoading;
     int pagenumber = 1;
     Toolbar toolbar;
-    ImageView no_wifi_1;
+    ImageView no_wifi_1,settings_icon;
     ImageView toggle_drawer;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
@@ -98,35 +91,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init() {
 
-        toolbar = (Toolbar) findViewById(R.id.mainactivity_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-        navigationView = (NavigationView) findViewById(R.id.navigation_view_mainactivity);
-        Menu menu=navigationView.getMenu();
+        settings_icon=(ImageView)findViewById(R.id.setting_icon_main);
+        settings_icon.setOnClickListener(this);
 
-        for(int i=0;i<menu.size();i++)
-        {
-            String id = "menuItem" + (i + 1);
-            MenuItem item=menu.findItem(getResources().getIdentifier(id, "id", getPackageName()));
-            navigationView.findViewsWithText(mMenuItems,item.getTitle(),View.FIND_VIEWS_WITH_TEXT);
-        }
-
-        Typeface typeface=Typeface.createFromAsset(getResources().getAssets(),"lgc.ttf");
-        for(int i=0;i<mMenuItems.size();i++)
-        {
-
-            ((TextView) mMenuItems.get(i)).setTypeface(typeface, Typeface.BOLD);
-        }
-
-
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-
-
-        toggle_drawer = (ImageView) findViewById(R.id.toggle_drawer);
-        toggle_drawer.setOnClickListener(this);
 
 
         no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
@@ -202,12 +171,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.toggle_drawer:
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(Gravity.LEFT);
-                } else {
-                    drawerLayout.closeDrawer(Gravity.LEFT);
-                }
+            case R.id.setting_icon_main:
+                Intent i=new Intent(this,Setting.class);
+                startActivity(i);
                 break;
         }
 

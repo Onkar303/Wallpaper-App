@@ -1,147 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/drawerlayout"
-    tools:openDrawer="left">
+    tools:context=".MainActivity">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        >
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/no_internert"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/no_wifi"
-            android:visibility="visible"
-            android:tint="@color/materialBlack"/>
-
-        <android.support.v4.widget.NestedScrollView
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@android:color/white"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshLayout"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:scrollbarStyle="outsideInset"
-                    android:scrollbars="vertical"
-                    android:background="@drawable/background"
-                    />
-            </android.support.v4.widget.SwipeRefreshLayout>
-        </android.support.v4.widget.NestedScrollView>
-
-
-
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-            <android.support.v7.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:id="@+id/mainactivity_toolbar"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp">
-                <ImageView
+                <com.example.admin.myapplication.Utils.CustomTextViewMainBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/drawer_toggle_icon"
-                    android:padding="10dp"
-                    android:id="@+id/toggle_drawer"
+                    android:layout_centerInParent="true"
+                    android:text="@string/logo_name"
+                    android:textStyle="bold"
+                    android:textColor="@color/materialBlack"
+                    android:textSize="21sp"
                     />
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
-    </android.support.design.widget.CoordinatorLayout>
 
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting2"
+                    android:layout_marginRight="15dp"
+                    android:tint="@android:color/black"
+                    android:id="@+id/setting_icon_main"
+                    android:contentDescription="setting icon"
+                    android:background="?android:attr/selectableItemBackground"/>
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="250dp"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/materialGrey"/>
+            </RelativeLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/no_internert"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/no_wifi"
+        android:tint="@color/materialBlack"
+        android:visibility="visible" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
-        app:elevation="16dp"
-        android:background="@drawable/background_bottom_sheet"
-        app:itemTextColor="@android:color/white"
-        android:id="@+id/navigation_view_mainactivity">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_bottom_sheet"
-            android:orientation="vertical">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <View
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:background="@drawable/circular_image"
-                android:id="@+id/circular_image"
-               />
-
-
-
-
-            <com.example.admin.myapplication.Utils.RecyclerTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="#fff"
-                android:textSize="20sp"
-                android:layout_below="@+id/circular_image"
-                android:layout_gravity="center_horizontal"
-                />
-
-            <com.example.admin.myapplication.Utils.RecyclerTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="About"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="30dp"/>
-
-            <com.example.admin.myapplication.Utils.RecyclerTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Share"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="30dp"/>
-
-
-            <com.example.admin.myapplication.Utils.RecyclerTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="30dp"/>
-
-        </LinearLayout>
-
-
-
-    </android.support.design.widget.NavigationView>
-
-</android.support.v4.widget.DrawerLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:clipToPadding="false"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
 

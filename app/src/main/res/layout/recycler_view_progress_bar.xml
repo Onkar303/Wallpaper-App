@@ -6,6 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@+id/recycler_item_progress_bar"/>
+        android:id="@+id/recycler_item_progress_bar"
+        android:backgroundTint="@color/materialBlack"/>
 
 </RelativeLayout>

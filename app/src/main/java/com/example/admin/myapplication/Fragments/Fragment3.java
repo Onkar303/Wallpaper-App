@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.R;
 
 public class Fragment3 extends Fragment {
@@ -31,7 +30,7 @@ public class Fragment3 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment3,container,false);
+        View v=inflater.inflate(R.layout.intro_screen_fragment3,container,false);
         imageView=(ImageView)v.findViewById(R.id.image32);
         //
         try{

@@ -9,69 +9,78 @@
     tools:context=".ProfileActivity">
 
 
-    <ScrollView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="25dp"
+        android:fillViewport="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
             android:background="@drawable/borderlines"
             android:orientation="vertical"
-            android:weightSum="3"
+            android:weightSum="4"
             android:id="@+id/profile_container"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.example.admin.myapplication.Utils.RecyclerTextView
+                <com.example.admin.myapplication.Utils.CustomTextViewMain
                     android:id="@+id/profilename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/user_image"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:text="Name"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="40sp" />
+                    android:textColor="@color/materialBlack"
+                    android:textSize="40sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_image"
                     android:layout_width="155dp"
                     android:layout_height="155dp"
-                    android:layout_centerHorizontal="true"
                     android:src="@drawable/ic_launcher_background"
                     android:transitionName="profile_transition"
-                    app:civ_border_color="@android:color/black"
+                    app:civ_border_color="@color/materialBlack"
                     app:civ_border_width="1.5dp"
                     />
+        </LinearLayout>
 
-                <com.example.admin.myapplication.Utils.RecyclerTextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+                <com.example.admin.myapplication.Utils.CustomTextViewMain
                     android:id="@+id/bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_image"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="20dp"
                     android:padding="5dp"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
+                    android:textColor="@color/materialBlack" />
+        </LinearLayout>
 
 
             <LinearLayout
@@ -92,11 +101,11 @@
                         android:id="@+id/profile_pic"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
-                        android:tint="@android:color/black"
+                        android:tint="@color/materialBlack"
                         android:layout_centerInParent="true"
                         android:src="@drawable/photocameraicon" />
 
-                    <com.example.admin.myapplication.Utils.RecyclerTextView
+                    <com.example.admin.myapplication.Utils.CustomTextViewMain
                         android:id="@+id/total_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -104,7 +113,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="5dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/materialBlack" />
 
 
                 </LinearLayout>
@@ -122,9 +131,9 @@
                         android:layout_height="38dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/like"
-                        android:tint="@android:color/black"/>
+                        android:tint="@color/materialBlack"/>
 
-                    <com.example.admin.myapplication.Utils.RecyclerTextView
+                    <com.example.admin.myapplication.Utils.CustomTextViewMain
                         android:id="@+id/total_likes_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -132,7 +141,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="5dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/materialBlack" />
 
                 </LinearLayout>
 
@@ -143,7 +152,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.9"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <Button
@@ -154,13 +163,14 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:background="@drawable/borderline_button"
+                    android:background="@drawable/profile_button_ripple"
                     android:padding="3dp"
                     android:text="All Photos"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/materialBlack"
+                    />
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v7.widget.CardView>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
@@ -185,8 +195,8 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/minus"
-                android:tint="@color/materialBlack"
-                android:background="#f2f2f2"
+                android:tint="@color/handlecolor"
+                android:background="@android:color/white"
                 />
 
 

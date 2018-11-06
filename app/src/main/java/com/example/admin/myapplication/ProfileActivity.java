@@ -46,8 +46,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
-
-
     ProfileBottomSheetCallBack callback;
     SplashModel splashModel;
     TextView name, bio, totla_photos, total_likes;
@@ -180,11 +178,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
         name.setText(splashModel.getUser().getName());
         if (String.valueOf(splashModel.getUser().getBio()).equals("null")) {
-            bio.setText("No Bio");
+            bio.setText("Oops No bio :(");
         } else {
             bio.setText(String.valueOf(splashModel.getUser().getBio()));
         }
-
 
         totla_photos.setText(String.valueOf(splashModel.getUser().getTotalPhotos()));
         total_likes.setText(String.valueOf(splashModel.getUser().getTotalLikes()));

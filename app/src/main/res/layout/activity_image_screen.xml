@@ -40,7 +40,7 @@
 
         >
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/share_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         android:id="@+id/set_as_background_linearlayout"
         >
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/set_background_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
         android:orientation="horizontal">
 
 
-        <com.example.admin.myapplication.Utils.RecyclerTextView
+        <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/download_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

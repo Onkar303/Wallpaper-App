@@ -2,4 +2,6 @@
     <string name="app_name">My Application</string>
     <string name="title_activity_view_pager">ViewPagerActivity</string>
     <string name="title_activity_sign_in">SignIn</string>
+    <string name="logo_name">Wallpapers</string>
+    <string name="app_version">0.1</string>
 </resources>

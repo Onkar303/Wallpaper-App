@@ -47,12 +47,11 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.example.admin.myapplication.Animations.AlertDialogAnimation;
 import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
-import com.example.admin.myapplication.Utils.RecyclerTextView;
+import com.example.admin.myapplication.Utils.CustomTextViewMain;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.File;
@@ -264,7 +263,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         RelativeLayout relativeLayout, recycleritemrelativelayout;
         ImageView popupmenu;
         ProgressBar progressBar;
-        RecyclerTextView errorText;
+        CustomTextViewMain errorText;
         ConstraintLayout constraintLayout;
         ShimmerFrameLayout shimmerlayout;
 
@@ -279,7 +278,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardView = (CardView) v.findViewById(R.id.recycler_item_card);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
             popupmenu = (ImageView) v.findViewById(R.id.recycler_item_menu);
-            errorText = (RecyclerTextView) v.findViewById(R.id.loading_error_main_list);
+            errorText = (CustomTextViewMain) v.findViewById(R.id.loading_error_main_list);
             constraintLayout = (ConstraintLayout) v.findViewById(R.id.recycler_item_contraintlayout);
             shimmerlayout = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_layout);
 
