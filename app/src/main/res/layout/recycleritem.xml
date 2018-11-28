@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:id="@+id/recycler_item_relatrive_layout"
-    android:background="?android:attr/selectableItemBackground"
     >
 
 
@@ -44,7 +43,7 @@
                     android:scaleType="fitXY"
                     android:transitionName="mytransition"
                     android:adjustViewBounds="true"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:foreground="@drawable/imageview_cutom_ripple"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
