@@ -35,7 +35,7 @@
                 android:adjustViewBounds="true"
                 android:transitionName="mytransition"
                 android:padding="-1dp"
-                android:background="@drawable/imageview_cutom_ripple"
+                android:foreground="@drawable/imageview_cutom_ripple"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
