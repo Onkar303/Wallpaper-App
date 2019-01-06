@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.MyImageViewPagerAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
 
@@ -32,9 +33,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     Animation openRotation, closeRotation, translateYopen, translateYclose, fadein, fadeout;
     boolean isOpen = false;
     String ImageUrl = null;
-    ViewPager imageViewPager;
-    MyImageViewPagerAdapter adapter;
-    List<SplashModel> list;
+    SplashModel model;
     int image_position;
     TextView sharetext, setbackgroundtext, downloadtext;
 
@@ -53,8 +52,8 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     public void init() {
-        imageViewPager = (ViewPager) findViewById(R.id.image_view_pager);
-        list = new ArrayList<>();
+
+
 
 
         sharetext = (TextView) findViewById(R.id.share_text);
@@ -94,24 +93,16 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         downloadtext.setVisibility(View.GONE);
         setbackgroundtext.setVisibility(View.GONE);
 
+        imageView = (ImageView) findViewById(R.id.ImageScreenImageView);
 
-        imageView = (ImageView) findViewById(R.id.imageViewscreen);
-        if (!getIntent().hasExtra("list")) {
-            MyAlertDialog("didnotFetch iurl");
+
+        if (!getIntent().hasExtra("model")) {
+            MyAlertDialog("didnotFetch url");
         } else {
-            list = (List<SplashModel>) getIntent().getSerializableExtra("list");
+            model=(SplashModel) getIntent().getSerializableExtra("model");
         }
 
-        if (getIntent().hasExtra("position")) {
-            image_position = getIntent().getIntExtra("position", 0);
-        }
-
-        adapter = new MyImageViewPagerAdapter(this, list);
-        imageViewPager.setAdapter(adapter);
-        imageViewPager.setCurrentItem(image_position);
-
-
-        //Glide.with(this).load(lis).into(imageView);
+        Glide.with(this).load(model.getUrls().getFull()).into(imageView);
     }
 
     public void MyAlertDialog(String name) {

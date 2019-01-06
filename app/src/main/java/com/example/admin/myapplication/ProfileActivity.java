@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     NestedScrollView nestedScrollView;
     BottomSheetBehavior bottomSheetBehavior;
     CoordinatorLayout coordinatorLayout;
-    FloatingActionButton floatingActionButton;
+    FloatingActionButton refreshButton;
     LayoutAnimationController controller;
     RelativeLayout bottom_sheet_dragger;
     ImageView nowifi;
@@ -81,6 +81,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void init() {
+
+        refreshButton = (FloatingActionButton) findViewById(R.id.refresh_list_profile_fab);
+        refreshButton.setOnClickListener(this);
         //swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.profile_swiperefreshlayout);
         // nestedScrollView=(NestedScrollView)findViewById(R.id.nestedscrollview_bottomsheet);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
@@ -196,14 +199,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fab_refreshbutton:
-                BottomSheetChangeFunction();
-                break;
+
 
             case R.id.all_profile_photos:
                 BottomSheetChangeFunction();
                 break;
 
+            case R.id.refresh_list_profile_fab:
+                pagenumber = 0;
+                list.clear();
+                adapter.notifyDataSetChanged();
+                new MyAsyncTask(pagenumber).execute();
+                break;
         }
     }
 

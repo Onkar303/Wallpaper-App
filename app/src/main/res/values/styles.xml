@@ -14,8 +14,9 @@
     </style>
 
 
-    <style name="CustomTheme" parent="android:Theme.Dialog">
+    <style name="CustomTheme">
         <item name="android:windowEnterAnimation">@anim/enteranimation</item>
+        <item name="android:windowExitAnimation">@anim/exitanimation</item>
     </style>
 
 

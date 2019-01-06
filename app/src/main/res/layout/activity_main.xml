@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@android:color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,11 +42,7 @@
                     android:contentDescription="setting icon"
                     android:background="?android:attr/selectableItemBackground"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/materialGrey"/>
+
             </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>

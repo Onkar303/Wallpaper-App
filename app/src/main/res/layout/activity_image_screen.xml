@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ImageScreen">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/image_view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -23,21 +19,18 @@
         android:src="@drawable/add_icon"
         android:tint="@color/materialGrey"
         app:backgroundTint="@color/materialBlack"
-        app:fabSize="normal"
-        />
+        app:fabSize="normal" />
 
 
     <LinearLayout
+        android:id="@+id/share_linear_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="89dp"
+        android:layout_marginBottom="84dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/share_linear_layout"
-
-
         >
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
@@ -61,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:src="@drawable/share"
             app:backgroundTint="@color/materialBlack"
@@ -72,15 +65,15 @@
 
 
     <LinearLayout
+        android:id="@+id/set_as_background_linearlayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="214dp"
+        android:layout_marginBottom="207dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/set_as_background_linearlayout"
-        >
+        android:paddingBottom="5dp">
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/set_background_text"
@@ -101,28 +94,28 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/set_background_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:src="@drawable/wallpaper"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini"
-            />
+            app:fabSize="mini" />
 
     </LinearLayout>
 
 
     <LinearLayout
+        android:id="@+id/download_linearlayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="152dp"
+        android:layout_marginBottom="145dp"
         android:gravity="center"
-        android:id="@+id/download_linearlayout"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
 
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
@@ -147,14 +140,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:src="@drawable/download"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini"
-            />
+            app:fabSize="mini" />
 
     </LinearLayout>
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ImageScreenImageView"/>
+
+
+
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

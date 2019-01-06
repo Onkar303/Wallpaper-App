@@ -16,11 +16,10 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
     Context c;
 
 
-    public MyViewPagerAdapter(FragmentManager fm,List<Fragment> list,Context c)
-    {
-        super (fm);
-        this.c=c;
-        this.list=list;
+    public MyViewPagerAdapter(FragmentManager fm, List<Fragment> list, Context c) {
+        super(fm);
+        this.c = c;
+        this.list = list;
     }
 
     @Override

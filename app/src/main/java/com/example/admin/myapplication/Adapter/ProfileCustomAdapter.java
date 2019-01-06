@@ -60,29 +60,28 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     CoordinatorLayout coordinatorLayout;
 
 
-    public ProfileCustomAdapter(List<SplashModel> list, Context context,CoordinatorLayout coordinatorLayout) {
+    public ProfileCustomAdapter(List<SplashModel> list, Context context, CoordinatorLayout coordinatorLayout) {
         this.context = context;
         this.list = list;
-        this.coordinatorLayout=coordinatorLayout;
-        constraintSet=new ConstraintSet();
+        this.coordinatorLayout = coordinatorLayout;
+        constraintSet = new ConstraintSet();
     }
-
 
 
     @NonNull
     @Override
     public ProfileCustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.profile_recycler_layout, parent, false);
-            ProfileCustomAdapter.MyViewHolder holder = new ProfileCustomAdapter.MyViewHolder(v);
-            return holder;
+        View v = inflater.inflate(R.layout.profile_recycler_layout, parent, false);
+        ProfileCustomAdapter.MyViewHolder holder = new ProfileCustomAdapter.MyViewHolder(v);
+        return holder;
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ProfileCustomAdapter.MyViewHolder holder, final int position) {
 
-        holder.likes_profile.setText(String.valueOf(list.get(position).getLikes())+" likes");
+        holder.likes_profile.setText(String.valueOf(list.get(position).getLikes()) + " likes");
 
 
         holder.imageView_profile.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +89,8 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ImageScreen.class);
-                i.putExtra("list",(Serializable) list);
-                i.putExtra("position",position);
+                i.putExtra("list", (Serializable) list);
+                i.putExtra("position", position);
 //                ActivityOptionsCompat options = ActivityOptionsCompat.
 //                        makeSceneTransitionAnimation((Activity) context, holder.imageView, holder.imageView.getTransitionName());
 //
@@ -101,7 +100,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         });
 
         constraintSet.clone(holder.constraintLayout);
-        constraintSet.setDimensionRatio(holder.imageView_profile.getId(),String.valueOf(list.get(position).getWidth())+":"+String.valueOf(list.get(position).getHeight()));
+        constraintSet.setDimensionRatio(holder.imageView_profile.getId(), String.valueOf(list.get(position).getWidth()) + ":" + String.valueOf(list.get(position).getHeight()));
         constraintSet.applyTo(holder.constraintLayout);
 
         holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
@@ -118,7 +117,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         holder.menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               showPopUp(list.get(position));
+                showPopUp(list.get(position));
             }
         });
 
@@ -137,11 +136,10 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     }
 
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        ImageView imageView_profile,menu_profile;
+        ImageView imageView_profile, menu_profile;
         View v;
         CustomTextViewMain likes_profile;
         ConstraintLayout constraintLayout;
@@ -151,10 +149,10 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             super(itemView);
             v = itemView;
             imageView_profile = (ImageView) v.findViewById(R.id.user_personal_pics);
-            likes_profile=(CustomTextViewMain) v.findViewById(R.id.likes_profile);
-            menu_profile=(ImageView)v.findViewById(R.id.recycler_item_menu_profile);
-            constraintLayout=(ConstraintLayout)v.findViewById(R.id.profilelist_constraintlayout);
-            cardView=(CardView)v.findViewById(R.id.profile_card_view);
+            likes_profile = (CustomTextViewMain) v.findViewById(R.id.likes_profile);
+            menu_profile = (ImageView) v.findViewById(R.id.recycler_item_menu_profile);
+            constraintLayout = (ConstraintLayout) v.findViewById(R.id.profilelist_constraintlayout);
+            cardView = (CardView) v.findViewById(R.id.profile_card_view);
         }
     }
 
@@ -163,24 +161,25 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.longpress_image, null);
-            ConstraintLayout constraintLayout=(ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
+            ConstraintLayout constraintLayout = (ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
             constraintSet.clone(constraintLayout);
             constraintLayout.setBackgroundColor(Color.parseColor(model.getColor()));
             ImageView imageView = (ImageView) v.findViewById(R.id.prodifile_image_longPress);
-            constraintSet.setDimensionRatio(imageView.getId(),String.valueOf(model.getWidth())+":"+String.valueOf(model.getHeight()));
+            constraintSet.setDimensionRatio(imageView.getId(), String.valueOf(model.getWidth()) + ":" + String.valueOf(model.getHeight()));
             constraintSet.applyTo(constraintLayout);
             Glide.with(context).load(model.getUrls().getRegular()).into(imageView);
             AlertDialog dialog = builder.create();
             dialog.setView(v);
-            dialog.show();
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
+            dialog.show();
+
 
         } catch (NullPointerException exception) {
             exception.printStackTrace();
         }
 
     }
-
 
 
     public void showPopUp(final SplashModel splashModel) {
@@ -194,8 +193,9 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         setasbackground = (LinearLayout) view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
         bottomSheetDialog.setView(view);
         final android.app.AlertDialog dialog = bottomSheetDialog.create();
-        dialog.show();
+        dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
         showProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,7 +241,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         setasbackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // new CustomAdapter.setAsBackgroundAsyncTask(splashModel).execute();
+                // new CustomAdapter.setAsBackgroundAsyncTask(splashModel).execute();
                 new ProfileCustomAdapter.setAsBackgroundAsyncTask(splashModel).execute();
                 dialog.dismiss();
 
@@ -252,8 +252,6 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
 
 
     }
-
-
 
 
     public class setAsBackgroundAsyncTask extends AsyncTask<String, Void, Bitmap> {
@@ -316,11 +314,9 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         }
     }
 
-    public class DownloadAsyncTask extends AsyncTask<Void, Void, Bitmap>
-    {
+    public class DownloadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
         SplashModel splashModel;
         ProgressDialog progressDialog;
-
 
         DownloadAsyncTask(SplashModel splashModel) {
             this.splashModel = splashModel;
@@ -387,11 +383,11 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
                         .setAction("Open", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent i=new Intent(Intent.ACTION_GET_CONTENT);
-                                Uri uri=Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/camtest/");
+                                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                                Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/camtest/");
 
-                                i.setDataAndType(uri,"image/*");
-                                context.startActivity(Intent.createChooser(i,"Open folder"));
+                                i.setDataAndType(uri, "image/*");
+                                context.startActivity(Intent.createChooser(i, "Open folder"));
                             }
                         })
                         .setActionTextColor(context.getResources().getColor(R.color.materialGrey))
@@ -402,7 +398,6 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             progressDialog.dismiss();
         }
     }
-
 
 
 }

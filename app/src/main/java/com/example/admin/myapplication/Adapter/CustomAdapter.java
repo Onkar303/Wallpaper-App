@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -219,9 +220,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(context, ImageScreen.class);
-                        i.putExtra("list", (Serializable) list);
-                        i.putExtra("position", position);
-
+                        i.putExtra("model", model);
 //                    ActivityOptionsCompat options = ActivityOptionsCompat.
 //                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
 //                    context.startActivity(i,options.toBundle());
@@ -313,8 +312,9 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Glide.with(context).load(model.getUrls().getRegular()).into(imageView);
             android.support.v7.app.AlertDialog dialog = builder.create();
             dialog.setView(v);
-            dialog.show();
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
+            dialog.show();
 
         } catch (NullPointerException exception) {
             exception.printStackTrace();
@@ -333,8 +333,9 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         setasbackground = (LinearLayout) view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
         bottomSheetDialog.setView(view);
         final AlertDialog dialog = bottomSheetDialog.create();
-        dialog.show();
+        dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
         showProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
