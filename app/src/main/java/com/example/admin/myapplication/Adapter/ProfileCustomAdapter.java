@@ -89,8 +89,8 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ImageScreen.class);
-                i.putExtra("list", (Serializable) list);
-                i.putExtra("position", position);
+                i.putExtra("model",list.get(position));
+//                i.putExtra("position", position);
 //                ActivityOptionsCompat options = ActivityOptionsCompat.
 //                        makeSceneTransitionAnimation((Activity) context, holder.imageView, holder.imageView.getTransitionName());
 //
