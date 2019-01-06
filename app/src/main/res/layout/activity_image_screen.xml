@@ -4,7 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageScreen">
+    tools:context=".ImageScreen"
+    android:id="@+id/ImageScreenParentLayout">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/ImageScreenProgressBar"/>
+
+
+
+    <com.jsibbold.zoomage.ZoomageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ImageScreenImageView"
+        android:transitionName="mytransition"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:layout_centerInParent="true"
+        app:zoomage_restrictBounds="true"
+        app:zoomage_animateOnReset="true"
+        app:zoomage_autoResetMode="UNDER"
+        app:zoomage_autoCenter="true"
+        app:zoomage_zoomable="true"
+        app:zoomage_translatable="true"
+        app:zoomage_minScale="0.6"
+        app:zoomage_maxScale="8"
+        />
+
 
 
 
@@ -31,6 +59,7 @@
         android:layout_marginBottom="84dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:background="@drawable/imageview_cutom_ripple"
         >
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
@@ -73,7 +102,9 @@
         android:layout_marginBottom="207dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:background="@drawable/imageview_cutom_ripple"
+        >
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/set_background_text"
@@ -115,7 +146,9 @@
         android:layout_marginBottom="145dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:background="@drawable/imageview_cutom_ripple"
+        >
 
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
@@ -150,10 +183,6 @@
 
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ImageScreenImageView"/>
 
 
 
