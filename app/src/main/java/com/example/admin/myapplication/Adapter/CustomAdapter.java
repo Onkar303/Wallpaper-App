@@ -56,6 +56,7 @@ import com.example.admin.myapplication.ImageScreen;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
+import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.CustomTextViewMain;
 import com.example.admin.myapplication.Utils.RSBlurProcessor;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -123,7 +124,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
-
         try {
 
 
@@ -179,7 +179,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.popupmenu.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showPopUp(model);
+                        CommonUtils.showPopUp(context,model,drawerLayout);
                     }
                 });
 //                if(position>previous_position)
@@ -213,7 +213,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        ALertDialog(model);
+                        CommonUtils.longPressImage(context,model);
                         return true;
                     }
                 });
@@ -306,245 +306,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public void ALertDialog(SplashModel model) {
-        try {
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.longpress_image, null);
-            ConstraintLayout constraintLayout = (ConstraintLayout) v.findViewById(R.id.longpress_contraintlayout);
-            constraintSet.clone(constraintLayout);
-            constraintLayout.setBackgroundColor(Color.parseColor(model.getColor()));
-            ImageView imageView = (ImageView) v.findViewById(R.id.prodifile_image_longPress);
-            constraintSet.setDimensionRatio(imageView.getId(), String.valueOf(model.getWidth()) + ":" + String.valueOf(model.getHeight()));
-            constraintSet.applyTo(constraintLayout);
-            Glide.with(context).load(model.getUrls().getRegular()).into(imageView);
-            android.support.v7.app.AlertDialog dialog = builder.create();
-            dialog.setView(v);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
-            dialog.show();
-        } catch (NullPointerException exception) {
-            exception.printStackTrace();
-        }
-
-    }
-
-    public void showPopUp(final SplashModel splashModel) {
-        LinearLayout download, showProfile, setasbackground;
-        ImageView close;
-        final AlertDialog.Builder bottomSheetDialog = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.alert_dialog_view, null, false);
-        showProfile = (LinearLayout) view.findViewById(R.id.showprofile_linear_layout);
-        close = (ImageView) view.findViewById(R.id.bottom_dialog_close);
-        download = (LinearLayout) view.findViewById(R.id.bottom_dialog_download);
-        setasbackground = (LinearLayout) view.findViewById(R.id.set_as_background_linearlayout_bottomsheet);
-        bottomSheetDialog.setView(view);
-        final AlertDialog dialog = bottomSheetDialog.create();
-        dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-        showProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context, ProfileActivity.class);
-                i.putExtra("myobject", splashModel);
-                context.startActivity(i);
-                dialog.dismiss();
-
-
-            }
-        });
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-
-
-        download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean checkpermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-
-                if (!checkpermission) {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
-                    }, 1);
-                }
-
-                if (checkpermission) {
-                    new DownloadAsyncTask(splashModel).execute();
-
-                } else {
-                    Toast.makeText(context, "No permission granted by you :'(", Toast.LENGTH_SHORT).show();
-                }
-                dialog.dismiss();
-
-            }
-        });
-
-        setasbackground.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new setAsBackgroundAsyncTask(splashModel).execute();
-                dialog.dismiss();
-
-            }
-        });
-
-        //bottomSheetDialog.getWindow().setBackgroundDrawableResource(R.drawable.background_bottom_sheet);
-
-
-    }
-
-
-    public class setAsBackgroundAsyncTask extends AsyncTask<String, Void, Bitmap> {
-
-        ProgressDialog progressDialog;
-        SplashModel splashModel;
-        Bitmap bitmap;
-
-        setAsBackgroundAsyncTask(SplashModel splashModel) {
-            this.splashModel = splashModel;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setTitle("Downloading");
-            progressDialog.setMessage("In progress.....");
-            progressDialog.setIndeterminate(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-
-            String imageURL = splashModel.getUrls().getRegular();
-
-            Bitmap bitmap = null;
-            try {
-                // Download Image from URL
-                InputStream input = new java.net.URL(imageURL).openStream();
-                // Decode Bitmap
-                bitmap = BitmapFactory.decodeStream(input);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            WallpaperManager manager = WallpaperManager.getInstance(context);
-
-            try {
-                if (bitmap == null) {
-                    Toast.makeText(context, "Error :(", Toast.LENGTH_SHORT).show();
-                } else {
-                    manager.setBitmap(bitmap);
-                    //manager.setBitmap(bitmap,null,false,WallpaperManager.FLAG_LOCK);
-                    Toast.makeText(context, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-
-            }
-            progressDialog.dismiss();
-        }
-    }
-
-    public class DownloadAsyncTask extends AsyncTask<Void, Void, Bitmap> {
-        SplashModel splashModel;
-        ProgressDialog progressDialog;
-
-
-        DownloadAsyncTask(SplashModel splashModel) {
-            this.splashModel = splashModel;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setTitle("Downloading");
-            progressDialog.setMessage("In Progress...");
-            progressDialog.setIndeterminate(false);
-            progressDialog.show();
-
-
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... voids) {
-
-            String imageURL = splashModel.getUrls().getRegular();
-
-            Bitmap bitmap = null;
-            try {
-                // Download Image from URL
-                InputStream input = new java.net.URL(imageURL).openStream();
-                // Decode Bitmap
-                bitmap = BitmapFactory.decodeStream(input);
-
-                FileOutputStream outStream = null;
-                File sdCard = Environment.getExternalStorageDirectory();
-                File dir = new File(sdCard.getAbsolutePath() + "/camtest");
-                if (!dir.exists() && !dir.isDirectory()) {
-                    dir.mkdirs();
-                }
-                String fileName = String.format("%d.jpg", System.currentTimeMillis());
-                File outFile = new File(dir, fileName);
-
-                outStream = new FileOutputStream(outFile);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-                outStream.flush();
-                outStream.close();
-                //Toast.makeText(context, "Wallpaper Downloaded", Toast.LENGTH_SHORT).show();
-
-                Log.d(TAG, "onPictureTaken - wrote to " + outFile.getAbsolutePath());
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                //Toast.makeText(context, "Error Downloading wallpaper", Toast.LENGTH_SHORT).show();
-
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if (bitmap == null) {
-                Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_LONG).show();
-
-            } else {
-                Snackbar.make(drawerLayout, "Download Successfull :)", Snackbar.LENGTH_LONG)
-                        .setAction("Open", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent i=new Intent(Intent.ACTION_GET_CONTENT);
-                                Uri uri=Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/camtest/");
-
-                                i.setDataAndType(uri,"resource/folder");
-                                context.startActivity(i);
-                            }
-                        })
-                        .setActionTextColor(context.getResources().getColor(R.color.materialGrey))
-                        .show();
-            }
-
-            progressDialog.dismiss();
-        }
-    }
 
 
     @Override
