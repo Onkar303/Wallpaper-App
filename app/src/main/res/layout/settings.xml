@@ -14,8 +14,6 @@
         android:layout_margin="10dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
-
-
         >
 
         <LinearLayout
@@ -100,7 +98,9 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:background="?attr/selectableItemBackground">
+                android:clickable="true"
+                android:foreground="@drawable/custom_ripple"
+                android:id="@+id/developer_text_layout">
 
 
                 <com.example.admin.myapplication.Utils.CustomTextViewMainBold
@@ -121,7 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="?attr/selectableItemBackground">
+                android:clickable="true"
+                android:foreground="@drawable/custom_ripple">
 
 
                 <com.example.admin.myapplication.Utils.CustomTextViewMainBold
@@ -152,7 +153,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:background="?attr/selectableItemBackground">
+                android:foreground="@drawable/custom_ripple"
+                android:clickable="true">
 
                 <com.example.admin.myapplication.Utils.CustomTextViewMainBold
                     android:layout_width="wrap_content"

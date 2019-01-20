@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.animation.FlingAnimation;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ArrayList<View> mMenuItems = new ArrayList<>(3);
+    CoordinatorLayout mailLayout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settings_icon=(ImageView)findViewById(R.id.setting_icon_main);
         settings_icon.setOnClickListener(this);
 
+        mailLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
 
 
         no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
@@ -150,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.addOnScrollListener(pageScrollListner);
 
-        adapter = new CustomAdapter(list, MainActivity.this,drawerLayout);
+        adapter = new CustomAdapter(list, MainActivity.this,drawerLayout,mailLayout);
 
         recyclerView.setAdapter(adapter);
 

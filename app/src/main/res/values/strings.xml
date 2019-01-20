@@ -4,4 +4,6 @@
     <string name="title_activity_sign_in">SignIn</string>
     <string name="logo_name">Wallpapers</string>
     <string name="app_version">0.1</string>
+    <string name="Developer_Statement">Thank you for using my app :) , feel free to give a review about the app and if you can , kindly donate</string>
+    <string name="Developer_Name">Onkar Kalpavriksha</string>
 </resources>

@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'jp.wasabeef:blurry:3.0.0'
 
 
 }

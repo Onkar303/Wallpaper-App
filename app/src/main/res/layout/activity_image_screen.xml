@@ -59,7 +59,6 @@
         android:layout_marginBottom="84dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@drawable/imageview_cutom_ripple"
         >
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
@@ -74,7 +73,8 @@
             android:padding="6dp"
             android:text="Share"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:foreground="@drawable/imageview_cutom_ripple"/>
 
 
         <android.support.design.widget.FloatingActionButton
@@ -87,7 +87,8 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/share"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            android:foreground="@drawable/imageview_cutom_ripple"/>
 
 
     </LinearLayout>
@@ -103,7 +104,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:background="@drawable/imageview_cutom_ripple"
+
         >
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
@@ -116,6 +117,7 @@
             android:layout_toLeftOf="@+id/share_fab_button"
             android:background="@drawable/floating_action_button_title_background"
             android:elevation="4dp"
+            android:foreground="@drawable/imageview_cutom_ripple"
             android:padding="6dp"
             android:text="Set As Background"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -132,7 +134,8 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/wallpaper"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            android:foreground="@drawable/imageview_cutom_ripple"/>
 
     </LinearLayout>
 
@@ -147,7 +150,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:background="@drawable/imageview_cutom_ripple"
+
         >
 
 
@@ -164,7 +167,8 @@
             android:padding="6dp"
             android:text="Download"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:foreground="@drawable/imageview_cutom_ripple"/>
 
 
         <android.support.design.widget.FloatingActionButton
@@ -177,17 +181,9 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/download"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            android:foreground="@drawable/imageview_cutom_ripple"/>
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
 
 </android.support.design.widget.CoordinatorLayout>
