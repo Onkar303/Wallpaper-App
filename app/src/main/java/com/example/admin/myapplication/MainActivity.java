@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.animation.FlingAnimation;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -29,10 +32,13 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
+import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
+import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.Constants;
 
 import com.google.gson.Gson;
@@ -48,7 +54,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,ConfigureDarkTheme{
     RecyclerView recyclerView;
     List<Object> list;
     CustomAdapter adapter;
@@ -69,7 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ArrayList<View> mMenuItems = new ArrayList<>(3);
-    CoordinatorLayout mailLayout;
+    CoordinatorLayout mailLayout,mainLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    TextView title;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -88,17 +97,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        if(CommonUtils.getThemePreference(this))
+        {
+            if(recyclerView != null)
+            {
+                recyclerView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                collapsingToolbarLayout.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+                title.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                settings_icon.setColorFilter(Color.argb(255,255,255,255));
+
+            }
+
+        }
+        else
+        {
+            if(recyclerView != null)
+            {
+                recyclerView.setBackgroundColor(Color.WHITE);
+                collapsingToolbarLayout.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                title.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                settings_icon.setColorFilter(Color.argb(0,0,0,0));
+
+            }
+
+        }
 
     }
 
     public void init() {
 
 
+        mainLayout = (CoordinatorLayout)findViewById(R.id.mainLayout);
+
+        CommonUtils.getTheme(this,this);
+        Setting.theme = this;
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.mainscreen_collapsing_toolbar);
+        title = (TextView)findViewById(R.id.mainscreen_title);
+
 
         settings_icon=(ImageView)findViewById(R.id.setting_icon_main);
         settings_icon.setOnClickListener(this);
 
         mailLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
+
+
+
 
 
         no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
@@ -134,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
             }
-
             @Override
             public int getTotalPageCount() {
                 return 100;
@@ -152,9 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         recyclerView.addOnScrollListener(pageScrollListner);
-
         adapter = new CustomAdapter(list, MainActivity.this,drawerLayout,mailLayout);
-
         recyclerView.setAdapter(adapter);
 
 
@@ -168,8 +209,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             no_wifi_1.setVisibility(View.VISIBLE);
         }
 
-
     }
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -198,6 +241,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void isDark(boolean isDark) {
+        if(isDark)
+        {
+            if(recyclerView != null)
+            {
+                recyclerView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                collapsingToolbarLayout.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+                title.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                settings_icon.setColorFilter(Color.argb(255,255,255,255));
+
+            }
+
+        }
+        else
+        {
+            if(recyclerView != null)
+            {
+                recyclerView.setBackgroundColor(Color.WHITE);
+                collapsingToolbarLayout.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                title.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                settings_icon.setColorFilter(Color.argb(0,0,0,0));
+
+            }
+
+        }
+    }
 
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.CustomAdapter;
+import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
@@ -161,5 +163,30 @@ public class CommonUtils {
         }
         return false;
     }
+
+    public static void configureDarkTheme(Context context,boolean isDark)
+    {
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constants.DARK_THEME,Context.MODE_PRIVATE).edit();
+        editor.putBoolean(Constants.IS_DARK,isDark);
+        editor.apply();
+
+    }
+
+
+    public static boolean getThemePreference(Context context)
+    {
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.DARK_THEME,Context.MODE_PRIVATE);
+        boolean isDark = preferences.getBoolean(Constants.IS_DARK,false);
+        return isDark;
+    }
+
+
+    public static void getTheme(Context context,ConfigureDarkTheme theme)
+    {
+        theme.isDark(getThemePreference(context));
+    }
+
+
 
 }

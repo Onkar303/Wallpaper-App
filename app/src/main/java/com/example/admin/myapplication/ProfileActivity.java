@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -28,8 +29,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.ProfileCustomAdapter;
+import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
+import com.example.admin.myapplication.Utils.CommonUtils;
+import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.ProfileBottomSheetCallBack;
 import com.google.gson.Gson;
 
@@ -45,7 +49,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, ConfigureDarkTheme {
     ProfileBottomSheetCallBack callback;
     SplashModel splashModel;
     TextView name, bio, totla_photos, total_likes;
@@ -61,13 +65,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     FloatingActionButton refreshButton;
     LayoutAnimationController controller;
     RelativeLayout bottom_sheet_dragger;
-    ImageView nowifi;
+    ImageView nowifi,total_likes_image,total_photos_image,handle_image;
     Button showAllPhotos;
     GridLayoutManager gridLayoutManager;
     PageScrollListner listner;
     LinearLayout linearLayout;
     boolean isLoading;
     int pagenumber = 1;
+    CardView cardView;
 
 
     @Override
@@ -77,10 +82,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
+        Setting.theme = this;
         getData();
     }
 
     public void init() {
+
 
         refreshButton = (FloatingActionButton) findViewById(R.id.refresh_list_profile_fab);
         refreshButton.setOnClickListener(this);
@@ -92,12 +99,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         linearLayout = (LinearLayout) findViewById(R.id.profile_container);
-
-
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.profile_coordinator);
-
         nowifi = (ImageView) findViewById(R.id.bottom_sheet_nowifi);
 
+        cardView = (CardView)findViewById(R.id.profileCardView);
 
         showAllPhotos = (Button) findViewById(R.id.all_profile_photos);
         showAllPhotos.setOnClickListener(this);
@@ -113,6 +118,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         //floatingActionButton.setBackgroundColor(Color.parseColor(splashModel.getColor()));
 
+
+        handle_image = (ImageView)findViewById(R.id.handle_image);
+        total_likes_image =(ImageView)findViewById(R.id.total_likes);
+        total_photos_image = (ImageView)findViewById(R.id.profile_pic);
         list = new ArrayList<>();
         name = (TextView) findViewById(R.id.profilename);
         bio = (TextView) findViewById(R.id.bio);
@@ -199,8 +208,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
-
             case R.id.all_profile_photos:
                 BottomSheetChangeFunction();
                 break;
@@ -214,6 +221,47 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    @Override
+    public void isDark(boolean isDark) {
+        if(isDark)
+        {
+             coordinatorLayout.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             cardView.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+             total_likes.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+             totla_photos.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+             bio.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+             name.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+             total_photos_image.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+             total_likes_image.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+             showAllPhotos.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+             recyclerView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             handle_image.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             handle_image.setColorFilter(Color.BLACK);
+
+        }
+        else{
+             coordinatorLayout.setBackgroundColor(Color.WHITE);
+             cardView.setBackgroundColor(Color.WHITE);
+             total_likes.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             totla_photos.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             bio.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             name.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             total_photos_image.setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK));
+             total_likes_image.setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK));
+             showAllPhotos.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+             recyclerView.setBackgroundColor(Color.WHITE);
+             handle_image.setBackgroundColor(Color.WHITE);
+             handle_image.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+        }
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isDark(CommonUtils.getThemePreference(this));
+    }
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
 

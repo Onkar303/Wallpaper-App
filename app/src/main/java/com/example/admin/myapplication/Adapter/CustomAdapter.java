@@ -53,9 +53,11 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.admin.myapplication.ImageScreen;
+import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
+import com.example.admin.myapplication.Setting;
 import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.CustomTextViewMain;
 import com.example.admin.myapplication.Utils.RSBlurProcessor;
@@ -86,12 +88,14 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     View view;
 
 
+
     public CustomAdapter(List<Object> list, Context context, DrawerLayout drawerLayout,View view) {
         this.context = context;
         this.list = list;
         this.drawerLayout = drawerLayout;
         constraintSet = new ConstraintSet();
         this.view = view;
+
     }
 
     @Override

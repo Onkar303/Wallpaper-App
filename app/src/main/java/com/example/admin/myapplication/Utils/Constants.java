@@ -10,4 +10,16 @@ public class Constants {
 
     public static final String PERMISSION_NOT_GRANTED = "No permission granted by you :'(";
 
+    public static final String MATERIAL_BLACK = "#414141";
+    public static final String MATERIAL_GGREY = "#f2f2f2";
+
+    public static final String COLOR_PRIMARY = "#383c48";
+    public static final String COLOR_PRMIARY_DARK = "#20232B";
+
+    public static final String DARK_THEME = "dark_theme";
+    public static final String IS_DARK = "is_dark";
+
+    public static final String TOOL_BAR_COLOR_DARK = "#2B2B2B";
+
+
 }

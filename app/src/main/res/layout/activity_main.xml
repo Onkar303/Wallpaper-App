@@ -14,8 +14,9 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@android:color/white"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:background="@color/materialGrey"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:id="@+id/mainscreen_collapsing_toolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -29,11 +30,13 @@
                     android:textStyle="bold"
                     android:textColor="@color/materialBlack"
                     android:textSize="21sp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/mainscreen_title"
                     />
 
                 <ImageView
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/setting2"
