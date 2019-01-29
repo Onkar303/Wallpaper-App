@@ -4,14 +4,20 @@ import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -37,6 +43,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.admin.myapplication.Adapter.MyImageViewPagerAdapter;
 import com.example.admin.myapplication.Model.SplashModel;
+import com.example.admin.myapplication.Utils.CommonUtils;
+import com.example.admin.myapplication.Utils.Constants;
 import com.jsibbold.zoomage.ZoomageView;
 
 import java.io.File;
@@ -69,6 +77,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
     CoordinatorLayout coordinatorLayout;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +87,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void init() {
 
 
@@ -126,6 +136,45 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         setbackgroundtext.setVisibility(View.GONE);
 
         imageView = (ZoomageView) findViewById(R.id.ImageScreenImageView);
+
+        if(CommonUtils.getThemePreference(this))
+        {
+          imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+          progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+            progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY), PorterDuff.Mode.SRC_IN);
+          mainbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+          setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+          downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+          sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+
+            sharetext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            downloadtext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            setbackgroundtext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+
+            sharetext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            downloadtext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            setbackgroundtext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+        }
+        else
+        {
+            imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+
+            progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK), PorterDuff.Mode.SRC_IN);
+            mainbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+            setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+            downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+            sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+
+            sharetext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            downloadtext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            setbackgroundtext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+
+            sharetext.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            downloadtext.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            setbackgroundtext.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+        }
+
 
 
         if (!getIntent().hasExtra("model")) {

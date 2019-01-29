@@ -59,6 +59,7 @@ import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Setting;
 import com.example.admin.myapplication.Utils.CommonUtils;
+import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.CustomTextViewMain;
 import com.example.admin.myapplication.Utils.RSBlurProcessor;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -242,6 +243,20 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     }
                 });
+
+
+                if(CommonUtils.getThemePreference(context))
+                {
+                    myholder.title.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                    myholder.likes.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                    myholder.popupmenu.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+                }
+                else
+                {
+                    myholder.title.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                    myholder.likes.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                    myholder.popupmenu.setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK));
+                }
 
             } else {
 

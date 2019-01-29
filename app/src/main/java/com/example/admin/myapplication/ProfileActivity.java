@@ -1,12 +1,15 @@
 package com.example.admin.myapplication;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -221,6 +224,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void isDark(boolean isDark) {
         if(isDark)
@@ -237,7 +241,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
              recyclerView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
              handle_image.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
              handle_image.setColorFilter(Color.BLACK);
-
+             showAllPhotos.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+             linearLayout.setBackground(getDrawable(R.drawable.borderlines_materal_grey));
         }
         else{
              coordinatorLayout.setBackgroundColor(Color.WHITE);
@@ -252,11 +257,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
              recyclerView.setBackgroundColor(Color.WHITE);
              handle_image.setBackgroundColor(Color.WHITE);
              handle_image.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+            showAllPhotos.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+            linearLayout.setBackground(getDrawable(R.drawable.borderlines));
+
+
+
         }
 
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onResume() {
         super.onResume();

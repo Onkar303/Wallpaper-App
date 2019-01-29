@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         if(CommonUtils.getThemePreference(this))
         {
+            refreshLayout.setColorSchemeResources(R.color.materialBlack);
+            refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.materialGrey));
             if(recyclerView != null)
             {
                 recyclerView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
@@ -111,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else
         {
+            refreshLayout.setColorSchemeResources(R.color.materialGrey);
+            refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.materialBlack));
             if(recyclerView != null)
             {
                 recyclerView.setBackgroundColor(Color.WHITE);
@@ -141,15 +145,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mailLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
 
-
-
-
-
         no_wifi_1 = (ImageView) findViewById(R.id.no_internert);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         refreshLayout.setOnRefreshListener(this);
-        refreshLayout.setColorSchemeResources(R.color.materialGrey);
-        refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.materialBlack));
+        if(CommonUtils.getThemePreference(this))
+        {
+            refreshLayout.setColorSchemeResources(R.color.materialBlack);
+            refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.materialGrey));
+        }
+        else
+        {
+            refreshLayout.setColorSchemeResources(R.color.materialGrey);
+            refreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.materialBlack));
+        }
         animationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(this, 2);

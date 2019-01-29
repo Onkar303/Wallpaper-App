@@ -41,6 +41,7 @@ import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Utils.CommonUtils;
+import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.CustomTextViewMain;
 
 import java.io.File;
@@ -127,6 +128,17 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .apply(new RequestOptions().override(1000, 1000))
                 .into(holder.imageView_profile);
+
+        if(CommonUtils.getThemePreference(context))
+        {
+            holder.menu_profile.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+            holder.likes_profile.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+        }
+        else
+        {
+            holder.menu_profile.setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK));
+            holder.likes_profile.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+        }
 
 
     }
