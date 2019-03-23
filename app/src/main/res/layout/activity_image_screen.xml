@@ -7,11 +7,7 @@
     tools:context=".ImageScreen"
     android:id="@+id/ImageScreenParentLayout">
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/ImageScreenProgressBar"/>
+
 
 
 
@@ -34,6 +30,11 @@
         />
 
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/ImageScreenProgressBar"/>
 
 
     <android.support.design.widget.FloatingActionButton

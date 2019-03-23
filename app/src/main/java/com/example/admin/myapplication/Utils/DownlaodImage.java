@@ -90,10 +90,10 @@ public class DownlaodImage extends AsyncTask<Void,Void,Bitmap> {
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
         if (bitmap == null) {
-            Toast.makeText(context, "Error Downloading :(", Toast.LENGTH_LONG).show();
+            CommonUtils.CustomToast(context,"Error Downloading Image :(");
 
         } else {
-            Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
+           CommonUtils.CustomToast(context, "success");
         }
 
         progressDialog.dismiss();

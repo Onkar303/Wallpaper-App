@@ -63,7 +63,8 @@ public class SetBackground extends AsyncTask<String, Void, Bitmap> {
             } else {
                 manager.setBitmap(bitmap);
                 //manager.setBitmap(bitmap,null,false,WallpaperManager.FLAG_LOCK);
-                Toast.makeText(context, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
+
+              CommonUtils.CustomToast(context,"Wallpaper set");
             }
 
         } catch (IOException e) {

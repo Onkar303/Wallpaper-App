@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -82,6 +83,13 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_screen);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
+
         init();
 
 
@@ -91,9 +99,9 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
     public void init() {
 
 
-        progressBar = (ProgressBar)findViewById(R.id.ImageScreenProgressBar);
+        progressBar = (ProgressBar) findViewById(R.id.ImageScreenProgressBar);
 
-        coordinatorLayout= (CoordinatorLayout)findViewById(R.id.ImageScreenParentLayout);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.ImageScreenParentLayout);
 
         sharetext = (TextView) findViewById(R.id.share_text);
         setbackgroundtext = (TextView) findViewById(R.id.set_background_text);
@@ -109,8 +117,12 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         translateYclose = AnimationUtils.loadAnimation(this, R.anim.translateyclose);
         mainbutton = (FloatingActionButton) findViewById(R.id.main_fab_button);
         sharebutton = (FloatingActionButton) findViewById(R.id.share_fab_button);
-        setbackgroundImage = (FloatingActionButton) findViewById(R.id.set_background_image);
         downloadbutton = (FloatingActionButton) findViewById(R.id.download_fab_button);
+
+
+
+        setbackgroundImage = (FloatingActionButton) findViewById(R.id.set_background_image);
+
         mainbutton.setOnClickListener(this);
         sharebutton.setOnClickListener(this);
         downloadbutton.setOnClickListener(this);
@@ -137,15 +149,14 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
         imageView = (ZoomageView) findViewById(R.id.ImageScreenImageView);
 
-        if(CommonUtils.getThemePreference(this))
-        {
-          imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
-          progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+        if (CommonUtils.getThemePreference(this)) {
+            imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
             progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY), PorterDuff.Mode.SRC_IN);
-          mainbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
-          setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
-          downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
-          sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+            mainbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+            setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+            downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+            sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
 
             sharetext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
             downloadtext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
@@ -154,9 +165,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
             sharetext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
             downloadtext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
             setbackgroundtext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
-        }
-        else
-        {
+        } else {
             imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
             progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
 
@@ -165,6 +174,8 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
             setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
             downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
             sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+
+
 
             sharetext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
             downloadtext.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
@@ -176,11 +187,10 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         }
 
 
-
         if (!getIntent().hasExtra("model")) {
             MyAlertDialog("didnotFetch url");
         } else {
-            model=(SplashModel) getIntent().getSerializableExtra("model");
+            model = (SplashModel) getIntent().getSerializableExtra("model");
         }
 
         Glide.with(this).load(model.getUrls().getFull()).listener(new RequestListener<Drawable>() {
@@ -211,7 +221,6 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 
 
     @Override
@@ -288,7 +297,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
             case R.id.share_linear_layout:
 
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_STREAM,Uri.parse(model.getUrls().toString()));
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(model.getUrls().toString()));
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setType("image/*");
                 startActivity(intent);
@@ -440,10 +449,10 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
                         .setAction("Open", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent i=new Intent(Intent.ACTION_GET_CONTENT);
-                                Uri uri=Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/camtest/");
+                                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                                Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/camtest/");
 
-                                i.setDataAndType(uri,"resource/folder");
+                                i.setDataAndType(uri, "resource/folder");
                                 startActivity(i);
                             }
                         })

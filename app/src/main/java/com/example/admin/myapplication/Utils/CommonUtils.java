@@ -15,10 +15,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -72,7 +77,7 @@ public class CommonUtils {
             }
             else
             {
-                Toast.makeText(context, Constants.CONNECTION_LOST, Toast.LENGTH_SHORT).show();
+                CustomToast(context, Constants.CONNECTION_LOST);
             }
             android.support.v7.app.AlertDialog dialog = builder.create();
             dialog.setView(v);
@@ -136,7 +141,8 @@ public class CommonUtils {
                     new DownlaodImage(context,splashModel,layout).execute();
 
                 } else {
-                    Toast.makeText(context, Constants.PERMISSION_NOT_GRANTED, Toast.LENGTH_SHORT).show();
+
+                    CustomToast(context,"Permission not granted");
                 }
                 dialog.dismiss();
 
@@ -185,6 +191,42 @@ public class CommonUtils {
     public static void getTheme(Context context,ConfigureDarkTheme theme)
     {
         theme.isDark(getThemePreference(context));
+    }
+
+
+    public static void CustomToast(Context context,String toastMessage){
+
+        LayoutInflater inflater = ((AppCompatActivity)context).getLayoutInflater();
+        View customView = inflater.inflate(R.layout.customtoast,(ViewGroup)((AppCompatActivity)context).findViewById(R.id.customToast));
+
+        TextView textView = (TextView)customView.findViewById(R.id.ToastText);
+        textView.setText(toastMessage);
+
+        CardView toastCard = (CardView)customView.findViewById(R.id.toastCard);
+
+        if(getThemePreference(context))
+        {
+            toastCard.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            textView.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            toastCard.setRadius(10);
+        }
+        else
+        {
+            toastCard.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+            textView.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+            toastCard.setRadius(10);
+
+
+
+        }
+
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(customView);
+
+        toast.show();
+
+
     }
 
 
