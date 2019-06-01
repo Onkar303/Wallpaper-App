@@ -37,18 +37,28 @@
         android:id="@+id/ImageScreenProgressBar"/>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/main_fab_button"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        android:paddingLeft="25dp"
+        android:paddingRight="0dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/add_icon"
-        android:tint="@color/materialGrey"
-        app:backgroundTint="@color/materialBlack"
-        app:fabSize="normal" />
+        >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/main_fab_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_icon"
+            android:padding="5dp"
+            android:tint="@color/materialGrey"
+            app:backgroundTint="@color/materialBlack"
+            app:fabSize="normal" />
+
+    </FrameLayout>
 
 
     <LinearLayout
@@ -57,7 +67,7 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="95dp"
         android:gravity="center"
         android:orientation="horizontal"
         >
@@ -69,7 +79,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/share_fab_button"
-            android:background="@drawable/floating_action_button_title_background"
+            android:background="@drawable/floating_action_button_title_background_dark"
             android:elevation="4dp"
             android:padding="6dp"
             android:text="Share"
@@ -116,7 +126,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/share_fab_button"
-            android:background="@drawable/floating_action_button_title_background"
+            android:background="@drawable/floating_action_button_title_background_dark"
             android:elevation="4dp"
             android:foreground="@drawable/imageview_cutom_ripple"
             android:padding="6dp"
@@ -147,7 +157,7 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="145dp"
+        android:layout_marginBottom="150dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
@@ -163,7 +173,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/share_fab_button"
-            android:background="@drawable/floating_action_button_title_background"
+            android:background="@drawable/floating_action_button_title_background_dark"
             android:elevation="4dp"
             android:padding="6dp"
             android:text="Download"

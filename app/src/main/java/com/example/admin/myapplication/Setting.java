@@ -103,8 +103,9 @@ public class Setting extends AppCompatActivity implements View.OnClickListener,S
     {
         mainrelativeLayout.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
         cardView1.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+        cardView1.setBackground(getResources().getDrawable(R.drawable.setting_card_dark));
         cardView1.setRadius(10);
-        cardView2.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+        cardView2.setBackground(getResources().getDrawable(R.drawable.setting_card_dark));
         cardView2.setRadius(10);
         appversion.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
         appname.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
@@ -115,9 +116,9 @@ public class Setting extends AppCompatActivity implements View.OnClickListener,S
 
     public void setLightTheme(){
         mainrelativeLayout.setBackgroundColor(Color.WHITE);
-        cardView1.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+        cardView1.setBackground(getResources().getDrawable(R.drawable.setting_card_light));
         cardView1.setRadius(10);
-        cardView2.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
+        cardView2.setBackground(getResources().getDrawable(R.drawable.setting_card_light));
         cardView2.setRadius(10);
         appversion.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
         appname.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
