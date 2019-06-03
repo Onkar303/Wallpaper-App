@@ -2,64 +2,50 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ImageScreenParentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageScreen"
-    android:id="@+id/ImageScreenParentLayout">
-
-
-
+    tools:context=".ImageScreen">
 
 
     <com.jsibbold.zoomage.ZoomageView
+        android:id="@+id/ImageScreenImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ImageScreenImageView"
-        android:transitionName="mytransition"
+        android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        android:layout_centerInParent="true"
-        app:zoomage_restrictBounds="true"
+        android:transitionName="mytransition"
         app:zoomage_animateOnReset="true"
-        app:zoomage_autoResetMode="UNDER"
         app:zoomage_autoCenter="true"
-        app:zoomage_zoomable="true"
-        app:zoomage_translatable="true"
-        app:zoomage_minScale="0.6"
+        app:zoomage_autoResetMode="UNDER"
         app:zoomage_maxScale="8"
-        />
+        app:zoomage_minScale="0.6"
+        app:zoomage_restrictBounds="true"
+        app:zoomage_translatable="true"
+        app:zoomage_zoomable="true" />
 
 
     <ProgressBar
+        android:id="@+id/ImageScreenProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/ImageScreenProgressBar"/>
+        android:layout_gravity="center" />
 
-
-    <FrameLayout
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_fab_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:paddingRight="0dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        >
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/main_fab_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/add_icon"
-            android:padding="5dp"
-            android:tint="@color/materialGrey"
-            app:backgroundTint="@color/materialBlack"
-            app:fabSize="normal" />
-
-    </FrameLayout>
-
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="30dp"
+        android:padding="5dp"
+        android:src="@drawable/add_icon"
+        android:tint="@color/materialGrey"
+        app:backgroundTint="@color/materialBlack"
+        app:fabSize="normal"
+        android:foreground="@drawable/main_floatingaction_ripple"
+        />
 
     <LinearLayout
         android:id="@+id/share_linear_layout"
@@ -69,37 +55,32 @@
         android:layout_marginRight="14dp"
         android:layout_marginBottom="95dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <com.example.admin.myapplication.Utils.CustomTextViewMain
             android:id="@+id/share_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/share_fab_button"
             android:background="@drawable/floating_action_button_title_background_dark"
             android:elevation="4dp"
+            android:foreground="@drawable/fab_title_ripple"
             android:padding="6dp"
             android:text="Share"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:foreground="@drawable/imageview_cutom_ripple"/>
+            android:textColor="@android:color/white" />
 
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/share_fab_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:foreground="@drawable/floatingactionbutton_ripple"
             android:src="@drawable/share"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini"
-            android:foreground="@drawable/imageview_cutom_ripple"/>
+            app:fabSize="mini" />
 
 
     </LinearLayout>
@@ -128,7 +109,7 @@
             android:layout_toLeftOf="@+id/share_fab_button"
             android:background="@drawable/floating_action_button_title_background_dark"
             android:elevation="4dp"
-            android:foreground="@drawable/imageview_cutom_ripple"
+            android:foreground="@drawable/fab_title_ripple"
             android:padding="6dp"
             android:text="Set As Background"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -143,10 +124,10 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:foreground="@drawable/floatingactionbutton_ripple"
             android:src="@drawable/wallpaper"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini"
-            android:foreground="@drawable/imageview_cutom_ripple"/>
+            app:fabSize="mini" />
 
     </LinearLayout>
 
@@ -175,11 +156,11 @@
             android:layout_toLeftOf="@+id/share_fab_button"
             android:background="@drawable/floating_action_button_title_background_dark"
             android:elevation="4dp"
+            android:foreground="@drawable/fab_title_ripple"
             android:padding="6dp"
             android:text="Download"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:foreground="@drawable/imageview_cutom_ripple"/>
+            android:textColor="@android:color/white" />
 
 
         <android.support.design.widget.FloatingActionButton
@@ -190,10 +171,10 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:foreground="@drawable/floatingactionbutton_ripple"
             android:src="@drawable/download"
             app:backgroundTint="@color/materialBlack"
-            app:fabSize="mini"
-            android:foreground="@drawable/imageview_cutom_ripple"/>
+            app:fabSize="mini" />
 
     </LinearLayout>
 

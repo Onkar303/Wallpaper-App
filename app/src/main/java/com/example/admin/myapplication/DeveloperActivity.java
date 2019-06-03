@@ -64,17 +64,17 @@ public class DeveloperActivity extends AppCompatActivity {
         if(isDark)
         {
             developerCoordinatorLayout.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
-            developer_card.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+            //developer_card.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
             bio.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
             Name.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
             donate_button.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
             donate_button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
-            profile_container_developer.setBackground(getDrawable(R.drawable.borderlines_materal_grey));
+            profile_container_developer.setBackground(getDrawable(R.drawable.borderlines_dark));
             developer_image.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
         }
         else{
             developerCoordinatorLayout.setBackgroundColor(Color.WHITE);
-            developer_card.setBackgroundColor(Color.WHITE);
+            //developer_card.setBackgroundColor(Color.WHITE);
      //       bio.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
             Name.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
             donate_button.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));

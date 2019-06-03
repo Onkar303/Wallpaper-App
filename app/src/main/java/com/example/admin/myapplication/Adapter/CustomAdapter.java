@@ -87,6 +87,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     ConstraintSet constraintSet;
     DrawerLayout drawerLayout;
     View view;
+    ConfigureDarkTheme theme;
 
 
 
@@ -277,7 +278,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public class MyRecyclerItemViewHolder extends RecyclerView.ViewHolder {
+    public class MyRecyclerItemViewHolder extends RecyclerView.ViewHolder implements ConfigureDarkTheme {
 
         CircleImageView ProfileImage;
         TextView title;
@@ -294,6 +295,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ShimmerFrameLayout shimmerlayout;
 
 
+
         public MyRecyclerItemViewHolder(View itemView) {
             super(itemView);
             v = itemView;
@@ -307,9 +309,32 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             errorText = (CustomTextViewMain) v.findViewById(R.id.loading_error_main_list);
             constraintLayout = (ConstraintLayout) v.findViewById(R.id.recycler_item_contraintlayout);
             shimmerlayout = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_layout);
+            CommonUtils.getTheme(context,this);
+            Setting.theme = this;
+
+
 
         }
 
+
+
+        @Override
+        public void isDark(boolean isDark) {
+            if(isDark)
+               {
+                    title.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                    likes.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
+                    popupmenu.setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY));
+
+                }
+                else
+                {
+                    title.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                    likes.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
+                    popupmenu.setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK));
+                }
+
+        }
     }
 
 

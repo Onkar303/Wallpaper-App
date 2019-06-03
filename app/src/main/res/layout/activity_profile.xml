@@ -18,6 +18,7 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="25dp"
         android:fillViewport="true"
+        android:background="@android:color/transparent"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         android:id="@+id/profileCardView">
@@ -67,7 +68,7 @@
                     app:civ_border_width="1.5dp"
                     android:focusable="true"
                     android:clickable="true"
-                    android:foreground="@drawable/imageview_cutom_ripple"
+                    android:foreground="@drawable/profile_image_ripple"
                     />
         </LinearLayout>
 

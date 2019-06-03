@@ -25,7 +25,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener,S
     Switch aSwitch;
     CardView cardView1,cardView2;
     CustomTextViewMainBold termsandCondition,developer,darkTheme,appname,appversion;
-    static ConfigureDarkTheme theme;
+    public static ConfigureDarkTheme theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -105,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.profile_coordinator);
         nowifi = (ImageView) findViewById(R.id.bottom_sheet_nowifi);
 
-        cardView = (CardView)findViewById(R.id.profileCardView);
+       // cardView = (CardView)findViewById(R.id.profileCardView);
 
         showAllPhotos = (Button) findViewById(R.id.all_profile_photos);
         showAllPhotos.setOnClickListener(this);
@@ -230,7 +230,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if(isDark)
         {
              coordinatorLayout.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
-             cardView.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
+           //  cardView.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
              total_likes.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
              totla_photos.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
              bio.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
@@ -242,11 +242,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
              handle_image.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
              handle_image.setColorFilter(Color.BLACK);
              showAllPhotos.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
-             linearLayout.setBackground(getDrawable(R.drawable.borderlines_materal_grey));
+             linearLayout.setBackground(getDrawable(R.drawable.borderlines_dark));
         }
         else{
              coordinatorLayout.setBackgroundColor(Color.WHITE);
-             cardView.setBackgroundColor(Color.WHITE);
+             //cardView.setBackgroundColor(Color.WHITE);
              total_likes.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
              totla_photos.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
              bio.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));

@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -65,7 +66,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
     ProgressBar progressBar;
 
-    FloatingActionButton mainbutton, sharebutton, downloadbutton, setbackgroundImage;
+    FloatingActionButton mainbutton, sharebutton, downloadbutton, setbackgroundImagebutton;
 
     LinearLayout set_as_background_linearlayout, download_linearlayout, share_linearlayout;
 
@@ -114,12 +115,12 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
 
 
-        setbackgroundImage = (FloatingActionButton) findViewById(R.id.set_background_image);
+        setbackgroundImagebutton = (FloatingActionButton) findViewById(R.id.set_background_image);
 
         mainbutton.setOnClickListener(this);
         sharebutton.setOnClickListener(this);
         downloadbutton.setOnClickListener(this);
-        setbackgroundImage.setOnClickListener(this);
+        setbackgroundImagebutton.setOnClickListener(this);
 
 
         //linearlayout
@@ -134,7 +135,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         //setting the visibility to invisible
         sharebutton.setVisibility(View.GONE);
         downloadbutton.setVisibility(View.GONE);
-        setbackgroundImage.setVisibility(View.GONE);
+        setbackgroundImagebutton.setVisibility(View.GONE);
 
         sharetext.setVisibility(View.GONE);
         downloadtext.setVisibility(View.GONE);
@@ -146,8 +147,9 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
             imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_BLACK));
             progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
             progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(Constants.MATERIAL_GGREY), PorterDuff.Mode.SRC_IN);
+
             mainbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
-            setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
+            setbackgroundImagebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
             downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
             sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_GGREY)));
 
@@ -155,6 +157,28 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
             downloadtext.setBackground(getResources().getDrawable(R.drawable.floating_action_button_title_background_light));
             setbackgroundtext.setBackground(getResources().getDrawable(R.drawable.floating_action_button_title_background_light));
 
+            Drawable drawablemainbutton=getResources().getDrawable(R.drawable.add_icon);
+            Drawable newbaficon=drawablemainbutton.getConstantState().newDrawable();
+            newbaficon.mutate().setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK),PorterDuff.Mode.MULTIPLY);
+            mainbutton.setImageDrawable(newbaficon);
+
+
+            Drawable drawablesetbackgroundImage=getResources().getDrawable(R.drawable.wallpaper);
+            Drawable newbaficondrawablesetbackgroundImage=drawablesetbackgroundImage.getConstantState().newDrawable();
+            newbaficondrawablesetbackgroundImage.mutate().setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK),PorterDuff.Mode.MULTIPLY);
+            setbackgroundImagebutton.setImageDrawable(newbaficondrawablesetbackgroundImage);
+
+
+
+            Drawable drawabledownload=getResources().getDrawable(R.drawable.download);
+            Drawable newbaficondrawabledownload=drawabledownload.getConstantState().newDrawable();
+            newbaficondrawabledownload.mutate().setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK),PorterDuff.Mode.MULTIPLY);
+            downloadbutton.setImageDrawable(newbaficondrawabledownload);
+
+            Drawable drawableshare=getResources().getDrawable(R.drawable.share);
+            Drawable newbaficondrawableshare=drawableshare.getConstantState().newDrawable();
+            newbaficondrawableshare.mutate().setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK),PorterDuff.Mode.MULTIPLY);
+            sharebutton.setImageDrawable(newbaficondrawableshare);
 
 
 
@@ -163,13 +187,16 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
             setbackgroundtext.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
         } else {
             imageView.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
-            progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
 
+            progressBar.setProgressBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
             progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(Constants.MATERIAL_BLACK), PorterDuff.Mode.SRC_IN);
+
             mainbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
-            setbackgroundImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+            setbackgroundImagebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
             downloadbutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
             sharebutton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(Constants.MATERIAL_BLACK)));
+
+
 
 
             sharetext.setBackground(getResources().getDrawable(R.drawable.floating_action_button_title_background_dark));
@@ -244,7 +271,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
                     sharebutton.setClickable(true);
                     downloadbutton.setClickable(true);
-                    setbackgroundImage.setClickable(true);
+                    setbackgroundImagebutton.setClickable(true);
 
 
                     sharetext.setVisibility(View.VISIBLE);
@@ -254,7 +281,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
                     sharebutton.setVisibility(View.VISIBLE);
                     downloadbutton.setVisibility(View.VISIBLE);
-                    setbackgroundImage.setVisibility(View.VISIBLE);
+                    setbackgroundImagebutton.setVisibility(View.VISIBLE);
 
 
                     mainbutton.setAnimation(openRotation);
@@ -281,11 +308,11 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
                     sharebutton.setVisibility(View.GONE);
                     downloadbutton.setVisibility(View.GONE);
-                    setbackgroundImage.setVisibility(View.GONE);
+                    setbackgroundImagebutton.setVisibility(View.GONE);
 
                     sharebutton.setClickable(false);
                     downloadbutton.setClickable(false);
-                    setbackgroundImage.setClickable(false);
+                    setbackgroundImagebutton.setClickable(false);
 
                     mainbutton.setAnimation(closeRotation);
                     translateYclose.start();
