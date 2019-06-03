@@ -106,7 +106,7 @@
                 app:civ_border_width="1dp"
                 android:focusable="true"
                 android:clickable="true"
-                android:foreground="@drawable/imageview_cutom_ripple"
+                android:foreground="@drawable/recycler_item_profile_pic_custom_ripple"
 
                 />
 

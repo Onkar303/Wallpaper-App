@@ -78,9 +78,8 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_screen);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        CommonUtils.setTransLucentNavigationBar(getWindow());
+        CommonUtils.setFullScreen(getWindow());
 
 
 

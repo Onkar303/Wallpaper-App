@@ -24,6 +24,7 @@ import com.example.admin.myapplication.Adapter.MyViewPagerAdapter;
 import com.example.admin.myapplication.Fragments.Fragment1;
 import com.example.admin.myapplication.Fragments.Fragment2;
 import com.example.admin.myapplication.Fragments.Fragment3;
+import com.example.admin.myapplication.Utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,8 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        CommonUtils.setTransLucentNavigationBar(getWindow());
+        CommonUtils.setFullScreen(getWindow());
         init();
     }
 

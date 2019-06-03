@@ -6,7 +6,7 @@
     app:cardElevation="5dp"
     app:cardCornerRadius="10dp"
     android:layout_margin="20dp"
-    android:background="@android:color/transparent"
+
     >
 
     <android.support.constraint.ConstraintLayout
@@ -16,7 +16,7 @@
         android:background="@android:color/transparent"
         >
 
-        <ImageView
+        <com.jsibbold.zoomage.ZoomageView
             android:id="@+id/prodifile_image_longPress"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -25,6 +25,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:zoomage_animateOnReset="true"
+            app:zoomage_autoCenter="true"
+            app:zoomage_autoResetMode="UNDER"
+            app:zoomage_maxScale="8"
+            app:zoomage_minScale="0.6"
+            app:zoomage_restrictBounds="true"
+            app:zoomage_translatable="true"
+            app:zoomage_zoomable="true"
             />
 
 

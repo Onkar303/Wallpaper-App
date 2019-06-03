@@ -21,6 +21,8 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -215,9 +217,6 @@ public class CommonUtils {
             toastCard.setBackgroundColor(Color.parseColor(Constants.MATERIAL_GGREY));
             textView.setTextColor(Color.parseColor(Constants.MATERIAL_BLACK));
             toastCard.setRadius(10);
-
-
-
         }
 
         Toast toast = new Toast(context);
@@ -227,6 +226,17 @@ public class CommonUtils {
         toast.show();
 
 
+    }
+
+    public static void setTransLucentNavigationBar(Window window)
+    {
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
+
+    public static void setFullScreen(Window window)
+    {
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
 

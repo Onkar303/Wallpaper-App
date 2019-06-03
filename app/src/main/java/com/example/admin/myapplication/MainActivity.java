@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        CommonUtils.setTransLucentNavigationBar(getWindow());
+        CommonUtils.setFullScreen(getWindow());
 
         getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
@@ -259,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 collapsingToolbarLayout.setBackgroundColor(Color.parseColor(Constants.TOOL_BAR_COLOR_DARK));
                 title.setTextColor(Color.parseColor(Constants.MATERIAL_GGREY));
                 settings_icon.setColorFilter(Color.argb(255,255,255,255));
+
 
             }
 

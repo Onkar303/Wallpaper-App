@@ -8,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ import com.example.admin.myapplication.Utils.CustomTextViewMainBold;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class DeveloperActivity extends AppCompatActivity {
+public class DeveloperActivity extends AppCompatActivity implements View.OnClickListener {
 
     LinearLayout profile_container_developer;
     CoordinatorLayout developerCoordinatorLayout;
@@ -39,9 +40,8 @@ public class DeveloperActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_developer);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        CommonUtils.setFullScreen(getWindow());
+        CommonUtils.setTransLucentNavigationBar(getWindow());
         init();
     }
 
@@ -55,6 +55,8 @@ public class DeveloperActivity extends AppCompatActivity {
      developer_card = (CardView)findViewById(R.id.developer_card);
      developer_image = (ImageView)findViewById(R.id.user_image_developer);
      setDark(CommonUtils.getThemePreference(this));
+
+     donate_button.setOnClickListener(this);
 
     }
 
@@ -86,5 +88,13 @@ public class DeveloperActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onClick(View view) {
+        switch(view.getId())
+        {
+            case R.id.donate_developer:
+                CommonUtils.myCustomAlertDialog(this,"Under Development","this feature is under development");
+                break;
+        }
+    }
 }

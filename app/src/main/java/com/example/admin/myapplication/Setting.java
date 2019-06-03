@@ -31,9 +31,8 @@ public class Setting extends AppCompatActivity implements View.OnClickListener,S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        CommonUtils.setTransLucentNavigationBar(getWindow());
+        CommonUtils.setFullScreen(getWindow());
 
 
         init();

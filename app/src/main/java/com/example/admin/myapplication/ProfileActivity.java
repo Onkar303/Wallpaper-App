@@ -82,7 +82,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        CommonUtils.setTransLucentNavigationBar(getWindow());
+        CommonUtils.setFullScreen(getWindow());
         getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
         Setting.theme = this;
