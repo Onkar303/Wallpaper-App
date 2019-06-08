@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ViewPagerActivity"
+            android:name=".IntroductionActivity"
             android:label="@string/title_activity_view_pager"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -39,10 +39,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Setting"
+            android:name=".SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ImageScreen"
+            android:name=".ImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
@@ -52,9 +52,6 @@
             android:label="@string/title_activity_sign_in"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".MyView"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />

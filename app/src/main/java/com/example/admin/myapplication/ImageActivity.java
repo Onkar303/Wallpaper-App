@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -26,7 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -51,7 +49,7 @@ import java.io.InputStream;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class ImageScreen extends AppCompatActivity implements View.OnClickListener {
+public class ImageActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent i;
     ZoomageView imageView;
@@ -363,7 +361,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(ImageScreen.this);
+            progressDialog = new ProgressDialog(ImageActivity.this);
             progressDialog.setTitle("Downloading");
             progressDialog.setMessage("In progress.....");
             progressDialog.setIndeterminate(false);
@@ -390,15 +388,15 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            WallpaperManager manager = WallpaperManager.getInstance(ImageScreen.this);
+            WallpaperManager manager = WallpaperManager.getInstance(ImageActivity.this);
 
             try {
                 if (bitmap == null) {
-                    Toast.makeText(ImageScreen.this, "Error :(", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImageActivity.this, "Error :(", Toast.LENGTH_SHORT).show();
                 } else {
                     manager.setBitmap(bitmap);
                     //manager.setBitmap(bitmap,null,false,WallpaperManager.FLAG_LOCK);
-                    Toast.makeText(ImageScreen.this, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImageActivity.this, "Wallpaper set :)", Toast.LENGTH_SHORT).show();
                 }
 
             } catch (IOException e) {
@@ -422,7 +420,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(ImageScreen.this);
+            progressDialog = new ProgressDialog(ImageActivity.this);
             progressDialog.setTitle("Downloading");
             progressDialog.setMessage("In Progress...");
             progressDialog.setIndeterminate(false);
@@ -473,7 +471,7 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             if (bitmap == null) {
-                Toast.makeText(ImageScreen.this, "Error Downloading :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(ImageActivity.this, "Error Downloading :(", Toast.LENGTH_LONG).show();
 
             } else {
                 Snackbar.make(coordinatorLayout, "Download Successfull :)", Snackbar.LENGTH_LONG)

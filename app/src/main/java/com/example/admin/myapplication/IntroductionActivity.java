@@ -1,23 +1,15 @@
 package com.example.admin.myapplication;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,19 +19,18 @@ import com.example.admin.myapplication.Fragments.Fragment1;
 import com.example.admin.myapplication.Fragments.Fragment2;
 import com.example.admin.myapplication.Fragments.Fragment3;
 import com.example.admin.myapplication.Utils.CommonUtils;
+import com.example.admin.myapplication.Utils.IntroductionScreenButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import github.chenupt.springindicator.SpringIndicator;
-
-public class ViewPagerActivity extends AppCompatActivity implements ViewPager.PageTransformer {
+public class IntroductionActivity extends AppCompatActivity implements ViewPager.PageTransformer,View.OnClickListener,ViewPager.OnPageChangeListener {
 
     ViewPager viewPager;
     MyViewPagerAdapter adapter;
     List<Fragment> list;
     Toolbar toolbar;
-    Button button;
+    Button finish,previous,next;
     TabLayout tablayout;
 
 
@@ -64,16 +55,21 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
         adapter = new MyViewPagerAdapter(getSupportFragmentManager(), list, this);
         viewPager.setAdapter(adapter);
 
-        button=(Button)findViewById(R.id.next);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(ViewPagerActivity.this,LoginActivity.class);
-                startActivity(i);
-            }
-        });
+        next=(IntroductionScreenButton)findViewById(R.id.next);
+        next.setOnClickListener(this);
+
+        previous=(IntroductionScreenButton)findViewById(R.id.previous);
+        previous.setOnClickListener(this);
+
+        finish =(IntroductionScreenButton)findViewById(R.id.finish);
+        finish.setOnClickListener(this);
+
+
+
         viewPager.setPageTransformer(false, this);
         tablayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(this);
 
 
         //
@@ -132,5 +128,55 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.finish:
+                Intent i=new Intent(IntroductionActivity.this,MainActivity.class);
+                startActivity(i);
+                break;
 
+            case R.id.previous:
+                viewPager.setCurrentItem(viewPager.getCurrentItem()-1,true);
+                break;
+
+
+            case R.id.next:
+                viewPager.setCurrentItem(viewPager.getCurrentItem()+1,true);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+     if(position==0)
+     {
+         previous.setVisibility(View.GONE);
+         finish.setVisibility(View.GONE);
+         next.setVisibility(View.VISIBLE);
+     }else if(position==1)
+     {
+         previous.setVisibility(View.VISIBLE);
+         finish.setVisibility(View.GONE);
+         next.setVisibility(View.VISIBLE);
+     }
+     else
+     {
+         previous.setVisibility(View.VISIBLE);
+         finish.setVisibility(View.VISIBLE);
+         next.setVisibility(View.GONE);
+     }
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

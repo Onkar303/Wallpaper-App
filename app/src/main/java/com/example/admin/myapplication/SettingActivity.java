@@ -19,7 +19,7 @@ import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.CustomTextViewMainBold;
 
-public class Setting extends AppCompatActivity implements View.OnClickListener,Switch.OnCheckedChangeListener {
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener,Switch.OnCheckedChangeListener {
 
     RelativeLayout relativeLayout,mainrelativeLayout;
     Switch aSwitch;

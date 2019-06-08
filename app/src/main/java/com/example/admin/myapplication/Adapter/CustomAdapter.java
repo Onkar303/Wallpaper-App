@@ -1,43 +1,28 @@
 package com.example.admin.myapplication.Adapter;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
-import android.renderscript.RenderScript;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -52,30 +37,20 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.example.admin.myapplication.ImageScreen;
+import com.example.admin.myapplication.ImageActivity;
 import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
-import com.example.admin.myapplication.Setting;
+import com.example.admin.myapplication.SettingActivity;
 import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.CustomTextViewMain;
-import com.example.admin.myapplication.Utils.RSBlurProcessor;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import jp.wasabeef.blurry.Blurry;
-import jp.wasabeef.blurry.internal.Blur;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ActivityCompat.OnRequestPermissionsResultCallback {
     List<Object> list;
@@ -233,7 +208,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(context, ImageScreen.class);
+                        Intent i = new Intent(context, ImageActivity.class);
                         i.putExtra("model", model);
 //                    ActivityOptionsCompat options = ActivityOptionsCompat.
 //                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
@@ -310,7 +285,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             constraintLayout = (ConstraintLayout) v.findViewById(R.id.recycler_item_contraintlayout);
             shimmerlayout = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_layout);
             CommonUtils.getTheme(context,this);
-            Setting.theme = this;
+            SettingActivity.theme = this;
 
 
 

@@ -25,13 +25,39 @@
     </android.support.design.widget.TabLayout>
 
 
-    <Button
-        android:id="@+id/next"
+    <com.example.admin.myapplication.Utils.IntroductionScreenButton
+        android:id="@+id/finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="bottom|end"
         android:background="@null"
-        android:text="Next" />
+        android:text="Finish"
+        android:textColor="@android:color/white"
+        android:foreground="?attr/selectableItemBackground"
+        android:textAllCaps="false"
+        />
+
+    <com.example.admin.myapplication.Utils.IntroductionScreenButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previous"
+        android:layout_gravity="bottom"
+        android:text="Prev"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:foreground="?attr/selectableItemBackground"
+        android:textAllCaps="false"
+        />
+
+    <com.example.admin.myapplication.Utils.IntroductionScreenButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/next"
+        android:layout_gravity="bottom|end"
+        android:text="Next"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

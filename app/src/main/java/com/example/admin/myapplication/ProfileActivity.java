@@ -21,7 +21,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
@@ -88,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         CommonUtils.setStickyNavigationBar(getWindow());
         getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
-        Setting.theme = this;
+        SettingActivity.theme = this;
         getData();
     }
 

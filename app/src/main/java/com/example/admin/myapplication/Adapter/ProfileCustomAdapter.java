@@ -1,57 +1,33 @@
 package com.example.admin.myapplication.Adapter;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.admin.myapplication.ImageScreen;
+import com.example.admin.myapplication.ImageActivity;
 import com.example.admin.myapplication.Model.SplashModel;
-import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.Constants;
 import com.example.admin.myapplication.Utils.CustomTextViewMain;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
 import java.util.List;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdapter.MyViewHolder> {
 
@@ -90,7 +66,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, ImageScreen.class);
+                Intent i = new Intent(context, ImageActivity.class);
                 i.putExtra("model",list.get(position));
 //                i.putExtra("position", position);
 //                ActivityOptionsCompat options = ActivityOptionsCompat.

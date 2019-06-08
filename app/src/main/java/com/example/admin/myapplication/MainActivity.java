@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -27,7 +26,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
@@ -139,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainLayout = (CoordinatorLayout)findViewById(R.id.mainLayout);
 
         CommonUtils.getTheme(this,this);
-        Setting.theme = this;
+        SettingActivity.theme = this;
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.mainscreen_collapsing_toolbar);
         title = (TextView)findViewById(R.id.mainscreen_title);
@@ -231,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.setting_icon_main:
-                Intent i=new Intent(this,Setting.class);
+                Intent i=new Intent(this, SettingActivity.class);
                 startActivity(i);
                 break;
         }

@@ -5,7 +5,7 @@
     android:id="@+id/ImageScreenParentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageScreen">
+    tools:context=".ImageActivity">
 
 
     <com.jsibbold.zoomage.ZoomageView
