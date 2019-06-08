@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.ActivityCompat;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
+import com.example.admin.myapplication.MainActivity;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
@@ -83,8 +85,10 @@ public class CommonUtils {
             }
             android.support.v7.app.AlertDialog dialog = builder.create();
             dialog.setView(v);
+
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
+            CommonUtils.setStickyNavigationBar(dialog.getWindow());
             dialog.show();
         } catch (NullPointerException exception) {
             exception.printStackTrace();
@@ -106,6 +110,7 @@ public class CommonUtils {
         final android.app.AlertDialog dialog = bottomSheetDialog.create();
         dialog.getWindow().setWindowAnimations(R.style.CustomTheme);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        CommonUtils.setStickyNavigationBar(dialog.getWindow());
         dialog.show();
         showProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +119,8 @@ public class CommonUtils {
                 i.putExtra("myobject", splashModel);
                 context.startActivity(i);
                 dialog.dismiss();
+
+
 
 
             }
@@ -237,6 +244,33 @@ public class CommonUtils {
     public static void setFullScreen(Window window)
     {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public static void setStickyNavigationBar(Window window){
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
+        {
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    |View.SYSTEM_UI_FLAG_IMMERSIVE
+                    |View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    |View.SYSTEM_UI_FLAG_FULLSCREEN);
+        }
+
+    }
+
+
+    public static void setStickyNavigatinBar(View v){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
+        {
+            v.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    |View.SYSTEM_UI_FLAG_IMMERSIVE
+                    |View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    |View.SYSTEM_UI_FLAG_FULLSCREEN);
+        }
     }
 
 

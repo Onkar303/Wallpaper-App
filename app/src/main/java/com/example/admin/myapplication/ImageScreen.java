@@ -80,12 +80,16 @@ public class ImageScreen extends AppCompatActivity implements View.OnClickListen
 
         CommonUtils.setTransLucentNavigationBar(getWindow());
         CommonUtils.setFullScreen(getWindow());
-
-
-
+        CommonUtils.setStickyNavigationBar(getWindow());
         init();
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CommonUtils.setStickyNavigationBar(getWindow());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

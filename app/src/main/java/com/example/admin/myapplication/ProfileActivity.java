@@ -85,6 +85,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         CommonUtils.setTransLucentNavigationBar(getWindow());
         CommonUtils.setFullScreen(getWindow());
+        CommonUtils.setStickyNavigationBar(getWindow());
         getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
         Setting.theme = this;
@@ -273,6 +274,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
+        CommonUtils.setStickyNavigationBar(getWindow());
         isDark(CommonUtils.getThemePreference(this));
     }
 
@@ -410,4 +412,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public static boolean isTablet(Context ctx) {
         return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+
+
 }

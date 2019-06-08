@@ -33,7 +33,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener,S
         setContentView(R.layout.settings);
         CommonUtils.setTransLucentNavigationBar(getWindow());
         CommonUtils.setFullScreen(getWindow());
-
+        CommonUtils.setStickyNavigationBar(getWindow());
 
         init();
 
@@ -142,5 +142,9 @@ public class Setting extends AppCompatActivity implements View.OnClickListener,S
     }
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CommonUtils.setStickyNavigationBar(getWindow());
+    }
 }

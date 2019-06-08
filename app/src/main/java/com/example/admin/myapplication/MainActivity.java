@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         CommonUtils.setTransLucentNavigationBar(getWindow());
         CommonUtils.setFullScreen(getWindow());
+        CommonUtils.setStickyNavigationBar(getWindow());
+
 
         getWindow().setBackgroundDrawableResource(R.drawable.background);
         init();
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        CommonUtils.setStickyNavigationBar(getWindow());
         if(CommonUtils.getThemePreference(this))
         {
             refreshLayout.setColorSchemeResources(R.color.materialBlack);
@@ -125,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }
+
+
 
     }
 

@@ -42,7 +42,15 @@ public class DeveloperActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_developer);
         CommonUtils.setFullScreen(getWindow());
         CommonUtils.setTransLucentNavigationBar(getWindow());
+        CommonUtils.setStickyNavigationBar(getWindow());
         init();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CommonUtils.setStickyNavigationBar(getWindow());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

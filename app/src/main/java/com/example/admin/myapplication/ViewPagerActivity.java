@@ -3,6 +3,7 @@ package com.example.admin.myapplication;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,9 +46,11 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isFirstTime();
         setContentView(R.layout.activity_view_pager);
         CommonUtils.setTransLucentNavigationBar(getWindow());
         CommonUtils.setFullScreen(getWindow());
+        CommonUtils.setStickyNavigationBar(getWindow());
         init();
     }
 
@@ -101,4 +105,32 @@ public class ViewPagerActivity extends AppCompatActivity implements ViewPager.Pa
 
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CommonUtils.setStickyNavigationBar(getWindow());
+    }
+
+
+    public void isFirstTime()
+    {
+        SharedPreferences sharedPreferences=getSharedPreferences("AppPreference",0);
+        boolean firstRun=sharedPreferences.getBoolean("FirstLaunch",true);
+        if(firstRun)
+        {
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putBoolean("FirstLaunch",false);
+            editor.commit();
+        }
+        else
+        {
+            Intent launchMainActivity =new Intent(this,MainActivity.class);
+            startActivity(launchMainActivity);
+            finish();
+        }
+    }
+
+
+
 }
