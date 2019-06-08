@@ -126,8 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }
-
-
+        adapter.notifyDataSetChanged();
 
     }
 
