@@ -1,5 +1,6 @@
 package com.example.admin.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -31,6 +33,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
@@ -39,6 +42,7 @@ import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.example.admin.myapplication.Utils.CommonUtils;
 import com.example.admin.myapplication.Utils.Constants;
 
+import com.example.admin.myapplication.Utils.CustomTextViewMainBold;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -52,7 +56,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,ConfigureDarkTheme{
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,ConfigureDarkTheme,CustomAdapter.OnClickedHandled{
     RecyclerView recyclerView;
     List<Object> list;
     CustomAdapter adapter;
@@ -139,8 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SettingActivity.theme = this;
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.mainscreen_collapsing_toolbar);
-        title = (TextView)findViewById(R.id.mainscreen_title);
-
+        title = (CustomTextViewMainBold)findViewById(R.id.mainscreen_title);
 
         settings_icon=(ImageView)findViewById(R.id.setting_icon_main);
         settings_icon.setOnClickListener(this);
@@ -205,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         recyclerView.addOnScrollListener(pageScrollListner);
-        adapter = new CustomAdapter(list, MainActivity.this,drawerLayout,mailLayout);
+        adapter = new CustomAdapter(list, MainActivity.this,mailLayout,this);
         recyclerView.setAdapter(adapter);
 
 
@@ -215,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pagenumber = 1;
             new MyAsyncTask(pagenumber).execute();
         } else {
+
             recyclerView.setVisibility(View.GONE);
             no_wifi_1.setVisibility(View.VISIBLE);
         }
@@ -279,6 +284,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
+
 
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -383,6 +390,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static boolean isTablet(Context ctx) {
         return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+
+    @Override
+    public void onClickImageView(int position, SplashModel splashModel) {
+
+
+        Intent i = new Intent(this, ImageActivity.class);
+        i.putExtra("model", splashModel);
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
+//                    context.startActivity(i,options.toBundle());
+
+        startActivity(i);
+
+
+    }
+
+    @Override
+    public void onLongClickImageView(int position, SplashModel splashModel) {
+        CommonUtils.longPressImage(this,splashModel);
+    }
+
+    @Override
+    public void onClickProfileImage(int position, SplashModel splashModel, CustomAdapter.MyRecyclerItemViewHolder holder) {
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+        {
+            Intent i1 = new Intent(this, ProfileActivity.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, holder.ProfileImage, holder.ProfileImage.getTransitionName());
+
+            i1.putExtra("myobject", splashModel);
+            startActivity(i1, options.toBundle());
+        }
+
+    }
+
+    @Override
+    public void onClickPopUpMenu(int position, SplashModel splashModel) {
+        CommonUtils.showPopUp(this,splashModel,drawerLayout);
+
     }
 
 

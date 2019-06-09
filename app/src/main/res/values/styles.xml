@@ -13,6 +13,7 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:typeface"></item>
         <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowBackground">@drawable/ic_splash_background</item>
     </style>
 
 

@@ -63,15 +63,17 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     DrawerLayout drawerLayout;
     View view;
     ConfigureDarkTheme theme;
+    OnClickedHandled clickedhandled;
 
 
 
-    public CustomAdapter(List<Object> list, Context context, DrawerLayout drawerLayout,View view) {
+    public CustomAdapter(List<Object> list, Context context,View view,OnClickedHandled clickedhandled) {
         this.context = context;
         this.list = list;
-        this.drawerLayout = drawerLayout;
-        constraintSet = new ConstraintSet();
         this.view = view;
+        this.clickedhandled=clickedhandled;
+
+        constraintSet = new ConstraintSet();
 
     }
 
@@ -91,8 +93,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         View v;
         if (viewType == SPLASHMODEL_TYPE) {
             v = LayoutInflater.from(context).inflate(R.layout.recycleritem, parent, false);
-            MyRecyclerItemViewHolder holder = new MyRecyclerItemViewHolder(v);
-            return holder;
+            MyRecyclerItemViewHolder splashModel_Holder = new MyRecyclerItemViewHolder(v);
+            return splashModel_Holder;
         } else {
             v = LayoutInflater.from(context).inflate(R.layout.recycler_view_progress_bar, parent, false);
             MyRecyclerProgresViewHolder holder = new MyRecyclerProgresViewHolder(v);
@@ -103,15 +105,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder,int position) {
         try {
-
-
             if (holder instanceof MyRecyclerItemViewHolder) {
                 //MyAnimationUtils.Animate(holder,true);
                 final MyRecyclerItemViewHolder myholder = (MyRecyclerItemViewHolder) holder;
-                final SplashModel model = (SplashModel) list.get(position);
+                final SplashModel model = (SplashModel) list.get(holder.getAdapterPosition());
                 myholder.title.setText(model.getUser().getFirstName());
                 myholder.likes.setText(model.getUser().getTotalLikes() + " likes");
                 RequestOptions requestOptions = new RequestOptions();
@@ -160,9 +159,10 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.popupmenu.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CommonUtils.showPopUp(context,model,drawerLayout);
+                        clickedhandled.onClickPopUpMenu(holder.getAdapterPosition(),model);
                     }
                 });
+
 //                if(position>previous_position)
 //                {
 //                    MyAnimationUtils.Animate(myholder, true);
@@ -172,21 +172,14 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                    MyAnimationUtils.Animate(holder,false);
 //                }
                 // MyAnimationUtils.Animate(holder,true);
-                previous_position = position;
+                //previous_position = position;
                 myholder.ProfileImage.setBorderColor(Color.parseColor(model.getColor()));
-                //holder.imageView.setMaxHeight(1000);
-                //holder.relativeLayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
                 myholder.ProfileImage.setOnClickListener(new View.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View view) {
-                        Intent i1 = new Intent(context, ProfileActivity.class);
-                        ActivityOptionsCompat options = ActivityOptionsCompat.
-                                makeSceneTransitionAnimation((Activity) context, myholder.ProfileImage, myholder.ProfileImage.getTransitionName());
-
-                        i1.putExtra("myobject", model);
-                        context.startActivity(i1, options.toBundle());
+                        clickedhandled.onClickProfileImage(holder.getAdapterPosition(),model,myholder);
                     }
                 });
 
@@ -194,28 +187,17 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 myholder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        CommonUtils.longPressImage(context,model);
+                        clickedhandled.onLongClickImageView(holder.getAdapterPosition(),model);
                         return true;
                     }
                 });
 
-                // holder.recycleritemrelativelayout.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
-                //holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getColor()));
-
-                //Glide.with(context).load(list.get(position).getUrls().getRegular().toString()).into(holder.imageView);
                 myholder.imageView.setOnClickListener(new View.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(context, ImageActivity.class);
-                        i.putExtra("model", model);
-//                    ActivityOptionsCompat options = ActivityOptionsCompat.
-//                            makeSceneTransitionAnimation((Activity) context, holder.imageView,holder.imageView.getTransitionName());
-//                    context.startActivity(i,options.toBundle());
-
-                        context.startActivity(i);
-
+                        clickedhandled.onClickImageView(holder.getAdapterPosition(),model);
 
                     }
                 });
@@ -255,35 +237,33 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public class MyRecyclerItemViewHolder extends RecyclerView.ViewHolder implements ConfigureDarkTheme {
 
-        CircleImageView ProfileImage;
+        public CircleImageView ProfileImage;
         TextView title;
-        TextView likes, id;
+        TextView likes;
         ImageView imageView;
         View v;
         CardView cardView;
-        LinearLayout linearLayout;
-        RelativeLayout relativeLayout, recycleritemrelativelayout;
+        RelativeLayout relativeLayout;
         ImageView popupmenu;
-        ProgressBar progressBar;
         CustomTextViewMain errorText;
         ConstraintLayout constraintLayout;
         ShimmerFrameLayout shimmerlayout;
 
 
 
-        public MyRecyclerItemViewHolder(View itemView) {
+        MyRecyclerItemViewHolder(View itemView) {
             super(itemView);
             v = itemView;
-            imageView = (ImageView) v.findViewById(R.id.imageView);
-            likes = (TextView) v.findViewById(R.id.likes);
-            title = (TextView) v.findViewById(R.id.title);
-            ProfileImage = (CircleImageView) v.findViewById(R.id.user_profile_image);
-            cardView = (CardView) v.findViewById(R.id.recycler_item_card);
-            relativeLayout = (RelativeLayout) v.findViewById(R.id.header_recycleritem);
-            popupmenu = (ImageView) v.findViewById(R.id.recycler_item_menu);
-            errorText = (CustomTextViewMain) v.findViewById(R.id.loading_error_main_list);
-            constraintLayout = (ConstraintLayout) v.findViewById(R.id.recycler_item_contraintlayout);
-            shimmerlayout = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_layout);
+            imageView = v.findViewById(R.id.imageView);
+            likes = v.findViewById(R.id.likes);
+            title = v.findViewById(R.id.title);
+            ProfileImage = v.findViewById(R.id.user_profile_image);
+            cardView = v.findViewById(R.id.recycler_item_card);
+            relativeLayout = v.findViewById(R.id.header_recycleritem);
+            popupmenu = v.findViewById(R.id.recycler_item_menu);
+            errorText =  v.findViewById(R.id.loading_error_main_list);
+            constraintLayout =  v.findViewById(R.id.recycler_item_contraintlayout);
+            shimmerlayout =  v.findViewById(R.id.shimmer_layout);
             CommonUtils.getTheme(context,this);
             SettingActivity.theme = this;
 
@@ -317,9 +297,9 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         ProgressBar progressBar;
 
-        public MyRecyclerProgresViewHolder(View itemView) {
+        MyRecyclerProgresViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.recycler_item_progress_bar);
+            progressBar = itemView.findViewById(R.id.recycler_item_progress_bar);
 
         }
     }
@@ -341,12 +321,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public Bitmap getBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(v.getWidth(),v.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
-        v.draw(c);
-        return b;
+
+    public interface OnClickedHandled{
+        void onClickImageView(int position,SplashModel splashModel);
+        void onLongClickImageView(int position,SplashModel splashModel);
+        void onClickProfileImage(int position,SplashModel splashModel,MyRecyclerItemViewHolder holder);
+        void onClickPopUpMenu(int position,SplashModel splashModel);
     }
 
 

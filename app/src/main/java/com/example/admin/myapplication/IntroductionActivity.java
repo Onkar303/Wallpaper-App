@@ -135,6 +135,7 @@ public class IntroductionActivity extends AppCompatActivity implements ViewPager
             case R.id.finish:
                 Intent i=new Intent(IntroductionActivity.this,MainActivity.class);
                 startActivity(i);
+                finish();
                 break;
 
             case R.id.previous:

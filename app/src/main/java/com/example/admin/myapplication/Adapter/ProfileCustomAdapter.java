@@ -33,7 +33,6 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
 
     List<SplashModel> list;
     Context context;
-    Bitmap bitmap;
     ConstraintSet constraintSet;
     CoordinatorLayout coordinatorLayout;
 
