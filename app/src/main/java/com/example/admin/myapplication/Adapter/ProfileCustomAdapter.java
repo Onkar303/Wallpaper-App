@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.admin.myapplication.ImageActivity;
+import com.example.admin.myapplication.Listners.OnClickHandled;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.R;
 import com.example.admin.myapplication.Utils.CommonUtils;
@@ -35,13 +36,15 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     Context context;
     ConstraintSet constraintSet;
     CoordinatorLayout coordinatorLayout;
+    OnClickHandled onClickHandled;
 
 
-    public ProfileCustomAdapter(List<SplashModel> list, Context context, CoordinatorLayout coordinatorLayout) {
+    public ProfileCustomAdapter(List<SplashModel> list, Context context, CoordinatorLayout coordinatorLayout,OnClickHandled onClickHandled) {
         this.context = context;
         this.list = list;
         this.coordinatorLayout = coordinatorLayout;
         constraintSet = new ConstraintSet();
+        this.onClickHandled=onClickHandled;
     }
 
 
@@ -56,7 +59,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ProfileCustomAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ProfileCustomAdapter.MyViewHolder holder, int position) {
 
         holder.likes_profile.setText(String.valueOf(list.get(position).getLikes()) + " likes");
 
@@ -65,14 +68,8 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, ImageActivity.class);
-                i.putExtra("model",list.get(position));
-//                i.putExtra("position", position);
-//                ActivityOptionsCompat options = ActivityOptionsCompat.
-//                        makeSceneTransitionAnimation((Activity) context, holder.imageView, holder.imageView.getTransitionName());
-//
-//                context.startActivity(i, options.toBundle());
-                context.startActivity(i);
+
+                onClickHandled.onClickImageView(holder.getAdapterPosition(),list.get(holder.getAdapterPosition()));
             }
         });
 
@@ -85,7 +82,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         holder.imageView_profile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                CommonUtils.longPressImage(context,list.get(position));
+                onClickHandled.onLongClickImageView(holder.getAdapterPosition(),list.get(holder.getAdapterPosition()));
                 return true;
 
             }
@@ -94,7 +91,8 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         holder.menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommonUtils.showPopUp(context,list.get(position),coordinatorLayout);
+                onClickHandled.onClickPopUpMenu(holder.getAdapterPosition(),list.get(holder.getAdapterPosition()));
+
             }
         });
 
@@ -124,7 +122,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
 
         ImageView imageView_profile, menu_profile;
@@ -133,14 +131,14 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
         ConstraintLayout constraintLayout;
         CardView cardView;
 
-        public MyViewHolder(View itemView) {
+         MyViewHolder(View itemView) {
             super(itemView);
             v = itemView;
-            imageView_profile = (ImageView) v.findViewById(R.id.user_personal_pics);
-            likes_profile = (CustomTextViewMain) v.findViewById(R.id.likes_profile);
-            menu_profile = (ImageView) v.findViewById(R.id.recycler_item_menu_profile);
-            constraintLayout = (ConstraintLayout) v.findViewById(R.id.profilelist_constraintlayout);
-            cardView = (CardView) v.findViewById(R.id.profile_card_view);
+            imageView_profile = v.findViewById(R.id.user_personal_pics);
+            likes_profile =  v.findViewById(R.id.likes_profile);
+            menu_profile = v.findViewById(R.id.recycler_item_menu_profile);
+            constraintLayout =  v.findViewById(R.id.profilelist_constraintlayout);
+            cardView =  v.findViewById(R.id.profile_card_view);
         }
     }
 

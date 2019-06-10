@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
+import com.example.admin.myapplication.Listners.OnClickHandled;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.example.admin.myapplication.Utils.CommonUtils;
@@ -57,7 +58,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,ConfigureDarkTheme,CustomAdapter.OnClickedHandled{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,ConfigureDarkTheme, OnClickHandled {
     RecyclerView recyclerView;
     List<Object> list;
     CustomAdapter adapter;

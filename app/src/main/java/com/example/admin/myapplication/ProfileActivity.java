@@ -1,6 +1,7 @@
 package com.example.admin.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -30,8 +31,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.admin.myapplication.Adapter.CustomAdapter;
 import com.example.admin.myapplication.Adapter.ProfileCustomAdapter;
 import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
+import com.example.admin.myapplication.Listners.OnClickHandled;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.RecyclerViewClasses.PageScrollListner;
 import com.example.admin.myapplication.Utils.CommonUtils;
@@ -51,7 +54,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, ConfigureDarkTheme {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, ConfigureDarkTheme , OnClickHandled {
     ProfileBottomSheetCallBack callback;
     SplashModel splashModel;
     TextView name, bio, totla_photos, total_likes;
@@ -176,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        adapter = new ProfileCustomAdapter(list, this,coordinatorLayout);
+        adapter = new ProfileCustomAdapter(list, this,coordinatorLayout,this);
         controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(listner);
@@ -276,6 +279,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         CommonUtils.setStickyNavigationBar(getWindow());
         isDark(CommonUtils.getThemePreference(this));
     }
+
+
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
 
@@ -410,6 +415,33 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public static boolean isTablet(Context ctx) {
         return (ctx.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    @Override
+    public void onClickImageView(int position, SplashModel splashModel) {
+        Intent i = new Intent(this, ImageActivity.class);
+        i.putExtra("model",list.get(position));
+//                i.putExtra("position", position);
+//                ActivityOptionsCompat options = ActivityOptionsCompat.
+//                        makeSceneTransitionAnimation((Activity) context, holder.imageView, holder.imageView.getTransitionName());
+//
+//                context.startActivity(i, options.toBundle());
+        startActivity(i);
+    }
+
+    @Override
+    public void onLongClickImageView(int position, SplashModel splashModel) {
+        CommonUtils.longPressImage(this,list.get(position));
+    }
+
+    @Override
+    public void onClickProfileImage(int position, SplashModel splashModel, CustomAdapter.MyRecyclerItemViewHolder holder) {
+
+    }
+
+    @Override
+    public void onClickPopUpMenu(int position, SplashModel splashModel) {
+        CommonUtils.showPopUp(this,list.get(position),coordinatorLayout);
     }
 
 

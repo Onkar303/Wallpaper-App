@@ -39,6 +39,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.admin.myapplication.ImageActivity;
 import com.example.admin.myapplication.Listners.ConfigureDarkTheme;
+import com.example.admin.myapplication.Listners.OnClickHandled;
 import com.example.admin.myapplication.Model.SplashModel;
 import com.example.admin.myapplication.ProfileActivity;
 import com.example.admin.myapplication.R;
@@ -63,11 +64,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     DrawerLayout drawerLayout;
     View view;
     ConfigureDarkTheme theme;
-    OnClickedHandled clickedhandled;
+    OnClickHandled clickedhandled;
 
 
 
-    public CustomAdapter(List<Object> list, Context context,View view,OnClickedHandled clickedhandled) {
+    public CustomAdapter(List<Object> list, Context context,View view,OnClickHandled clickedhandled) {
         this.context = context;
         this.list = list;
         this.view = view;
@@ -319,14 +320,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
                 break;
         }
-    }
-
-
-    public interface OnClickedHandled{
-        void onClickImageView(int position,SplashModel splashModel);
-        void onLongClickImageView(int position,SplashModel splashModel);
-        void onClickProfileImage(int position,SplashModel splashModel,MyRecyclerItemViewHolder holder);
-        void onClickPopUpMenu(int position,SplashModel splashModel);
     }
 
 
